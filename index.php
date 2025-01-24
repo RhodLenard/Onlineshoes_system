@@ -6,7 +6,7 @@
 <html>
 <head>
 	<title>Sneakers Street</title>
-	<link rel="icon" href="img/logo.jpg" />
+	<link rel="icon" href="images/logo.jpg" />
 	<link rel = "stylesheet" type = "text/css" href="css/style.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<script src="js/bootstrap.js"></script>
@@ -29,7 +29,7 @@
 <body>
 
 	<div id="header">
-		<img src="img/logo.jpg">
+		<img src="images/logo.jpg">
 		<label>Sneakers Street</label>
 			<ul>
 				<li><a href="#signup"   data-toggle="modal">Sign Up</a></li>

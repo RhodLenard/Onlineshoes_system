@@ -26,7 +26,7 @@
 <body>
 
 <div id="header">
-        <img src="img/logo.jpg">
+				<img src="images/logo.jpg">
         <label>Sneakers Street</label>
 
         <?php
