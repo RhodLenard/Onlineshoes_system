@@ -22,8 +22,8 @@ $secret_key = 'sk_test_nXFb87e78U2sHsK4yN8TAusV'; // Replace with your actual se
 
 // Handle GCash Payment
 if ($payment_method === 'GCash') {
-    $success_url = 'https://4b18-152-32-96-17.ngrok-free.app/onlshoe/success.php?tid=' . $transaction_id;
-    $failed_url = 'https://4b18-152-32-96-17.ngrok-free.app/onlshoe/failed.php?tid=' . $transaction_id;
+    $success_url = 'https://f1fb-152-32-96-17.ngrok-free.app/onlshoe/success.php?tid=' . $transaction_id;
+    $failed_url = 'https://f1fb-152-32-96-17.ngrok-free.app/onlshoe/failed.php?tid=' . $transaction_id;
 
     $payload = [
         'data' => [

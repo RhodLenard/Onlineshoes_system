@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2024 at 08:40 AM
+-- Generation Time: Jan 25, 2025 at 12:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `alphaware`
+-- Database: `shoes`
 --
 
 -- --------------------------------------------------------
@@ -38,7 +38,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`adminid`, `username`, `password`) VALUES
-(1, 'admin', 'admin');
+(9, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,19 @@ INSERT INTO `contact` (`contact_id`, `email`, `message`) VALUES
 (11, '', ''),
 (12, '', ''),
 (13, '', ''),
-(14, '', '');
+(14, '', ''),
+(15, '', ''),
+(16, '', ''),
+(17, '', ''),
+(18, '', ''),
+(19, '', ''),
+(20, '', ''),
+(21, '', ''),
+(22, '', ''),
+(23, '', ''),
+(24, '', ''),
+(25, '', ''),
+(26, '', '');
 
 -- --------------------------------------------------------
 
@@ -97,7 +109,20 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customerid`, `firstname`, `mi`, `lastname`, `address`, `country`, `zipcode`, `mobile`, `telephone`, `email`, `password`) VALUES
-(1, 'a', 'a', 'a', 'a', 'aa', '3004', '09123456789', '6771966', 'sdff@asfd.com', 'a');
+(5, 'R', 'L', 'V', '034 Avendano street', 'Bulacan', '3004', '09760048883', '6771966', 'rlpanget@gmail.com', '12345');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_size` varchar(10) NOT NULL,
+  `order_qty` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -109,7 +134,7 @@ CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `product_name` varchar(50) NOT NULL,
   `product_price` varchar(50) NOT NULL,
-  `product_size` varchar(50) NOT NULL,
+  `product_size` varchar(255) DEFAULT NULL,
   `product_image` varchar(500) NOT NULL,
   `brand` varchar(100) NOT NULL,
   `category` varchar(50) NOT NULL
@@ -120,21 +145,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_size`, `product_image`, `brand`, `category`) VALUES
-(1, 'New Balance 530 Retro Size 10', '3000', '10', '54593321107311777NB530retro.png', 'New Balance', 'running'),
-(755, 'Nike Journey Run Size 9', '5000', '9', '62070101328243645nikejourneyrun.png', 'Nike', 'running'),
-(2424, 'Onitsuka Size 9', '4000', '9', '60928668210681754onitsuka.png', 'Onitsuka', 'feature'),
-(2520, 'Sabrina Size 9', '5000', '9', '27757605612851496sabrina.png', 'Sabrina', 'feature'),
-(3747, 'Asics Magic Speed 3 Size 9', '5000', '9', '25866082032998627asicsmagicspeed3.png', 'Asics', 'running'),
-(5843, 'Vanz Knu Skool Size 9', '3500', '9', '69569116966518516Knu.png', 'Vanz', 'football'),
-(7559, 'Adidas EQ21 Size 8', '4000', '8', '32597818921229766adidaseq21.png', 'Adidas', 'running'),
-(60364, 'Nike GT Cut Size 10', '4000', '10', '58886686361217244nikegtcut.png', 'Nike', 'basketball'),
-(60409, 'Samba Size 10', '3000', '10', '49660819811247812samba.png', 'Samba', 'football'),
-(80830, 'Onitsuka Size 9', '4000', '9', '50948702259765519onitsuka.png', 'Onitsuka', 'football'),
-(131238, 'Nike Journey Run Size 9', '5000', '9', '67243594614025079nikejourneyrun.png', 'Nike', 'feature'),
-(140937, 'Sabrina Size 9', '5000', '9', '64232288574222540sabrina.png', 'Sabrina', 'basketball'),
-(178253, 'Nike Air Size 8', '5000', '8', '16695470035654683NIkeair.png', 'Nike', 'football'),
-(614744, 'Kyrie 1 Size 8', '4000', '8', '74886045754018259Kyrie1.png', 'Kyrie', 'basketball'),
-(6035006, 'Kobe V Size 9', '5000', '9', '632017120479950kobev.png', 'Kobe', 'basketball');
+(11860661, 'J1', '5000', 'US 7', '60568252730950462DC0774-160.webp', 'Jordan', 'basketball'),
+(142497861, 'Vans', '5000', 'US 7,US 7.5', '44742948665727592VANSERAMENS-BLACKWHITE.webp', 'Vans', 'running'),
+(941354064, 'Vans', '5000', 'US 7', '59827545832422853VANSERAMENS-BLACKWHITE.webp', 'Vans', 'football');
 
 -- --------------------------------------------------------
 
@@ -145,6 +158,7 @@ INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_s
 CREATE TABLE `stock` (
   `stock_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `product_size` varchar(50) NOT NULL,
   `qty` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -152,65 +166,11 @@ CREATE TABLE `stock` (
 -- Dumping data for table `stock`
 --
 
-INSERT INTO `stock` (`stock_id`, `product_id`, `qty`) VALUES
-(1, 71339, 20),
-(2, 82631, 30),
-(3, 3, 20),
-(4, 4, 20),
-(5, 6, 20),
-(6, 7, 20),
-(7, 8, 20),
-(8, 9, 20),
-(9, 10, 19),
-(10, 11, 23),
-(11, 13, 20),
-(12, 14, 20),
-(13, 15, 20),
-(14, 16, 20),
-(15, 17, 20),
-(16, 19, 20),
-(17, 20, 20),
-(18, 21, 20),
-(19, 26, 13),
-(20, 28, 20),
-(21, 29, 18),
-(22, 30, 20),
-(23, 31, 20),
-(26, 431860, 40),
-(27, 21561, 30),
-(28, 358159, 30),
-(29, 157, 25),
-(30, 51292, 20),
-(31, 961461, 10),
-(32, 6113, 10),
-(33, 31868, 10),
-(34, 618442, 10),
-(35, 608925, 10),
-(36, 499083, 10),
-(37, 84750, 10),
-(38, 390813, 10),
-(39, 96263, 10),
-(40, 95920, 10),
-(41, 84, 10),
-(42, 911516, 10),
-(43, 41, 10),
-(44, 5843, 10),
-(45, 6130495, 10),
-(46, 178253, 10),
-(47, 80830, 10),
-(48, 60409, 10),
-(49, 6035006, 10),
-(50, 614744, 10),
-(51, 140937, 10),
-(52, 60364, 10),
-(53, 57808, 10),
-(54, 7559, 10),
-(55, 3747, 10),
-(56, 1, 10),
-(57, 755, 10),
-(58, 131238, 10),
-(59, 2424, 10),
-(60, 2520, 10);
+INSERT INTO `stock` (`stock_id`, `product_id`, `product_size`, `qty`) VALUES
+(360, 11860661, 'US 7', 0),
+(359, 142497861, 'US 7.5', 0),
+(357, 941354064, 'US 7', 0),
+(358, 142497861, 'US 7', 0);
 
 -- --------------------------------------------------------
 
@@ -219,12 +179,21 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `qty`) VALUES
 --
 
 CREATE TABLE `transaction` (
-  `transaction_id` int(11) NOT NULL,
+  `transaction_id` int(10) UNSIGNED NOT NULL,
   `customerid` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `order_stat` varchar(100) NOT NULL,
-  `order_date` varchar(50) NOT NULL
+  `order_date` varchar(50) NOT NULL,
+  `payment_method` varchar(50) DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`transaction_id`, `customerid`, `amount`, `order_stat`, `order_date`, `payment_method`) VALUES
+(31, 5, 5000, 'Confirmed', '2025-01-23 15:10:37', 'Cash'),
+(34, 5, 5000, 'Confirmed', '2025-01-25 00:33:11', 'GCash');
 
 -- --------------------------------------------------------
 
@@ -236,8 +205,44 @@ CREATE TABLE `transaction_detail` (
   `transacton_detail_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `order_qty` int(11) NOT NULL,
-  `transaction_id` int(11) NOT NULL
+  `transaction_id` int(10) UNSIGNED DEFAULT NULL,
+  `product_size` varchar(50) DEFAULT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `transaction_detail`
+--
+
+INSERT INTO `transaction_detail` (`transacton_detail_id`, `product_id`, `order_qty`, `transaction_id`, `product_size`, `quantity`) VALUES
+(402, 11860661, 0, 34, 'US 7', 1),
+(398, 11860661, 0, 31, 'US 7', 1),
+(397, 11860661, 0, 30, 'US 7', 1),
+(396, 11860661, 0, 29, 'US 7', 1),
+(395, 11860661, 0, 28, 'US 7', 1),
+(394, 11860661, 0, 27, 'US 7', 1),
+(393, 11860661, 0, 26, 'US 7', 1),
+(392, 142497861, 0, 25, 'US 7.5', 1),
+(391, 142497861, 0, 24, 'US 7', 1),
+(390, 142497861, 0, 23, 'US 7', 1),
+(389, 941354064, 0, 22, 'US 7', 1),
+(388, 961890493, 0, 22, 'US 7', 1),
+(387, 729211742, 0, 22, 'US 7', 1),
+(386, 816026124, 0, 21, 'US 7', 1),
+(385, 816026124, 0, 20, 'US 7', 1),
+(381, 816026124, 0, 16, 'US 7', 1),
+(380, 961890493, 0, 16, 'US 7', 1),
+(375, 544317460, 0, 13, 'US 7', 1),
+(372, 544317460, 0, 11, 'US 7', 1),
+(374, 544317460, 0, 12, 'US 7', 1),
+(370, 544317460, 0, 9, 'US 7', 1),
+(369, 544317460, 0, 8, 'US 7', 1),
+(368, 544317460, 0, 7, 'US 7', 1),
+(365, 544317460, 0, 4, 'US 7.5', 1),
+(364, 544317460, 0, 3, 'US 7.5', 1),
+(363, 544317460, 0, 2, 'US 7.5', 1),
+(361, 544317460, 0, 3611, 'US 7.5', 1),
+(359, 544317460, 0, 3609, 'US 7.5', 1);
 
 --
 -- Indexes for dumped tables
@@ -262,6 +267,12 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`customerid`);
 
 --
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`order_id`,`product_id`,`product_size`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -283,7 +294,8 @@ ALTER TABLE `transaction`
 -- Indexes for table `transaction_detail`
 --
 ALTER TABLE `transaction_detail`
-  ADD PRIMARY KEY (`transacton_detail_id`);
+  ADD PRIMARY KEY (`transacton_detail_id`),
+  ADD KEY `fk_transaction` (`transaction_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -293,31 +305,37 @@ ALTER TABLE `transaction_detail`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `adminid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customerid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `customerid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
+
+--
+-- AUTO_INCREMENT for table `transaction`
+--
+ALTER TABLE `transaction`
+  MODIFY `transaction_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `transaction_detail`
 --
 ALTER TABLE `transaction_detail`
-  MODIFY `transacton_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transacton_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=403;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

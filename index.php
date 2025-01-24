@@ -96,23 +96,23 @@
 			</ul>
 	</div>
 
-	<div id="carousel" style="padding-left: 250px ">
-		<div id="myCarousel" class="carousel slide" >
-			<div class="carousel-inner" >
-				<div class="active item" style="padding:0; border-bottom:0 solid #111;"><img src="img/banner1.jpg" class="carousel"></div>
-				<div class="item" style="padding:0; border-bottom:0 solid #111;"><img src="img/banner2.jpg" class="carousel"></div>
-				<div class="item" style="padding:0; border-bottom:0 solid #111;"><img src="img/banner3.jpg" class="carousel"></div>
+	<div id="carousel">
+			<div id="myCarousel" class="carousel slide">
+				<div class="carousel-inner">
+					<div class="active item" style="padding:0; border-bottom:0 solid #111;"><img src="images/basketball.png" class="carousel"></div>
+					<div class="item" style="padding:0; border-bottom:0 solid #111;"><img src="images/sneakers.png" class="carousel"></div>
+					<div class="item" style="padding:0; border-bottom:0 solid #111;"><img src="images/running.png" class="carousel"></div>
+				</div>
+					<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+					<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 			</div>
-				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		</div>
-	</div>
 
 
 
 
 	<div id="content">
-		<div id="product" style="position:relative; margin-top:30%;">
+		<div id="product" style="position:relative; margin-bottom:17.65%;">
 			<center><h2><legend>Feature Items</legend></h2></center>
 			<br />
 
