@@ -246,7 +246,7 @@ if (isset($_POST['add'])) {
 
     <div id="leftnav">
         <ul>
-            <li><a href="admin_home.php" style="color:#333;">Dashboard</a></li>
+            <li><a href="admin_home.php">Dashboard</a></li>
             <li><a href="admin_home.php">Products</a>
                 <ul>
                     <li><a href="admin_feature.php "style="font-size:15px; margin-left:15px;">Features</a></li>

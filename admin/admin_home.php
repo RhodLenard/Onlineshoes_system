@@ -128,7 +128,7 @@ $(function () {
 
 	<div id="leftnav">
 		<ul>
-			<li><a href="admin_home.php" style="color:#333;">Dashboard</a></li>
+			<li><a href="admin_home.php">Dashboard</a></li>
 			<li><a href="admin_home.php">Products</a>
 				<ul>
 					<li><a href="admin_feature.php "style="font-size:15px; margin-left:15px;">Features</a></li>
@@ -145,7 +145,7 @@ $(function () {
 	</div>
 	<div id="rightcontent" style="position:absolute; top:10%;">
 
-	<div id="container" style="min-width: 310px; height: 600px; max-width: 1000px; margin: 0 auto; background:none; float:left;"></div>
+	<div id="container" style="min-width: 310px; height: 600px; max-width: 1000px; margin: 0 auto; background:none; float:left; margin-left:16%;"></div>
 
 
 

@@ -401,12 +401,12 @@ form.well a.btn.btn-info:hover {
 
 #leftnav ul li a {
   text-decoration: none;
-  color: #333;
+  color: #ffffff;
   font-size: 20px;
 }
 
 #leftnav ul li a:hover {
-  color: #fff;
+  color: #807e7e;
 }
 
 #leftnav ul li ul {
@@ -424,7 +424,7 @@ form.well a.btn.btn-info:hover {
 
 #rightcontent {
   position: relative;
-  width: 1025px;
+  width: 88%;
   top: 50px;
   left: 220px;
   z-index: -99999;
