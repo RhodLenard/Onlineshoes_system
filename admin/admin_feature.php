@@ -260,7 +260,7 @@ if (isset($_POST['add'])) {
         </ul>
     </div>
 
-    <div id="rightcontent" style="position:absolute; top:10%;">
+    <div id="rightcontent">
         <div class="alert alert-info"><center><h2>Features</h2></center></div>
         <br />
         <label style="padding:5px; float:right;"><input type="text" name="filter" placeholder="Search Product here..." id="filter"></label>

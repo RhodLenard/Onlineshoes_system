@@ -329,7 +329,7 @@ form.well a.btn.btn-info:hover {
   font-size: 20px;
   position: relative;
   margin-top: 30px;
-  margin-left: 80px;
+  margin-left: 30%;
   float: left;
 }
 
@@ -357,8 +357,8 @@ form.well a.btn.btn-info:hover {
 
 #develop {
   position: relative;
-  float: right;
-  margin-right: 15%;
+  float: left;
+  margin-left: 10%;
 }
 
 #develop ul a li {

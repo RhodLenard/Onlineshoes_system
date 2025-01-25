@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div id="header">
-		<img src="img/logo.jpg">
+	<img src="images/logo.jpg">
 		<label>Sneakers Street</label>
 			<ul>
 				<li><a href="#signup"   data-toggle="modal">Sign Up</a></li>
@@ -126,7 +126,7 @@
 	<div id="content" style="margin-bottom: 10%;">
 		<br />
 		<br />
-		<div id="product">
+		<div id="product" style="margin-bottom: 44.9%;">
 
 			<?php
 			include ('function/addcart.php');
@@ -170,12 +170,21 @@
 </div>
 	<br />
 	<div id="footer">
-		<div class="foot">
-			<label style="font-size:17px;"> Copyrght &copy; </label>
-			<p style="font-size:25px;">Online Shoe Store Inc. 2024 Brought To You by Mr.Jharil, Jonaths, Joshua, Talle. </p>
-		</div>
+    <div class="foot">
+        <label style="font-size:17px;"> Copyright &copy; </label>
+        <p style="font-size:25px;">Sneakers Street Inc. 2025  </p>
+    </div>
 
-			
+    <div id="develop">
+        <h4>Developed By:</h4>
+        <ul style="list-style-type: none; /* Removes the bullets */">
+            <li>JHARIL JACINTO PINPIN</li>
+						<li>JONATHS URAGA</li>
+						<li>JOSHUA MUSNGI</li>
+						<li>TALLE TUBIG</li>
+        </ul>
+    </div>
+</div>
 	</div>
 </body>
 </html>

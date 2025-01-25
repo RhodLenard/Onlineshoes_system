@@ -94,7 +94,7 @@
 
 
 	<br>
-<div id="container">
+<div id="container" style="margin-bottom: 10%;">
 	<div class="nav">
 			 <ul>
 				<li><a href="home.php">   <i class="icon-home"></i>Home</a></li>
@@ -234,22 +234,21 @@ if (isset($_SESSION['cart']))
 		<br />
 </div>
 <br />
-	<div id="footer">
-		<div class="foot">
-			<label style="font-size:17px;"> Copyrght &copy; </label>
-			<p style="font-size:25px;">Online Shoe Store Inc. 2024 Brought To You by JHARIL JACINTO PINPIN. </p>
-		</div>
+<div id="footer">
+    <div class="foot">
+        <label style="font-size:17px;"> Copyright &copy; </label>
+        <p style="font-size:25px;">Sneakers Street Inc. 2025  </p>
+    </div>
 
-			<div id="foot">
-				<h4>Links</h4>
-					<ul>
-						<a href="https://www.facebook.com/Mr.JharilJacintoPinpin"><li>Facebook</li></a>
-						<a href="https://www.instagram.com/jhaaareal__/"><li>Instagram</li></a>
-						<a href="https://ph.pinterest.com/kickscrewcom/"><li>Pinterest</li></a>
-						<a href="https://www.tumblr.com/kicksaddictny?redirect_to=%2Fkicksaddictny&source=blog_peepr_view_login_wall"><li>Tumblr</li></a>
-					</ul>
-			</div>
-
-	</div>
+    <div id="develop">
+        <h4>Developed By:</h4>
+        <ul style="list-style-type: none; /* Removes the bullets */">
+            <li>JHARIL JACINTO PINPIN</li>
+						<li>JONATHS URAGA</li>
+						<li>JOSHUA MUSNGI</li>
+						<li>TALLE TUBIG</li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
