@@ -153,6 +153,10 @@ if (isset($_POST['add'])) {
             border-radius: 5px;
             text-align: center;
         }
+
+        .non-clickable-th {
+        pointer-events: none;
+    }
     </style>
 </head>
 <body style="display:unset;">
@@ -272,13 +276,13 @@ if (isset($_POST['add'])) {
         <table class="table table-hover" style="background-color:;">
             <thead>
             <tr style="font-size:20px;">
-                <th>Product Image</th>
-                <th>Product Name</th>
-                <th>Product Price</th>
-                <th>Product Sizes</th>
-                <th>No. of Stock</th>
-                <th>Action</th>
-            </tr>
+    <th class="non-clickable-th">Product Image</th>
+    <th class="non-clickable-th">Product Name</th>
+    <th class="non-clickable-th">Product Price</th>
+    <th class="non-clickable-th">Product Sizes</th>
+    <th class="non-clickable-th">No. of Stock</th>
+    <th class="non-clickable-th">Action</th>
+</tr>
             </thead>
             <tbody>
             <?php
@@ -465,6 +469,7 @@ if (isset($_GET['delete_id'])) {
 </html>
 <script type="text/javascript">
     $(document).ready(function() {
+        // Existing code for removing products
         $('.remove').click(function() {
             var id = $(this).attr("id");
             if(confirm("Are you sure you want to delete this product?")) {

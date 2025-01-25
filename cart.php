@@ -347,7 +347,7 @@ a[href*="action=remove"]:hover {
     </div>
 </div>
 
-<div id="container">
+<div id="container" style="margin-bottom: 23.99%;">
     <div class="nav" style="margin-top: 20px;">
         <ul>
             <li><a href="home.php"><i class="icon-home"></i>Home</a></li>
@@ -432,16 +432,16 @@ a[href*="action=remove"]:hover {
 <div id="footer">
     <div class="foot">
         <label style="font-size:17px;"> Copyright &copy; </label>
-        <p style="font-size:25px;">Online Shoe Store Inc. 2024 Brought To You by JHARIL JACINTO PINPIN. </p>
+        <p style="font-size:25px;">Sneakers Street Inc. 2025  </p>
     </div>
 
-    <div id="foot">
-        <h4>Links</h4>
-        <ul>
-            <a href="https://www.facebook.com/Mr.JharilJacintoPinpin"><li>Facebook</li></a>
-            <a href="https://www.instagram.com/jhaaareal__/"><li>Instagram</li></a>
-            <a href="https://ph.pinterest.com/kickscrewcom/"><li>Pinterest</li></a>
-            <a href="https://www.tumblr.com/kicksaddictny?redirect_to=%2Fkicksaddictny&source=blog_peepr_view_login_wall"><li>Tumblr</li></a>
+    <div id="develop">
+        <h4>Developed By:</h4>
+        <ul style="list-style-type: none; /* Removes the bullets */">
+            <li>JHARIL JACINTO PINPIN</li>
+						<li>JONATHS URAGA</li>
+						<li>JOSHUA MUSNGI</li>
+						<li>TALLE TUBIG</li>
         </ul>
     </div>
 </div>

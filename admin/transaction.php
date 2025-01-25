@@ -178,12 +178,12 @@
 			<table class="table table-hover" style="background-color:;">
 				<thead>
 				<tr style="font-size:16px;">
-					<th>ID</th>
-					<th>DATE</th>
-					<th>Customer Name</th>
-					<th>Total Amount</th>
-					<th>Order Status</th>
-					<th>Action</th>
+				<th style="pointer-events: none;">ID</th>
+    <th style="pointer-events: none;">DATE</th>
+    <th style="pointer-events: none;">Customer Name</th>
+    <th style="pointer-events: none;">Total Amount</th>
+    <th style="pointer-events: none;">Order Status</th>
+    <th style="pointer-events: none;">Action</th>
 				</tr>
 				</thead>
 				<tbody>

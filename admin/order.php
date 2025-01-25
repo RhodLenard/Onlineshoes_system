@@ -57,6 +57,7 @@
 
         }
 		</script>
+		
 </head>
 <body>
 	<div id="header" style="position:fixed;">
@@ -190,10 +191,12 @@
 				<div style='width:975px;' class="alert alert-info">
 					  <table class="table table-hover">
 						<thead>
-							<th>SHOE</th>
-							<th>Transaction No.</th>
-							<th>AMOUNT</th>
-						</thead>
+    <tr>
+        <th style="pointer-events: none;">SHOE</th>
+        <th style="pointer-events: none;">Transaction No.</th>
+        <th style="pointer-events: none;">AMOUNT</th>
+    </tr>
+</thead>
 						  <tbody>
 							<?php
 							$Q1 = $conn->query("SELECT * FROM transaction WHERE order_stat = 'Confirmed'");

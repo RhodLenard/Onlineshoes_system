@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div id="header">
-		<img src="img/logo.jpg">
+	<img src="images/logo.jpg">
 		<label>Sneakers Street</label>
 
 			<?php
@@ -92,7 +92,7 @@
 
 
 	<br>
-<div id="container">
+<div id="container" style="margin-bottom: 6.4%;">
 	<div class="nav">
 			 <ul>
 				<li><a href="home.php">   <i class="icon-home"></i>Home</a></li>
@@ -111,7 +111,7 @@
 			<legend>Frequently Added Questions</legend>
 
 				 <h4>DO YOU SHIP?</h4>
-					<p style="text-indent:60px;">Yes, we ship the products via LBC and 2GO only.</p>
+					<p style="text-indent:60px;">Yes, we ship the products via Lalamove and TokTok only.</p>
 				<hr>
 					<h4>DO YOU DELIVER?</h4>
 						<p style="text-indent:60px;">No, We only offer Shipping.</p>
@@ -120,7 +120,7 @@
 						<p style="text-indent:60px;">We wil ship your product 2-3 days around Negros Occidental and It will take 4-6 days Nationwide.</p>
 				<hr>
 					<h3>HOW DO I PAY MY ORDERS?</h3>
-					<p style="text-indent:60px;">Through PAYPAL basis only.</p>
+					<p style="text-indent:60px;">Through Gcash/Card/Cash.</p>
 
 		</div>
 </div>
@@ -128,13 +128,20 @@
 <div>
 	<br />
 	<div id="footer">
-		<div class="foot">
-			<label style="font-size:17px;"> Copyrght &copy; </label>
-			<p style="font-size:25px;">Online Shoe Store Inc. 2024 Brought To You by Mr.Jharil, Jonaths, Joshua, Talle. </p>
-		</div>
+    <div class="foot">
+        <label style="font-size:17px;"> Copyright &copy; </label>
+        <p style="font-size:25px;">Sneakers Street Inc. 2025  </p>
+    </div>
 
-			
-
-	</div>
+    <div id="develop">
+        <h4>Developed By:</h4>
+        <ul style="list-style-type: none; /* Removes the bullets */">
+            <li>JHARIL JACINTO PINPIN</li>
+						<li>JONATHS URAGA</li>
+						<li>JOSHUA MUSNGI</li>
+						<li>TALLE TUBIG</li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>

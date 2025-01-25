@@ -173,13 +173,21 @@ if ($all_out_of_stock) {
 </div>
 <br />
 	<br />
-	<div id="footer" style="position: relative;">
-		<div class="foot">
-			<label style="font-size:17px;"> Copyright &copy; </label>
-			<p style="font-size:25px;">Online Shoe Store Inc. 2024 Brought To You by Mr.Jharil, Jonaths, Joshua, Talle. </p>
-		</div>
+	<div id="footer">
+    <div class="foot">
+        <label style="font-size:17px;"> Copyright &copy; </label>
+        <p style="font-size:25px;">Sneakers Street Inc. 2025  </p>
+    </div>
 
-			
-	</div>
+    <div id="develop">
+        <h4>Developed By:</h4>
+        <ul style="list-style-type: none; /* Removes the bullets */">
+            <li>JHARIL JACINTO PINPIN</li>
+						<li>JONATHS URAGA</li>
+						<li>JOSHUA MUSNGI</li>
+						<li>TALLE TUBIG</li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
