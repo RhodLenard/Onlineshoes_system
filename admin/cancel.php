@@ -1,4 +1,4 @@
-		<?php
+<?php
 		include("../db/dbconn.php");
 		
 		$t_id = $_GET['id'];

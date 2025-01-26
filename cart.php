@@ -205,7 +205,7 @@ if (isset($_POST['pay_now'])) {
 <html>
 <head>
     <title>Sneakers Street</title>
-    <link rel="icon" href="img/logo.jpg" />
+    <link rel="icon" href="images/logo.jpg" />
     <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <script src="js/bootstrap.js"></script>
@@ -282,7 +282,7 @@ a[href*="action=remove"]:hover {
 </head>
 <body>
 <div id="header">
-    <img src="img/logo.jpg">
+    <img src="images/logo.jpg">
     <label>Sneakers Street</label>
 
     <?php

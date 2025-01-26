@@ -57,6 +57,7 @@ if (isset($_SESSION['cart'])) {
 <head>
     <title>Payment Success</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.jpg" />
     <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <style>
@@ -99,7 +100,7 @@ if (isset($_SESSION['cart'])) {
 </head>
 <body>
 <div id="header">
-    <img src="img/logo.jpg">
+    <img src="images/logo.jpg">
     <label>Sneakers Street</label>
 </div>
 

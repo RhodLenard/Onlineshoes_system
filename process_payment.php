@@ -22,8 +22,8 @@ $secret_key = 'sk_test_nXFb87e78U2sHsK4yN8TAusV'; // Replace with your actual se
 
 // Handle GCash Payment
 if ($payment_method === 'GCash') {
-    $success_url = 'https://04f7-152-32-96-17.ngrok-free.app/onlineshoes/success.php?tid=' . $transaction_id;
-    $failed_url = 'https://04f7-152-32-96-17.ngrok-free.app/onlineshoes/failed.php?tid=' . $transaction_id;
+    $success_url = 'https://www.sneakersstreets.com/success.php?tid=' . $transaction_id;
+    $failed_url = 'https://www.sneakersstreets.com/failed.php?tid=' . $transaction_id;
 
     $payload = [
         'data' => [
@@ -86,8 +86,8 @@ if ($payment_method === 'GCash') {
 // Handle Card Payment
 if ($payment_method === 'Card') {
     // Step 1: Create a Checkout Session
-    $success_url = 'http://localhost/onlineshoes/success.php?tid=' . $transaction_id;
-    $failed_url = 'https://50e9-152-32-96-17.ngrok-free.app/onl%20shoe/failed.php?tid=' . $transaction_id;
+    $success_url = 'https://www.sneakersstreets.com/success.php?tid=' . $transaction_id;
+    $failed_url = 'https://www.sneakersstreets.com/failed.php?tid=' . $transaction_id;
 
     $payload = [
         'data' => [

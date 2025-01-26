@@ -29,6 +29,7 @@ if ($result->num_rows > 0) {
 <html>
 <head>
     <title>GCash Payment</title>
+    <link rel="icon" href="images/logo.jpg" />
     <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <style>

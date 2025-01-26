@@ -6,6 +6,7 @@
 <html>
 <head>
 	<title>Sneakers Street</title>
+	<link rel="icon" href="../images/logo.jpg">
 	<link rel = "stylesheet" type = "text/css" href="../css/style.css" media="all">
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 	<script src="../js/bootstrap.js"></script>
@@ -26,7 +27,7 @@
 </head>
 <body>
 	<div id="header" style="position:fixed;">
-		<img src="../img/logo.jpg">
+		<img src="../images/logo.jpg">
 		<label>Sneakers Street</label>
 
 			<?php

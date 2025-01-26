@@ -1,6 +1,10 @@
 <?php
-	include("function/login.php");
-	include("function/customer_signup.php");
+
+    include("db/dbconn.php"); // Database connection
+    include("function/login.php"); // Login functionality
+    include("function/customer_signup.php"); // Signup functionality
+
+	
 ?>
 <!DOCTYPE html>
 <html>

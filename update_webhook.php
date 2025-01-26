@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 $secret_key = 'sk_test_nXFb87e78U2sHsK4yN8TAusV'; // Replace with your actual secret key
 
 // Webhook details
-$webhook_url = 'https://04f7-152-32-96-17.ngrok-free.app/onlineshoes/webhook.php'; // Replace with your webhook endpoint URL
+$webhook_url = 'https://www.sneakersstreets.com/webhook.php'; // Replace with your webhook endpoint URL
 $webhook_description = 'GCash Payment Webhook'; // Description for the webhook
 $webhook_events = ['source.chargeable', 'payment.paid']; // Events to listen for
 

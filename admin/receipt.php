@@ -6,6 +6,7 @@
 <html>
 <head>
 	<title>Sneakers Street</title>
+	<link rel="icon" href="../images/logo.jpg">
 	<link rel = "stylesheet" type = "text/css" href="../css/style.css" media="all">
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 	<script src="../js/bootstrap.js"></script>
@@ -82,7 +83,7 @@ form.well legend {
 </head>
 <body>
 	<div id="header" style="position:fixed;">
-		<img src="../img/logo.jpg">
+		<img src="../images/logo.jpg">
 		<label>Sneakers Street</label>
 
 			<?php
@@ -127,7 +128,7 @@ form.well legend {
 	<div id="printablediv">
 	<center>
 	<table class="table" style="width:50%;">
-	<label style="font-size:25px;">KUPAL.</label>
+	<label style="font-size:25px;">Sneakers Street</label>
 	<label style="font-size:20px;">Official Receipt</label>
 		<tr>
 			<th><h5>Quantity</h5></th>

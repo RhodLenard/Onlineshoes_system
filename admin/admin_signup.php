@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Admin Sign Up - Sneakers Street</title>
+    <link rel="icon" href="../images/logo.jpg">
     <link rel="stylesheet" type="text/css" href="../css/style.css" media="all">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <script src="../js/bootstrap.js"></script>
@@ -46,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
   border: 1px solid #e0e0e0; /* Light border for subtle definition */
   text-align: center; /* Center-align text */
+  margin-top:30%;
 }
 
 /* Legend (Adminstrator text) */

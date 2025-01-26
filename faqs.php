@@ -6,7 +6,7 @@
 <html>
 <head>
 	<title>Sneakers Street</title>
-	<link rel="icon" href="img/logo.jpg" />
+	<link rel="icon" href="images/logo.jpg" />
 	<link rel = "stylesheet" type = "text/css" href="css/style.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<script src="js/bootstrap.js"></script>
@@ -98,17 +98,17 @@
 		<div id="content" style="margin-bottom: 17.7%;">
 			<legend>Frequently Added Questions</legend>
 
-				 <h4>DO YOU SHIP?</h4>
-					<p style="text-indent:60px;">Yes, we ship the products via LBC and 2GO only.</p>
+				  <h4>DO YOU SHIP?</h4>
+					<p style="text-indent:60px;">Yes, we ship the products via Lalamove and TokTok only.</p>
 				<hr>
 					<h4>DO YOU DELIVER?</h4>
 						<p style="text-indent:60px;">No, We only offer Shipping.</p>
 				<hr>
-					<h4>WHEN WILL I GET MY ORDERS?</h4>
+					<h3>WHEN WILL I GET MY ORDERS?</h3>
 						<p style="text-indent:60px;">We wil ship your product 2-3 days around Negros Occidental and It will take 4-6 days Nationwide.</p>
 				<hr>
-					<h4>HOW DO I PAY MY ORDERS?</h4>
-					<p style="text-indent:60px;">Through PAYPAL basis only.</p>
+					<h3>HOW DO I PAY MY ORDERS?</h3>
+					<p style="text-indent:60px;">Through Gcash/Card/Cash.</p>
 
 		</div>
 	<br />

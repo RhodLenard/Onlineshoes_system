@@ -6,6 +6,7 @@
 <html>
 <head>
 	<title>Sneakers Street</title>
+	<link rel="icon" href="images/logo.jpg" />
 	<link rel = "stylesheet" type = "text/css" href="css/style.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<script src="js/bootstrap.js"></script>

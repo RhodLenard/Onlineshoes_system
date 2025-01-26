@@ -6,7 +6,7 @@
 <html>
 <head>
 	<title>Sneakers Street</title>
-	<link rel="icon" href="img/logo.jpg" />
+	<link rel="icon" href="images/logo.jpg" />
 	<link rel = "stylesheet" type = "text/css" href="css/style.css" media="all">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<script src="js/bootstrap.js"></script>
@@ -122,14 +122,14 @@
 		</ul>
 	</div>
 
-	<div id="content">
+	<div id="content"  style="margin-bottom: 44.9%;">>
 		<br />
 		<br />
-		<div id="product" style="margin-bottom: 41%;">
+		<div id="product">
 
 			<?php
 
-$query = $conn->query("SELECT * FROM product WHERE category='feature' ORDER BY product_id DESC") or die(mysqli_error());
+$query = $conn->query("SELECT * FROM product WHERE category='running' ORDER BY product_id DESC") or die(mysqli_error());
 
 $all_out_of_stock = true; // Assume all products are out of stock initially
 

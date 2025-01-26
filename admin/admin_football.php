@@ -72,6 +72,7 @@ if (isset($_POST['add'])) {
 <html>
 <head>
     <title>Sneakers Street</title>
+    <link rel="icon" href="../images/logo.jpg">
     <link rel="stylesheet" type="text/css" href="../css/style.css" media="all">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <script src="../js/bootstrap.js"></script>
@@ -157,7 +158,7 @@ if (isset($_POST['add'])) {
 </head>
 <body style="display:unset;">
     <div id="header" style="position:fixed;">
-        <img src="../img/logo.jpg">
+        <img src="../images/logo.jpg">
         <label>Sneakers Street</label>
 
         <?php
@@ -262,7 +263,7 @@ if (isset($_POST['add'])) {
     </div>
 
     <div id="rightcontent">
-        <div class="alert alert-info"><center><h2>Football</h2></center></div>
+        <div class="alert alert-info"><center><h2>Sneakers</h2></center></div>
         <br />
         <label  style="padding:5px; float:right;"><input type="text" name="filter" placeholder="Search Product here..." id="filter"></label>
         <br />
