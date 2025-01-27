@@ -7,188 +7,336 @@
 <head>
 	<title>Sneakers Street</title>
 	<link rel="icon" href="images/logo.jpg" />
-	<link rel = "stylesheet" type = "text/css" href="css/style.css" media="all">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<script src="js/bootstrap.js"></script>
-	<script src="js/jquery-1.7.2.min.js"></script>
-	<script src="js/carousel.js"></script>
-	<script src="js/button.js"></script>
-	<script src="js/dropdown.js"></script>
-	<script src="js/tab.js"></script>
-	<script src="js/tooltip.js"></script>
-	<script src="js/popover.js"></script>
-	<script src="js/collapse.js"></script>
-	<script src="js/modal.js"></script>
-	<script src="js/scrollspy.js"></script>
-	<script src="js/alert.js"></script>
-	<script src="js/transition.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<style>
+        /* General Styles */
+        html, body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Ensure full height */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Minimum height to fill the viewport */
+        }
+
+        #header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #header img {
+            height: 50px;
+            vertical-align: middle;
+        }
+
+        #header label {
+            font-size: 24px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        #header ul {
+            list-style: none;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            padding: 0;
+        }
+
+        #header ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+        }
+
+        #header ul li a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: #fff;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        #header ul li a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        #container {
+            flex: 1; /* Expand to fill remaining space */
+            padding: 20px;
+        }
+
+        .nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav ul li {
+            position: relative;
+        }
+
+        .nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background-color: rgb(0, 0, 0);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav ul li a:hover::after,
+        .nav ul li a:focus::after {
+            transform: scaleX(1);
+        }
+
+        #content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        #product {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+				.float {
+    margin: 10px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Required for absolute positioning of the cart icon */
+}
+
+.float:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.float img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.float h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.float p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #007bff;
+}
+
+.float a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Cart Icon */
+.cart-icon {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 50%; /* Circular shape */
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cart-icon:hover {
+    background-color: rgba(255, 255, 255, 1); /* Solid background on hover */
+}
+
+.cart-icon img {
+    width: 24px; /* Adjust icon size */
+    height: 24px; /* Adjust icon size */
+}
+
+        #footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto; /* Ensures footer stays at the bottom */
+        }
+
+        #footer .foot, #footer #develop {
+            margin: 10px 0;
+        }
+
+        #develop ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+				.nav1 {
+    text-align: center;
+    padding: 30px 0; /* Increase padding for more spacing */
+}
+
+.nav1 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    gap: 25px; /* Add gap for better spacing between links */
+}
+
+.nav1 ul li {
+    margin: 0; /* Removed redundant margin */
+}
+
+.nav1 ul li a {
+    text-decoration: none;
+    color: #111;
+    font-size: 18px; /* Increase font size */
+    font-weight: bold; /* Make the text bolder */
+    position: relative;
+    padding-bottom: 8px; /* Add extra padding for clickable area */
+}
+
+.nav1 ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px; /* Increase underline thickness */
+    background-color: #111;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav1 ul li a:hover::after,
+.nav1 ul li a.active::after {
+    width: 100%; /* Expand underline to full width */
+    left: 0; /* Align underline with the link text */
+}
+
+
+    </style>
 </head>
 <body>
-	<div id="header">
-	<img src="images/logo.jpg">
-		<label>Sneakers Street</label>
-			<ul>
-				<li><a href="#signup"   data-toggle="modal">Sign Up</a></li>
-				<li><a href="#login"   data-toggle="modal">Login</a></li>
-			</ul>
-	</div>
-		<div id="login" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:400px;">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-				<h3 id="myModalLabel">Login...</h3>
-			</div>
-				<div class="modal-body">
-					<form method="post">
-					<center>
-						<input type="email" name="email" placeholder="Email" style="width:250px;">
-						<input type="password" name="password" placeholder="Password" style="width:250px;">
-					</center>
-				</div>
-			<div class="modal-footer">
-				<input class="btn btn-primary" type="submit" name="login" value="Login">
-				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
-					</form>
-			</div>
-		</div>
-
-		<div id="login1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:400px;">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-				<h3 id="myModalLabel">Please login before purchasing...</h3>
-			</div>
-				<div class="modal-body">
-					<form method="post">
-					<center>
-						<input type="email" name="email" placeholder="Email" style="width:250px;">
-						<input type="password" name="password" placeholder="Password" style="width:250px;">
-					</center>
-				</div>
-			<div class="modal-footer">
-				<p style="float:left;">No account? <a href="#signup" data-toggle="modal">Sign up here!</a></p>
-				<input class="btn btn-primary" type="submit" name="login" value="Login">
-				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
-					</form>
-			</div>
-		</div>
-
-		<div id="signup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:700px;">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-					<h3 id="myModalLabel">Sign Up Here...</h3>
-				</div>
-					<div class="modal-body">
-						<center>
-					<form method="post">
-						<input type="text" name="firstname" placeholder="Firstname" required>
-						<input type="text" name="mi" placeholder="Middle Initial" maxlength="1" required>
-						<input type="text" name="lastname" placeholder="Lastname" required>
-						<input type="text" name="address" placeholder="Address" style="width:430px;"required>
-						<input type="text" name="country" placeholder="Province" required >
-						<input type="text" name="zipcode" placeholder="ZIP Code" required maxlength="4">
-						<input type="text" name="mobile" placeholder="Mobile Number" maxlength="11">
-						<input type="text" name="telephone" placeholder="Telephone Number" maxlength="8">
-						<input type="email" name="email" placeholder="Email" required>
-						<input type="password" name="password" placeholder="Password" required>
-						</center>
-					</div>
-				<div class="modal-footer">
-					<input type="submit" class="btn btn-primary" name="signup" value="Sign Up">
-					<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
-				</div>
-					</form>
-			</div>
-	<br>
-<div id="container">
-	<div class="nav">
-
-			 <ul>
-				<li><a href="index.php"><i class="icon-home"></i>Home</a></li>
-				<li><a href="product.php"><i class="icon-th-list"></i>Product</a>
-				<li><a href="aboutus.php"><i class="icon-bookmark"></i>About Us</a></li>
-				<li><a href="contactus.php"><i class="icon-inbox"></i>Contact Us</a></li>
-				<li><a href="privacy.php"><i class="icon-info-sign"></i>Privacy Policy</a></li>
-				<li><a href="faqs.php"><i class="icon-question-sign"></i>FAQs</a></li>
-			</ul>
-	</div>
-
-	<div class="nav1">
-		<ul>
-			<li><a href="product.php">Basketball</a></li>
-			<li>|</li>
-			<li><a href="football.php" >Sneakers</a></li>
-			<li>|</li>
-			<li><a href="running.php" class="active" style="color:#111;">Running</a></li>
-		</ul>
-	</div>
-
-	<div id="content"  style="margin-bottom: 44.9%;">>
-		<br />
-		<br />
-		<div id="product">
-
-			<?php
-
-$query = $conn->query("SELECT * FROM product WHERE category='running' ORDER BY product_id DESC") or die(mysqli_error());
-
-$all_out_of_stock = true; // Assume all products are out of stock initially
-
-while ($fetch = $query->fetch_array()) {
-    $pid = $fetch['product_id'];
-
-    // Fetch stock information for the product
-    $query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die(mysqli_error());
-    $rows = $query1->fetch_array();
-
-    // Check if stock data exists and quantity is greater than 0
-    if ($rows && isset($rows['qty']) && $rows['qty'] > 0) {
-        $all_out_of_stock = false; // At least one product is in stock
-
-        // Display the product if it's in stock
-        echo "<div class='float'>";
-        echo "<center>";
-        echo "<a href='details.php?id=" . $fetch['product_id'] . "'><img class='img-polaroid' src='photo/" . $fetch['product_image'] . "' height='300px' width='300px'></a>";
-        echo "" . $fetch['product_name'] . "";
-        echo "<br />";
-        echo "P " . $fetch['product_price'] . "";
-        echo "<br />";
-        echo "</center>";
-        echo "</div>";
-    }
-}
-
-// If all products are out of stock, display a single "No Stock" message in the center
-if ($all_out_of_stock) {
-    echo "<div style='text-align: center; margin-top: 20px;'>";
-    echo "<span style='color: red; font-weight: bold; font-size: 18px;'>No Stock</span>";
-    echo "</div>";
-}
-			?>
-		</div>
-	</div>
-
-
-
-
-
-	<br />
-</div>
-<br />
-<div id="footer">
-    <div class="foot">
-        <label style="font-size:17px;"> Copyright &copy; </label>
-        <p style="font-size:25px;">Sneakers Street Inc. 2025  </p>
-    </div>
-
-    <div id="develop">
-        <h4>Developed By:</h4>
-        <ul style="list-style-type: none; /* Removes the bullets */">
-            <li>JHARIL JACINTO PINPIN</li>
-						<li>JONATHS URAGA</li>
-						<li>JOSHUA MUSNGI</li>
-						<li>TALLE TUBIG</li>
+    <div id="header">
+        <img src="images/logo.jpg">
+        <label>Sneakers Street</label>
+        <ul>
+            <li><a href="login.php">Login</a></li>
+            <li><a href="signup.php">Sign Up</a></li>
         </ul>
     </div>
-</div>
+
+		
+    <div id="container">
+        <div class="nav">
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="product.php">Product</a></li>
+                <li><a href="aboutus.php">About Us</a></li>
+                <li><a href="contactus.php">Contact Us</a></li>
+                <li><a href="privacy.php">Privacy Policy</a></li>
+                <li><a href="faqs.php">FAQs</a></li>
+            </ul>
+        </div>
+
+				
+				<div class="nav1">
+						<ul>
+								<li><a href="product.php">Basketball</a></li>
+								<li><a href="football.php">Sneakers</a></li>
+								<li><a href="running.php" class="active">Running</a></li>
+						</ul>
+				</div>
+
+				
+        <div id="content">
+            <div id="product">
+                <?php
+                   $query = $conn->query("SELECT * FROM product WHERE category='running' ORDER BY product_id DESC") or die(mysqli_error());
+
+                   $all_out_of_stock = true; 
+                   
+                   while ($fetch = $query->fetch_array()) {
+                       $pid = $fetch['product_id'];
+                       $query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die(mysqli_error());
+                       $rows = $query1->fetch_array();
+                       if ($rows && isset($rows['qty']) && $rows['qty'] > 0) {
+                           $all_out_of_stock = false;
+													 echo "<div class='float'>";
+													 echo "<a href='running.php?id=" . $fetch['product_id'] . "'>";
+													 echo "<img src='photo/" . $fetch['product_image'] . "' alt='" . $fetch['product_name'] . "'>";
+													 echo "<div class='cart-icon' onclick='addToCart(" . $fetch['product_id'] . ")'>";
+													 echo "<img src='images/shopping-cart.png' alt='Add to Cart'>"; // Replace with your cart icon
+													 echo "</div>";
+													 echo "<h3>" . $fetch['product_name'] . "</h3>";
+													 echo "<p>P " . $fetch['product_price'] . "</p>";
+													 echo "</a>";
+													 echo "</div>";
+                       }
+                   }
+                   if ($all_out_of_stock) {
+                       echo "<div style='text-align: center; margin-top: 20px;'>";
+                       echo "<span style='color: red; font-weight: bold; font-size: 18px;'>No Stock</span>";
+                       echo "</div>";
+                   }
+                ?>
+            </div>
+        </div>
+    </div>
+
+		<div style="padding: 20px;">
+    <div id="footer">
+        <div class="foot">
+            <label style="font-size:17px;"> Copyright &copy; </label>
+            <p style="font-size:25px;">Sneakers Street Inc. 2025</p>
+        </div>
+        <div id="develop">
+            <h4>Developed By:</h4>
+            <ul>
+                <li>JHARIL JACINTO PINPIN</li>
+                <li>JONATHS URAGA</li>
+                <li>JOSHUA MUSNGI</li>
+                <li>TALLE TUBIG</li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

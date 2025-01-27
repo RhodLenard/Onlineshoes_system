@@ -27,10 +27,7 @@ if (isset($_POST['signup'])) {
                 VALUES ('$firstname', '$mi', '$lastname', '$address', '$country', '$zipcode', '$mobile', '$telephone', '$email', '$password')";
 
         if ($conn->query($sql) === TRUE) {
-            $_SESSION['signup_message'] = "Signup successful!";
-            // Redirect to login.php after successful signup
-            header("Location: login.php");
-            exit(); // Ensure no further code is executed after redirection
+            $_SESSION['signup_message'] = "Signup successful! Redirecting to login page...";
         } else {
             $_SESSION['signup_message'] = "Error: " . $conn->error;
         }
@@ -46,6 +43,14 @@ if (isset($_POST['signup'])) {
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <script>
+        // JavaScript to handle redirection after 2 seconds
+        function redirectToLogin() {
+            setTimeout(function() {
+                window.location.href = "login.php";
+            }, 2000); // 2000 milliseconds = 2 seconds
+        }
+    </script>
     <style>
         /* General Styles */
         body {
@@ -189,7 +194,7 @@ if (isset($_POST['signup'])) {
     </style>
 </head>
 <body>
-    <div id="header">
+<div id="header">
         <img src="images/logo.jpg" alt="Logo">
         <label>Sneakers Street</label>
     </div>
@@ -204,6 +209,11 @@ if (isset($_POST['signup'])) {
                     $message_class = strpos($_SESSION['signup_message'], 'success') !== false ? 'success' : 'error';
                     echo '<div class="message ' . $message_class . '">' . $_SESSION['signup_message'] . '</div>';
                     unset($_SESSION['signup_message']); // Clear the message after displaying it
+
+                    // If the message is a success message, trigger the redirection
+                    if ($message_class === 'success') {
+                        echo '<script>redirectToLogin();</script>';
+                    }
                 }
                 ?>
                 <form method="POST" action="">
@@ -234,8 +244,9 @@ if (isset($_POST['signup'])) {
                 </div>
             </div>
         </div>
+    </div>
     
-
+    <div style="padding:20px">
     <div id="footer">
         <div>&copy; Sneakers Street Inc. 2025</div>
         <div>

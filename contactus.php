@@ -7,78 +7,321 @@
 <head>
 	<title>Sneakers Street</title>
 	<link rel="icon" href="images/logo.jpg" />
-	<link rel = "stylesheet" type = "text/css" href="css/style.css" media="all">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<script src="js/bootstrap.js"></script>
-	<script src="js/jquery-1.7.2.min.js"></script>
-	<script src="js/carousel.js"></script>
-	<script src="js/button.js"></script>
-	<script src="js/dropdown.js"></script>
-	<script src="js/tab.js"></script>
-	<script src="js/tooltip.js"></script>
-	<script src="js/popover.js"></script>
-	<script src="js/collapse.js"></script>
-	<script src="js/modal.js"></script>
-	<script src="js/scrollspy.js"></script>
-	<script src="js/alert.js"></script>
-	<script src="js/transition.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<style>
+		html, body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Ensure full height */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Minimum height to fill the viewport */
+        }
+
+        #header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #header img {
+            height: 50px;
+            vertical-align: middle;
+        }
+
+        #header label {
+            font-size: 24px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        #header ul {
+            list-style: none;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 30px;
+            padding: 0;
+        }
+
+        #header ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+        }
+
+        #header ul li a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: #fff;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        #header ul li a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        #container {
+            flex: 1; /* Expand to fill remaining space */
+            padding: 20px;
+        }
+
+        .nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav ul li {
+            position: relative;
+        }
+
+        .nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background-color: rgb(0, 0, 0);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav ul li a:hover::after,
+        .nav ul li a:focus::after {
+            transform: scaleX(1);
+        }
+
+        #content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        #product {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+				.float {
+    margin: 10px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Required for absolute positioning of the cart icon */
+}
+
+.float:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.float img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.float h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.float p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #007bff;
+}
+
+.float a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Cart Icon */
+.cart-icon {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    border-radius: 50%; /* Circular shape */
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cart-icon:hover {
+    background-color: rgba(255, 255, 255, 1); /* Solid background on hover */
+}
+
+.cart-icon img {
+    width: 24px; /* Adjust icon size */
+    height: 24px; /* Adjust icon size */
+}
+
+        #footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto; /* Ensures footer stays at the bottom */
+        }
+
+        #footer .foot, #footer #develop {
+            margin: 10px 0;
+        }
+
+        #develop ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+				.nav1 {
+    text-align: center;
+    padding: 30px 0; /* Increase padding for more spacing */
+}
+
+.nav1 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    gap: 25px; /* Add gap for better spacing between links */
+}
+
+.nav1 ul li {
+    margin: 0; /* Removed redundant margin */
+}
+
+.nav1 ul li a {
+    text-decoration: none;
+    color: #111;
+    font-size: 18px; /* Increase font size */
+    font-weight: bold; /* Make the text bolder */
+    position: relative;
+    padding-bottom: 8px; /* Add extra padding for clickable area */
+}
+
+.nav1 ul li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px; /* Increase underline thickness */
+    background-color: #111;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav1 ul li a:hover::after,
+.nav1 ul li a.active::after {
+    width: 100%; /* Expand underline to full width */
+    left: 0; /* Align underline with the link text */
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between links */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* General Social Link Styling */
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 50px; /* Rounded corners */
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Hover Effect */
+.social-link:hover {
+    transform: translateY(-5px); /* Lift the button on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Gmail Link Styling */
+.social-link.email {
+    background: linear-gradient(135deg, #dd4b39, #c23321); /* Gradient background */
+}
+
+.social-link.email:hover {
+    background: linear-gradient(135deg, #c23321, #dd4b39); /* Reverse gradient on hover */
+}
+
+/* Facebook Link Styling */
+.social-link.facebook {
+    background: linear-gradient(135deg, #3b5998, #2d4373); /* Gradient background */
+}
+
+.social-link.facebook:hover {
+    background: linear-gradient(135deg, #2d4373, #3b5998); /* Reverse gradient on hover */
+}
+
+/* Instagram Link Styling */
+.social-link.instagram {
+    background: linear-gradient(135deg, #e4405f, #c13584); /* Gradient background */
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(135deg, #c13584, #e4405f); /* Reverse gradient on hover */
+}
+
+/* Icon Styling */
+.social-link i {
+    margin-right: 8px; /* Space between icon and text */
+    font-size: 18px; /* Slightly larger icon */
+}
+
+	</style>
 </head>
 <body>
 	<div id="header">
-	<img src="images/logo.jpg">
-		<label>Sneakers Street</label>
-			<ul>
-				<li><a href="#signup"   data-toggle="modal">Sign Up</a></li>
-				<li><a href="#login"   data-toggle="modal">Login</a></li>
-			</ul>
-	</div>
-
-	<div id="login" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:400px;">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-				<h3 id="myModalLabel">Login...</h3>
-			</div>
-				<div class="modal-body">
-					<form method="post">
-					<center>
-						<input type="email" name="email" placeholder="Email" style="width:250px;">
-						<input type="password" name="password" placeholder="Password" style="width:250px;">
-					</center>
-				</div>
-			<div class="modal-footer">
-				<input class="btn btn-primary" type="submit" name="login" value="Login">
-				<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
-					</form>
-			</div>
-		</div>
-
-	<div id="signup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:700px;">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-					<h3 id="myModalLabel">Sign Up Here...</h3>
-				</div>
-					<div class="modal-body">
-						<center>
-					<form method="post">
-						<input type="text" name="firstname" placeholder="Firstname" required>
-						<input type="text" name="mi" placeholder="Middle Initial" maxlength="1" required>
-						<input type="text" name="lastname" placeholder="Lastname" required>
-						<input type="text" name="address" placeholder="Address" style="width:430px;"required>
-						<input type="text" name="country" placeholder="Province" required>
-						<input type="text" name="zipcode" placeholder="ZIP Code" required maxlength="4">
-						<input type="text" name="mobile" placeholder="Mobile Number" maxlength="11">
-						<input type="text" name="telephone" placeholder="Telephone Number" maxlength="8">
-						<input type="email" name="email" placeholder="Email" required>
-						<input type="password" name="password" placeholder="Password" required>
-						</center>
-					</div>
-				<div class="modal-footer">
-					<input type="submit" class="btn btn-primary" name="signup" value="Sign Up">
-					<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
-				</div>
-					</form>
-			</div>
+        <img src="images/logo.jpg">
+        <label>Sneakers Street</label>
+        <ul>
+            <li><a href="login.php">Login</a></li>
+            <li><a href="signup.php">Sign Up</a></li>
+        </ul>
+    </div>
+		
 
 	<br>
 <div id="container">
@@ -93,40 +336,31 @@
 			</ul>
 	</div>
 
+
+	<div style="display: flex; justify-content:center; align-items:center; min-height:35vh;">
 		<img src="img/contactus.jpg" style="width:1150px; height:250px; border:1px solid #000; ">
-	<br />
-	<br />
+	</div>
 
-		<div id="content">
-			<form method="post">
-				<table style="position:relative; left:25%;">
-					<tr>
-						<td style="font-size:20px;">Email:</td><td><input type="email" name="email" placeholder="Email" style="width:400px;"></td>
-					</tr>
-					<tr>
-						<td style="font-size:20px;">Message:</td><td><textarea name="message" style="width:400px; height:300px;" required></textarea></td>
-					</tr>
-					<tr>
-						<td></td><td><button class="btn btn-info" name="send" style="width:300px;"><i class="icon icon-ok icon-white"></i>Submit</button>&nbsp;<a href="index.php"><button class="btn btn-danger" style="width:110px;"><i class="icon icon-remove icon-white"></i>Cancel</button></a></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-		<?php
-
-
-			if(isset($POST['send']));
-			{
-				@$email = $_POST['email'];
-				@$message = $_POST['message'];
-
-				$conn->query ("INSERT INTO `contact` (email, message) VALUES ('$email', '$message')") or die (mysqli_error());
-			}
-		?>
-
-	<br />
+						<div id="content">
+							<div class="modern-contact-links">
+									<h2>Contact Us</h2>
+									<p>Feel free to reach out through the following platforms:</p>
+									<div class="social-links">
+											<a href="sneakersstreets@gmail.com" class="social-link email">
+													<i class="fas fa-envelope"></i> Gmail
+											</a>
+											<a href="https://facebook.com/your-profile" target="_blank" class="social-link facebook">
+													<i class="fab fa-facebook"></i> Facebook
+											</a>
+											<a href="https://instagram.com/your-profile" target="_blank" class="social-link instagram">
+													<i class="fab fa-instagram"></i> Instagram
+											</a>
+									</div>
+							</div>
+					</div>
 </div>
-	<br />
+
+	<div style="padding: 20px;">
 	<div id="footer">
     <div class="foot">
         <label style="font-size:17px;"> Copyright &copy; </label>

@@ -33,21 +33,37 @@
         }
 
         #header ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            text-align: right;
-        }
+    list-style: none; /* Remove default list styling */
+    margin: 0 0 0 auto; /* Push the ul to the right */
+    display: flex; /* Display list items horizontally */
+    justify-content: flex-end; /* Align links to the end (right) */
+    gap: 30px; /* Increase space between the links */
+    background-color: #333; /* Add a background color */
+    border-radius: 5px; /* Add rounded corners */
+}
 
-        #header ul li {
-            display: inline;
-            margin: 0 10px;
-        }
+#header ul li a {
+    color: #fff; /* Set link color to white */
+    text-decoration: none; /* Remove default underline */
+    font-weight: bold; /* Make the text bold */
+    position: relative; /* Required for pseudo-element positioning */
+}
 
-        #header ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
+#header ul li a::after {
+    content: ''; /* Required for pseudo-element */
+    position: absolute; /* Position relative to the link */
+    left: 50%; /* Start from the middle */
+    bottom: -5px; /* Position below the text */
+    width: 0; /* Start with no width */
+    height: 2px; /* Thickness of the underline */
+    background-color: #fff; /* Color of the underline */
+    transition: width 0.3s ease, left 0.3s ease; /* Smooth transition */
+}
+
+#header ul li a:hover::after {
+    width: 100%; /* Expand to full width */
+    left: 0; /* Move to the left edge */
+}
 
         #container {
             padding: 20px;
