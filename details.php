@@ -25,7 +25,113 @@ include("function/paypal.php");
     <script src="js/alert.js"></script>
     <script src="js/transition.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <style>
+        .modal {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #f5f5f5;
+}
+
+.modal.hide {
+    display: none;
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    border-bottom: 1px solid #444;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.modal-header .close {
+    color: #fff;
+    opacity: 0.8;
+    font-size: 20px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-header .close:hover {
+    opacity: 1;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.modal-body input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+}
+
+.modal-body input::placeholder {
+    color: #999;
+}
+
+/* Modal Footer */
+.modal-footer {
+    padding: 15px;
+    background-color: #333;
+    border-top: 1px solid #444;
+    text-align: right;
+}
+
+.modal-footer .btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.modal-footer .btn-primary {
+    background-color: #555;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #666;
+}
+
+.modal-footer .btn-danger {
+    background-color: #777;
+    color: #fff;
+    border: 1px solid #666;
+}
+
+.modal-footer .btn-danger:hover {
+    background-color: #888;
+}
+
+/* Center Align for Inputs */
+.center {
+    text-align: center;
+}
+    </style>
+
 </head>
+
+
 <body>
 <div id="header">
   <img src="images/logo.jpg">

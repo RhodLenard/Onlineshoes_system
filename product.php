@@ -128,37 +128,42 @@
 		<br />
 		<div id="product" style="margin-bottom: 44.9%;">
 
-			<?php
-			include ('function/addcart.php');
+		<?php
+                   $query = $conn->query("SELECT * FROM product WHERE category='basketball' ORDER BY product_id DESC") or die(mysqli_error());
 
-				$query = $conn->query("SELECT *FROM product WHERE category='basketball' ORDER BY product_id DESC") or die (mysqli_error());
-
-					while($fetch = $query->fetch_array())
-						{
-
-						$pid = $fetch['product_id'];
-
-						$query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die (mysqli_error());
-						$rows = $query1->fetch_array();
-
-						$qty = $rows['qty'];
-						if($qty <= 0){
-
-						}else{
-							echo "<div class='float'>";
-							echo "<center>";
-							echo "<a href='details.php?id=".$fetch['product_id']."'><img class='img-polaroid' src='photo/".$fetch['product_image']."' height = '300px' width = '300px'></a>";
-							echo "".$fetch['product_name']."";
-							echo "<br />";
-							echo "P ".$fetch['product_price']."";
-							echo "<br />";
-							echo "<h3 class='text-info' style='position:absolute; margin-top:-90px; text-indent:15px;'></h3>";
-							echo "</center>";
-							echo "</div>";
-						}
-
-						}
-			?>
+                   $all_out_of_stock = true; // Assume all products are out of stock initially
+                   
+                   while ($fetch = $query->fetch_array()) {
+                       $pid = $fetch['product_id'];
+                   
+                       // Fetch stock information for the product
+                       $query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die(mysqli_error());
+                       $rows = $query1->fetch_array();
+                   
+                       // Check if stock data exists and quantity is greater than 0
+                       if ($rows && isset($rows['qty']) && $rows['qty'] > 0) {
+                           $all_out_of_stock = false; // At least one product is in stock
+                   
+                           // Display the product if it's in stock
+                           echo "<div class='float'>";
+                           echo "<center>";
+                           echo "<a href='details.php?id=" . $fetch['product_id'] . "'><img class='img-polaroid' src='photo/" . $fetch['product_image'] . "' height='300px' width='300px'></a>";
+                           echo "" . $fetch['product_name'] . "";
+                           echo "<br />";
+                           echo "P " . $fetch['product_price'] . "";
+                           echo "<br />";
+                           echo "</center>";
+                           echo "</div>";
+                       }
+                   }
+                   
+                   // If all products are out of stock, display a single "No Stock" message in the center
+                   if ($all_out_of_stock) {
+                       echo "<div style='text-align: center; margin-top: 20px;'>";
+                       echo "<span style='color: red; font-weight: bold; font-size: 18px;'>No Stock</span>";
+                       echo "</div>";
+                   }
+                    ?>
 		</div>
 	</div>
 
