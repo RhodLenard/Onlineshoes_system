@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("db/dbconn.php");
 require_once('vendor/autoload.php');
 

@@ -66,9 +66,8 @@ if (isset($_POST['login'])) {
                 $transaction = $query->fetch_assoc();
                 $transaction_id = (int)$transaction['transaction_id'];
 
-                if (!isset($_SESSION['cart'])) {
-                    $_SESSION['cart'] = [];
-                }
+                // ✅ Fix: Reset session cart before loading new data
+                $_SESSION['cart'] = [];
 
                 // Fetch items from transaction_detail
                 $cart_query = $conn->query("
@@ -80,15 +79,12 @@ if (isset($_POST['login'])) {
                 while ($row = $cart_query->fetch_assoc()) {
                     $compositeKey = $row['product_id'] . '_' . $row['product_size'];
 
-                    if (isset($_SESSION['cart'][$compositeKey])) {
-                        $_SESSION['cart'][$compositeKey]['quantity'] += $row['quantity'];
-                    } else {
-                        $_SESSION['cart'][$compositeKey] = [
-                            'product_id' => $row['product_id'],
-                            'size' => $row['product_size'],
-                            'quantity' => $row['quantity']
-                        ];
-                    }
+                    // Add product to session cart (No Duplicates)
+                    $_SESSION['cart'][$compositeKey] = [
+                        'product_id' => $row['product_id'],
+                        'size' => $row['product_size'],
+                        'quantity' => $row['quantity']
+                    ];
                 }
             }
 
@@ -103,24 +99,41 @@ if (isset($_POST['login'])) {
                     $transaction_id = $conn->insert_id;
                 }
 
-                $conn->query("
-                    INSERT INTO transaction_detail (transaction_id, product_id, quantity, product_size) 
-                    VALUES ($transaction_id, $productId, 1, '$size') 
-                    ON DUPLICATE KEY UPDATE quantity = quantity + 1
-                ") or die(mysqli_error($conn));
+                // ✅ Fix: Prevent duplicate pending items
+                $check_pending = $conn->query("
+    SELECT quantity FROM transaction_detail 
+    WHERE transaction_id = $transaction_id AND product_id = $productId AND product_size = '$size'
+");
 
-                $compositeKey = $productId . '_' . $size;
-                if (isset($_SESSION['cart'][$compositeKey])) {
-                    $_SESSION['cart'][$compositeKey]['quantity'] += 1;
-                } else {
+                if ($check_pending->num_rows == 0) {
+                    // If item does not exist, insert a new one
+                    $conn->query("
+        INSERT INTO transaction_detail (transaction_id, product_id, quantity, product_size) 
+        VALUES ($transaction_id, $productId, 1, '$size')
+    ") or die(mysqli_error($conn));
+
+                    $compositeKey = $productId . '_' . $size;
                     $_SESSION['cart'][$compositeKey] = [
                         'product_id' => $productId,
                         'size' => $size,
                         'quantity' => 1
                     ];
+                } else {
+                    // If item exists, update the quantity
+                    $current_quantity = $check_pending->fetch_assoc()['quantity'];
+                    $new_quantity = $current_quantity + 1;
+
+                    $conn->query("
+        UPDATE transaction_detail 
+        SET quantity = $new_quantity 
+        WHERE transaction_id = $transaction_id AND product_id = $productId AND product_size = '$size'
+    ") or die(mysqli_error($conn));
+
+                    $compositeKey = $productId . '_' . $size;
+                    $_SESSION['cart'][$compositeKey]['quantity'] = $new_quantity;
                 }
 
-                $redirectPage = "cart.php"; // Change redirect to cart if an item was added
+                $redirectPage = "cart.php"; // Redirect to cart if an item was added
             }
 
             // ✅ Step 3: Show Loading Animation & Redirect

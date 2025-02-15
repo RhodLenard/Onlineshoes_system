@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("function/session.php");
 include("db/dbconn.php");
 
 // Check if payment confirmation is submitted
@@ -22,8 +22,8 @@ $secret_key = 'sk_test_s3CLTLvzgsZRPjvzmPNCeMaT'; // Replace with your actual se
 
 // Handle GCash Payment
 if ($payment_method === 'GCash') {
-    $success_url = 'https://61e8-27-49-8-118.ngrok-free.app/onlshoe/success.php?tid=' . $transaction_id;
-    $failed_url = 'https://61e8-27-49-8-118.ngrok-free.app/onlshoe/failed.php?tid=' . $transaction_id;
+    $success_url = 'https://0729-27-49-8-118.ngrok-free.app/onlshoe/success.php?tid=' . $transaction_id;
+    $failed_url = 'https://0729-27-49-8-118.ngrok-free.app/onlshoe/failed.php?tid=' . $transaction_id;
 
     $payload = [
         'data' => [
@@ -86,8 +86,8 @@ if ($payment_method === 'GCash') {
 // Handle Card Payment
 if ($payment_method === 'Card') {
     // Step 1: Create a Checkout Session
-    $success_url = 'https://61e8-27-49-8-118.ngrok-free.app/onlshoe/success.php?tid=' . $transaction_id;
-    $failed_url = 'https://61e8-27-49-8-118.ngrok-free.app/onlshoe/failed.php?tid=' . $transaction_id;
+    $success_url = 'https://0729-27-49-8-118.ngrok-free.app/onlshoe/success.php?tid=' . $transaction_id;
+    $failed_url = 'https://0729-27-49-8-118.ngrok-free.app/onlshoe/failed.php?tid=' . $transaction_id;
 
     $payload = [
         'data' => [

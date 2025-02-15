@@ -32,3 +32,23 @@ echo $undefined_variable; // This should trigger a Notice[26-Jan-2025 02:48:31 U
 [26-Jan-2025 03:10:37 UTC] PHP Warning:  include(): Failed opening 'db/dbconn.php' for inclusion (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/u858065112/domains/sneakersstreets.com/public_html/function/customer_signup.php on line 3
 Error: cURL error 60: SSL certificate problem: self-signed certificate in certificate chain (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.paymongo.com/v1/webhooks
 Error: cURL error 60: SSL certificate problem: self-signed certificate in certificate chain (see https://curl.haxx.se/libcurl/c/libcurl-errors.html) for https://api.paymongo.com/v1/webhooks
+Error: Client error: `POST https://api.paymongo.com/v1/webhooks` resulted in a `400 Bad Request` response:
+{"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer" (truncated...)
+
+Response Status: 400
+Response Body: {"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer":"events","attribute":"events"}}]}
+Error: Client error: `POST https://api.paymongo.com/v1/webhooks` resulted in a `400 Bad Request` response:
+{"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer" (truncated...)
+
+Response Status: 400
+Response Body: {"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer":"events","attribute":"events"}}]}
+Error: Client error: `POST https://api.paymongo.com/v1/webhooks` resulted in a `400 Bad Request` response:
+{"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer" (truncated...)
+
+Response Status: 400
+Response Body: {"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer":"events","attribute":"events"}}]}
+Error: Client error: `POST https://api.paymongo.com/v1/webhooks` resulted in a `400 Bad Request` response:
+{"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer" (truncated...)
+
+Response Status: 400
+Response Body: {"errors":[{"code":"parameter_invalid","detail":"payment_intent.succeeded is an invalid event type.","source":{"pointer":"events","attribute":"events"}}]}

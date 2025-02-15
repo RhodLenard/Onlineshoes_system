@@ -17,6 +17,57 @@ include("db/dbconn.php"); // Database connection
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/newstyle.css">
+    <script>
+        function toggleSizeGuide() {
+            var guide = document.getElementById("size-guide");
+            if (guide.style.display === "none" || guide.style.display === "") {
+                guide.style.display = "block";
+            } else {
+                guide.style.display = "none";
+            }
+        }
+    </script>
+    <style>
+        .size-guide-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: black;
+            text-decoration: none;
+        }
+
+        .size-guide-link i {
+            font-size: 20px;
+        }
+
+        /* Custom width for the modal */
+        @media (min-width: 992px) {
+
+            /* Applies on larger screens */
+            .modal-size-guide .modal-dialog {
+                max-width: 900px;
+                /* Adjust width as needed */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modal-dialog {
+                max-width: 95% !important;
+                /* Make modal almost full-width */
+                margin: 10px auto;
+                /* Center the modal */
+            }
+
+            .modal-body img {
+                width: 100% !important;
+                /* Make image responsive */
+                height: auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -120,6 +171,13 @@ include("db/dbconn.php"); // Database connection
                                         </div>";
                             }
                             ?>
+
+                        </div>
+                        <a class="size-guide-link" data-toggle="modal" data-target="#sizeGuideModal">
+                            <i class="fas fa-ruler"></i> Size Guide
+                        </a>
+                        <div id="size-guide" style="display: none;">
+                            <img src="images/size-guide.jpg" style="width: 100%; max-width: 800px; height: auto; border: 1px solid #000; display: block; margin: 10px auto;">
                         </div>
                         <input type="hidden" name="product_id" value="<?php echo $id; ?>">
                         <br><br>
@@ -242,6 +300,22 @@ include("db/dbconn.php"); // Database connection
             }
         </style>
 
+        <div class="modal fade" id="sizeGuideModal" tabindex="-1" role="dialog" aria-labelledby="sizeGuideModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-fullscreen-sm-down" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sizeGuideModalLabel">Size Guide</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="images/size-guide.jpg" class="img-fluid" alt="Size Guide">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             // JavaScript to ensure selected state stays consistent visually
             document.querySelectorAll('input[type="radio"]').forEach((radio) => {
@@ -267,4 +341,8 @@ include("db/dbconn.php"); // Database connection
                     <p style="font-size:25px;">Sneakers Street Inc. 2025 </p>
                 </div>
             </div>
+
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

@@ -44,4 +44,3 @@ if ($order_stat === 'Paid') {
 // If no redirection happens, return the status as JSON (optional)
 // This part will only execute if the above conditions are not met
 echo json_encode(['status' => $order_stat]);
-?>
