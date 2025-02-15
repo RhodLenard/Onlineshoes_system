@@ -34,42 +34,57 @@ if (isset($_GET['brand'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <title>Brand Details</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="icon" href="../images/logo.jpg">
+  <script>
+    function printTable() {
+      var content = document.getElementById("print-area").innerHTML;
+      var originalPage = document.body.innerHTML;
+
+      document.body.innerHTML = content; // Replace entire page with the print content
+      window.print();
+      document.body.innerHTML = originalPage; // Restore original page after printing
+      location.reload(); // Reload to restore JavaScript functionality
+    }
+  </script>
 </head>
 
 <body>
   <div class="container mt-5">
-    <h1>Brand: <?php echo htmlspecialchars($brand); ?></h1>
-    <table class="table table-bordered mt-4">
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Size</th>
-          <th>Total Quantity</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php if (!empty($sizes)) { ?>
-          <?php foreach ($sizes as $size) { ?>
+    <div id="print-area">
+      <h1>Brand: <?php echo htmlspecialchars($brand); ?></h1>
+      <table class="table table-bordered mt-4">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Size</th>
+            <th>Total Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (!empty($sizes)) { ?>
+            <?php foreach ($sizes as $size) { ?>
+              <tr>
+                <td><?php echo htmlspecialchars($size['product_name']); ?></td>
+                <td><?php echo htmlspecialchars($size['size']); ?></td>
+                <td><?php echo htmlspecialchars($size['total_qty']); ?></td>
+              </tr>
+            <?php } ?>
+          <?php } else { ?>
             <tr>
-              <td><?php echo htmlspecialchars($size['product_name']); ?></td>
-              <td><?php echo htmlspecialchars($size['size']); ?></td>
-              <td><?php echo htmlspecialchars($size['total_qty']); ?></td>
+              <td colspan="3">No sizes available for this brand.</td>
             </tr>
           <?php } ?>
-        <?php } else { ?>
-          <tr>
-            <td colspan="3">No sizes available for this brand.</td>
-          </tr>
-        <?php } ?>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+
+    <button onclick="printTable()" class="btn btn-primary">Print</button>
     <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
   </div>
 </body>

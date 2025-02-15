@@ -61,7 +61,8 @@ include("function/customer_signup.php");
     </div>
 
     <div style="display: flex; justify-content: center; align-items: center; min-height: 45vh;">
-        <img src="img/contactus.jpg" style="width: 100%; max-width: 1150px; height: auto; border: 1px solid #000;">
+        <img src="img/contact.jpg"
+            style="width: 100%; max-width: 500px; height: auto; border: 1px solid #000; display: block; margin: 0 auto;">
     </div>
 
     <div id="content" style="padding: 0 20px;">

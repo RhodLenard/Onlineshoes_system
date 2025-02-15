@@ -87,7 +87,7 @@ include("../db/dbconn.php");
 							Welcome, <?php echo isset($fetch['username']) ? $fetch['username'] : 'Guest'; ?>
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="../function/logout.php">Logout</a></li>
+							<li><a class="dropdown-item" href="../function/admin_logout.php">Logout</a></li>
 						</ul>
 					</li>
 				</ul>

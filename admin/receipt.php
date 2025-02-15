@@ -7,7 +7,7 @@ include("../db/dbconn.php");
 
 <head>
 	<title>Sneakers Street</title>
-		<meta charset="UTF-8">
+	<meta charset="UTF-8">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="../images/logo.jpg">
@@ -113,7 +113,7 @@ include("../db/dbconn.php");
 							Welcome, <?php echo isset($fetch['username']) ? $fetch['username'] : 'Guest'; ?>
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="../function/logout.php">Logout</a></li>
+							<li><a class="dropdown-item" href="../function/admin_logout.php">Logout</a></li>
 						</ul>
 					</li>
 				</ul>

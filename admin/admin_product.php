@@ -33,7 +33,7 @@ if (isset($_POST['add'])) {
         $conn->query("INSERT INTO product (product_id, product_name, product_price, product_image, brand, category, product_size)
                       VALUES ('$product_code', '$product_name', '$product_price', '$name', '$brand', '$category', '$product_size')");
 
-        $sizes = ["US 7 / 24.5cm", "US 7.5 / 25cm", "US 8 / 25.4cm", "US 8.5 / 25.8cm", "US 9 / 26.2cm", "US 9.5 / 26.7cm", "US 10 / 27.1cm", "US 10.5 / 27.5cm", "US 11 / 27.9cm", "US 11.5 / 28.3cm", "US 12 / 28.8cm"];
+        $sizes = ["US 7", "US 7.5", "US 8", "US 8.5", "US 9", "US 9.5", "US 10", "US 10.5", "US 11", "US 11", "US 12"];
         foreach ($sizes as $size) {
             if (isset($_POST['product_size']) && in_array($size, $_POST['product_size'])) {
                 $sanitized_size = str_replace([' ', '.'], '_', $size);
@@ -183,7 +183,7 @@ if (isset($_GET['delete_id'])) {
                             Welcome, <?php echo isset($fetch['username']) ? $fetch['username'] : 'Guest'; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="../function/logout.php">Logout</a></li>
+                            <li><a class="dropdown-item" href="../function/admin_logout.php">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -226,7 +226,7 @@ if (isset($_GET['delete_id'])) {
                             <h6 class="form-label">Select Available Sizes:</h6>
                             <div class="size-container d-flex flex-wrap gap-2">
                                 <?php
-                                $sizes = ["US 7 / 24.5cm", "US 7.5 / 25cm", "US 8 / 25.4cm", "US 8.5 / 25.8cm", "US 9 / 26.2cm", "US 9.5 / 26.7cm", "US 10 / 27.1cm", "US 10.5 / 27.5cm", "US 11 / 27.9cm", "US 11.5 / 28.3cm", "US 12 / 28.8cm"];
+                                $sizes = ["US 7", "US 7.5", "US 8", "US 8.5", "US 9", "US 9.5", "US 10", "US 10.5", "US 11", "US 11", "US 12"];
                                 foreach ($sizes as $size) {
                                     $sanitized_size = str_replace([' ', '.'], '_', $size);
                                     echo "
@@ -395,7 +395,7 @@ if (isset($_GET['delete_id'])) {
                             <p class="text-muted mb-4">Fill in the quantities for each size to update the stock inventory.</p>
                             <div class="row g-3">
                                 <?php
-                                $sizes = ["US 7 / 24.5cm", "US 7.5 / 25cm", "US 8 / 25.4cm", "US 8.5 / 25.8cm", "US 9 / 26.2cm", "US 9.5 / 26.7cm", "US 10 / 27.1cm", "US 10.5 / 27.5cm", "US 11 / 27.9cm", "US 11.5 / 28.3cm", "US 12 / 28.8cm"];
+                                $sizes = ["US 7", "US 7.5", "US 8", "US 8.5", "US 9", "US 9.5", "US 10", "US 10.5", "US 11", "US 11", "US 12"];
                                 foreach ($sizes as $size) {
                                     $sanitized_size = str_replace([' ', '.'], '_', $size);
                                     echo "
