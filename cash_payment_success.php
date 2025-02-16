@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("function/session.php");
 include("db/dbconn.php");
 
 // Get the transaction ID from the URL

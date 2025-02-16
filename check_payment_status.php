@@ -21,4 +21,3 @@ $stmt->close();
 
 // Return the status as JSON
 echo json_encode(['status' => $order_stat]);
-?>

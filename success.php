@@ -160,6 +160,9 @@ if (isset($_SESSION['cart'])) {
         </div>
     </div>
 
+
+
+
 </body>
 
 </html>

@@ -130,24 +130,22 @@ if ($result->num_rows > 0) {
 
         <script>
             function checkPaymentStatus() {
-                const transactionId = <?php echo $transaction_id; ?>; // Pass the transaction ID to JavaScript
+                const transactionId = new URLSearchParams(window.location.search).get('tid');
+                if (!transactionId) return;
 
                 fetch(`check_payment_status.php?tid=${transactionId}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'Paid') {
-                            // Redirect to the success page if payment is successful
-                            window.location.href = `success.php?tid=${transactionId}`;
-                        } else if (data.status === 'Failed') {
-                            // Redirect to the failed page if payment failed
-                            window.location.href = `failed.php?tid=${transactionId}`;
+                            window.location.href = 'success.php?tid=' + transactionId;
+                        } else {
+                            setTimeout(checkPaymentStatus, 3000); // Poll every 3 seconds
                         }
                     })
-                    .catch(error => console.error('Error checking payment status:', error));
+                    .catch(error => console.error('Error checking status:', error));
             }
 
-            // Check payment status every 5 seconds
-            setInterval(checkPaymentStatus, 5000);
+            setTimeout(checkPaymentStatus, 3000);
         </script>
 
 

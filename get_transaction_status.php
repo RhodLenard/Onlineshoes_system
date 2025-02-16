@@ -1,4 +1,5 @@
 <?php
+
 // Start a session
 session_start();
 
@@ -40,6 +41,7 @@ if ($order_stat === 'Paid') {
     // If the status is unknown or invalid, show an error message
     die("Invalid transaction status: $order_stat");
 }
+
 
 // If no redirection happens, return the status as JSON (optional)
 // This part will only execute if the above conditions are not met
