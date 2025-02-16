@@ -59,8 +59,6 @@ if (isset($_SESSION['cart'])) {
     <title>Sneakers Street</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/logo.jpg" />
-    <link rel=" stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/loginstyle.css">
@@ -112,9 +110,10 @@ if (isset($_SESSION['cart'])) {
             <p><strong>Customer Name:</strong> <?php echo $customer['firstname'] . ' ' . $customer['lastname']; ?></p>
             <p><strong>Total Amount:</strong> Php <?php echo number_format($transaction['amount'], 2); ?></p>
             <p><strong>Payment Method:</strong> PayMongo (GCash/Card)</p>
+            <p><strong>Transaction Date & Time:</strong> <?php echo date("F j, Y, g:i A", strtotime($transaction['order_date'])); ?></p> <!-- Added Date & Time -->
 
             <h3>Order Items</h3>
-            <table>
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Product Name</th>
@@ -159,9 +158,6 @@ if (isset($_SESSION['cart'])) {
 
         </div>
     </div>
-
-
-
 
 </body>
 
