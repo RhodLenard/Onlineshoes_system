@@ -84,6 +84,14 @@ if (isset($_GET['tid'])) {
             const transaction = <?php echo json_encode($transaction); ?>;
             const customer = <?php echo json_encode($customer); ?>;
 
+            // Full delivery address
+            const deliveryAddress = `
+                ${transaction.house_number}, ${transaction.street}, 
+                ${transaction.barangay}, ${transaction.city}, 
+                ${transaction.province}, ${transaction.postal_code} 
+                ${transaction.landmark ? `(${transaction.landmark})` : ''}
+            `.trim();
+
             // Countdown state
             const [countdown, setCountdown] = React.useState(10);
 
@@ -99,21 +107,22 @@ if (isset($_GET['tid'])) {
 
             return (
                 <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-8">
-                    <h2 className="text-2xl font-bold mb-4">Cash Payment Successful</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-green-600">Cash Payment Successful</h2>
                     <p className="mb-6 text-gray-700">
                         Thank you for your order! Please prepare the exact amount for cash payment upon delivery.
                     </p>
 
                     <h3 className="text-xl font-semibold mb-4">Transaction Details</h3>
-                    <div className="space-y-2">
+                    <div className="space-y-2 text-gray-800">
                         <p><strong>Transaction ID:</strong> {transaction.transaction_id}</p>
                         <p><strong>Customer Name:</strong> {customer.firstname} {customer.lastname}</p>
                         <p><strong>Total Amount:</strong> Php {parseFloat(transaction.amount).toFixed(2)}</p>
-                        <p><strong>Payment Method:</strong> Cash</p>
+                        <p><strong>Payment Method:</strong> Cash on Delivery</p>
+                        <p><strong>Delivery Address:</strong> {deliveryAddress}</p>
                     </div>
 
                     <p className="mt-4 text-gray-600">
-                        You will be redirected to the home page in {countdown} seconds...
+                        You will be redirected to the home page in <strong>{countdown}</strong> seconds...
                     </p>
                     <a
                         href="home.php"

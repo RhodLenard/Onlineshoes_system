@@ -161,7 +161,7 @@ $amount = $transaction['amount'];
 
             <div class="payment-options">
                 <label class="payment-option">
-                    <input type="radio" name="payment_method" value="GCash" required>
+                    <input type="radio" name="payment_method" value="GCash" required onclick="toggleAddressField(false)">
                     <div class="payment-card">
                         <img src="images/gcash-logo.png" alt="GCash Logo" class="payment-logo">
                         <span class="payment-name">GCash</span>
@@ -169,7 +169,7 @@ $amount = $transaction['amount'];
                 </label>
 
                 <label class="payment-option">
-                    <input type="radio" name="payment_method" value="Card" required>
+                    <input type="radio" name="payment_method" value="Card" required onclick="toggleAddressField(false)">
                     <div class="payment-card">
                         <img src="images/card-logo.png" alt="Card Logo" class="payment-logo">
                         <span class="payment-name">Credit/Debit Card</span>
@@ -177,12 +177,38 @@ $amount = $transaction['amount'];
                 </label>
 
                 <label class="payment-option">
-                    <input type="radio" name="payment_method" value="Cash" required>
+                    <input type="radio" name="payment_method" value="Cash" required onclick="toggleAddressField(true)">
                     <div class="payment-card">
                         <img src="images/cash-payment.png" alt="Cash Logo" class="payment-logo">
-                        <span class="payment-name">Cash</span>
+                        <span class="payment-name">Cash on Delivery</span>
                     </div>
                 </label>
+            </div>
+
+            <!-- Address Field (Hidden by Default) -->
+            <div id="addressField" style="display: none; margin-top: 20px;">
+                <h4 class="mb-2"><strong>Complete Delivery Address:</strong></h4>
+
+                <label for="house_number">House Number:</label>
+                <input type="text" name="house_number" id="house_number" class="form-control mb-2" required>
+
+                <label for="street">Street:</label>
+                <input type="text" name="street" id="street" class="form-control mb-2" required>
+
+                <label for="barangay">Barangay:</label>
+                <input type="text" name="barangay" id="barangay" class="form-control mb-2" required>
+
+                <label for="city">City:</label>
+                <input type="text" name="city" id="city" class="form-control mb-2" required>
+
+                <label for="province">Province:</label>
+                <input type="text" name="province" id="province" class="form-control mb-2" required>
+
+                <label for="postal_code">Postal Code:</label>
+                <input type="text" name="postal_code" id="postal_code" class="form-control mb-2" required>
+
+                <label for="landmark">Nearest Landmark (Optional):</label>
+                <input type="text" name="landmark" id="landmark" class="form-control mb-2">
             </div>
 
             <br>
@@ -191,6 +217,22 @@ $amount = $transaction['amount'];
             </button>
         </form>
     </div>
+
+    <script>
+        function toggleAddressField(show) {
+            document.getElementById("addressField").style.display = show ? "block" : "none";
+
+            // Set required attribute only when COD is selected
+            document.getElementById("house_number").required = show;
+            document.getElementById("street").required = show;
+            document.getElementById("barangay").required = show;
+            document.getElementById("city").required = show;
+            document.getElementById("province").required = show;
+            document.getElementById("postal_code").required = show;
+        }
+    </script>
+
+
     </div>
 
     <div style="padding: 20px;">

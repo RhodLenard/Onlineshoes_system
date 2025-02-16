@@ -154,19 +154,52 @@ if ($payment_method === 'Card') {
     }
 }
 
-// Handle Cash Payment (Stock Update Removed)
+// Get address details if COD is selected
 if ($payment_method === 'Cash') {
-    $stmt = $conn->prepare("UPDATE transaction SET order_stat = ?, payment_method = ? WHERE transaction_id = ?");
-    $order_stat = 'Paid';
-    $payment_method = 'Cash';
-    $stmt->bind_param("ssi", $order_stat, $payment_method, $transaction_id);
+    $house_number = trim($_POST['house_number']);
+    $street = trim($_POST['street']);
+    $barangay = trim($_POST['barangay']);
+    $city = trim($_POST['city']);
+    $province = trim($_POST['province']);
+    $postal_code = trim($_POST['postal_code']);
+    $landmark = isset($_POST['landmark']) ? trim($_POST['landmark']) : '';
+
+    // Validate that all required address fields are filled
+    if (empty($house_number) || empty($street) || empty($barangay) || empty($city) || empty($province) || empty($postal_code)) {
+        die("Please fill in all required address fields.");
+    }
+
+    // Update the order status and store address in the database
+    $stmt = $conn->prepare("
+        UPDATE transaction SET 
+            order_stat = 'Paid', 
+            payment_method = 'Cash', 
+            house_number = ?, 
+            street = ?, 
+            barangay = ?, 
+            city = ?, 
+            province = ?, 
+            postal_code = ?, 
+            landmark = ? 
+        WHERE transaction_id = ?");
+    $stmt->bind_param(
+        "sssssssi",
+        $house_number,
+        $street,
+        $barangay,
+        $city,
+        $province,
+        $postal_code,
+        $landmark,
+        $transaction_id
+    );
     $stmt->execute();
     $stmt->close();
 
     // Clear cart session
     unset($_SESSION['cart']);
 
-    // Redirect to success page
+    // Redirect to COD success page
     header("Location: cash_payment_success.php?tid=$transaction_id");
     exit;
 }
