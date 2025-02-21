@@ -96,18 +96,21 @@ include("../db/dbconn.php");
 	</nav>
 
 
+	<!-- Sidebar -->
 	<div class="sidebar">
 		<ul class="list-unstyled">
 			<li><a href="admin_home.php">Dashboard</a></li>
 			<li>
 				<a href="#productsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
 				<ul class="collapse list-unstyled" id="productsSubmenu">
-					<li><a href="admin_feature.php">Features</a></li>
-					<li><a href="admin_product.php">Basketball</a></li>
-					<li><a href="admin_football.php">Sneakers</a></li>
-					<li><a href="admin_running.php">Running</a></li>
+					<li><a href="admin_feature.php" style="margin-left:15px;">Features</a></li>
+					<li><a href="admin_product.php" style="margin-left:15px;">Basketball</a></li>
+					<li><a href="admin_football.php" style="margin-left:15px;">Sneakers</a></li>
+					<li><a href="admin_running.php" style="margin-left:15px;">Running</a></li>
+					<li><a href="admin_sale.php" style="margin-left:15px;">Sale</a></li>
 				</ul>
 			</li>
+			<li><a href="admin_send_notification.php">Notif Customer</a></li>
 			<li><a href="transaction.php">Transactions</a></li>
 			<li><a href="customer.php">Customers</a></li>
 			<li><a href="message.php">Messages</a></li>
@@ -116,19 +119,15 @@ include("../db/dbconn.php");
 	</div>
 
 	<div class="container py-4">
-		<div class="alert alert-info">
-			<center>
-				<h2>Orders</h2>
-			</center>
-		</div>
-		<br />
 		<div style='width:975px;' class="alert alert-info">
 			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th style="pointer-events: none;">SHOE</th>
 						<th style="pointer-events: none;">Transaction No.</th>
+						<th style="pointer-events: none;">DATE</th> <!-- ✅ New DATE Column -->
 						<th style="pointer-events: none;">AMOUNT</th>
+
 					</tr>
 				</thead>
 				<tbody>
@@ -137,8 +136,11 @@ include("../db/dbconn.php");
 					while ($r1 = $Q1->fetch_array()) {
 
 						$tid = $r1['transaction_id'];
+						$order_date = date('Y-m-d H:i:s', strtotime($r1['order_date'])); // ✅ Fetch and format date
 
-						$Q2 = $conn->query("SELECT * FROM transaction_detail LEFT JOIN product ON product.product_id = transaction_detail.product_id WHERE transaction_detail.transaction_id = '$tid' ");
+						$Q2 = $conn->query("SELECT * FROM transaction_detail 
+                            LEFT JOIN product ON product.product_id = transaction_detail.product_id 
+                            WHERE transaction_detail.transaction_id = '$tid' ");
 						$r2 = $Q2->fetch_array();
 
 						$pid = $r2['product_id'];
@@ -150,7 +152,8 @@ include("../db/dbconn.php");
 						echo "<tr>";
 						echo "<td>" . $brand . "</td>";
 						echo "<td>" . $tid . "</td>";
-						echo "<td>" . formatMoney($p_price) . "</td>";
+						echo "<td>" . $order_date . "</td>"; // ✅ Display order date
+						echo "<td>₱" . number_format($p_price, 0) . "</td>"; // Format product price with peso sign and commas
 						echo "</tr>";
 					}
 
@@ -158,12 +161,14 @@ include("../db/dbconn.php");
 					while ($r3 = $Q3->fetch_array()) {
 
 						$amnt = $r3['sum(amount)'];
-						echo "<tr><td></td><td>TOTAL : </td> <td><b>Php " . formatMoney($amnt) . "</b></td></tr>";
+						echo "<tr><td colspan='3' style='text-align:right;'><strong>TOTAL :</strong></td><td><b>₱" . number_format($amnt, 0) . "</b></td></tr>"; // Format total with peso sign and commas
 					}
 					?>
 				</tbody>
+
 			</table>
 		</div>
+
 
 		<?php
 		function formatMoney($number, $fractional = false)

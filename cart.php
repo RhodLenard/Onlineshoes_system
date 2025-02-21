@@ -181,51 +181,73 @@ if (isset($_GET['id'], $_GET['action'], $_GET['size'])) {
 
 // Handle payment
 if (isset($_POST['pay_now'])) {
-    // Check if the cart is empty
+    // ✅ 1. Check if the cart is empty
     if (empty($_SESSION['cart'])) {
         echo "<script>alert('Your cart is empty. Please add items to your cart before proceeding to payment.');</script>";
         echo "<script>window.location.href = 'cart.php';</script>";
         exit;
     }
 
+    // ✅ 2. Validate customer session
+    if (!isset($_SESSION['id'])) {
+        echo "<script>alert('User not logged in. Please log in to continue.');</script>";
+        echo "<script>window.location.href = 'login.php';</script>";
+        exit;
+    }
+
     $customer_id = $_SESSION['id'];
     $total_amount = 0;
-    date_default_timezone_set('Asia/Manila'); // Set the timezone to Philippines
+    date_default_timezone_set('Asia/Manila'); // Set timezone to Philippines
     $current_date = date('Y-m-d H:i:s'); // Get the current date and time
-    echo $current_date;
 
-    // Calculate the total amount
+    // ✅ 3. Calculate the total amount using prepared statements
+    $stmt = $conn->prepare("SELECT product_price FROM product WHERE product_id = ?");
     foreach ($_SESSION['cart'] as $compositeKey => $details) {
         if (!isset($details['product_id']) || empty($details['product_id'])) {
             continue; // Skip this item if product_id is missing
         }
 
-        $productId = $details['product_id'];
-        $query = $conn->query("SELECT * FROM product WHERE product_id = $productId") or die(mysqli_error($conn));
-        $product = $query->fetch_assoc();
-        $total_amount += $product['product_price'] * $details['quantity'];
-    }
+        $productId = (int) $details['product_id']; // Ensure it's an integer
+        $quantity = (int) $details['quantity'];
 
-    // Fetch the pending transaction for the customer
-    $transactionQuery = $conn->query("SELECT transaction_id FROM transaction WHERE customerid = $customer_id AND order_stat = 'Pending' LIMIT 1");
-    if ($transactionQuery->num_rows > 0) {
-        $transaction = $transactionQuery->fetch_assoc();
+        $stmt->bind_param("i", $productId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $product = $result->fetch_assoc();
+            $total_amount += $product['product_price'] * $quantity;
+        }
+    }
+    $stmt->close();
+
+    // ✅ 4. Handle transaction: Check if pending transaction exists
+    $stmt = $conn->prepare("SELECT transaction_id FROM transaction WHERE customerid = ? AND order_stat = 'Pending' LIMIT 1");
+    $stmt->bind_param("i", $customer_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $transaction = $result->fetch_assoc();
         $transaction_id = $transaction['transaction_id'];
 
-        // Update the transaction amount and order date (but keep status as 'Pending')
-        $conn->query("UPDATE transaction 
-                      SET amount = '$total_amount', order_date = '$current_date' 
-                      WHERE transaction_id = $transaction_id")
-            or die(mysqli_error($conn));
+        // ✅ 5. Update existing transaction
+        $stmtUpdate = $conn->prepare("UPDATE transaction SET amount = ?, order_date = ? WHERE transaction_id = ?");
+        $stmtUpdate->bind_param("dsi", $total_amount, $current_date, $transaction_id);
+        $stmtUpdate->execute();
+        $stmtUpdate->close();
     } else {
-        // If no pending transaction exists, create a new one with status 'Pending'
-        $conn->query("INSERT INTO transaction (customerid, amount, order_stat, order_date) 
-                      VALUES ('$customer_id', '$total_amount', 'Pending', '$current_date')")
-            or die(mysqli_error($conn));
-        $transaction_id = $conn->insert_id; // Get the last inserted ID
+        // ✅ 6. Insert new transaction if none is pending
+        $stmtInsert = $conn->prepare("INSERT INTO transaction (customerid, amount, order_stat, order_date) VALUES (?, ?, 'Pending', ?)");
+        $stmtInsert->bind_param("ids", $customer_id, $total_amount, $current_date);
+        $stmtInsert->execute();
+        $transaction_id = $stmtInsert->insert_id; // Get the last inserted ID
+        $stmtInsert->close();
     }
 
-    // Redirect to the payment summary page
+    $stmt->close();
+
+    // ✅ 7. Redirect to the payment summary page
     header("Location: summary.php?tid=$transaction_id");
     exit;
 }
@@ -250,6 +272,7 @@ if (isset($_POST['pay_now'])) {
 </head>
 
 <body>
+    <!-- ✅ Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">
             <img src="images/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -268,6 +291,18 @@ if (isset($_POST['pay_now'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
+
+                <!-- 🔔 Notification Bell with Modal Trigger -->
+                <li class="nav-item position-relative">
+                    <a class="nav-link position-relative notification-bell" href="#" style="position: relative;">
+                        <i class="fas fa-bell" style="position: relative;">
+                            <!-- Badge added here like cart-badge -->
+                            <span class="notif-badge" id="notif-count" style="display: none;">0</span>
+                        </i>
+                    </a>
+                </li>
+
+                <!-- 🛒 Cart Section -->
                 <li class="nav-item">
                     <?php
                     $cartCount = 0;
@@ -331,40 +366,59 @@ if (isset($_POST['pay_now'])) {
                             continue;
                         }
 
-                        $productId = $details['product_id'];
+                        $productId = (int) $details['product_id']; // Ensure integer
                         $size = $details['size'];
-                        $quantity = $details['quantity'];
+                        $quantity = (int) $details['quantity']; // Ensure quantity is an integer
 
-                        $query = $conn->query("SELECT * FROM product WHERE product_id = $productId") or die(mysqli_error($conn));
-                        if ($query->num_rows > 0) {
-                            $product = $query->fetch_assoc();
+                        // ✅ Using prepared statement for safety
+                        $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = ?");
+                        $stmt->bind_param("i", $productId);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        if ($result->num_rows > 0) {
+                            $product = $result->fetch_assoc();
 
                             $name = $product['product_name'];
-                            $price = $product['product_price'];
+                            $price = (float) str_replace(',', '', $product['product_price']); // Remove commas and convert to float
                             $image = $product['product_image'];
 
-                            $subtotal = $price * $quantity;
-                            $total += $subtotal;
+                            // Ensure both $price and $quantity are numeric before calculating subtotal
+                            if (is_numeric($price) && is_numeric($quantity)) {
+                                $subtotal = $price * $quantity;
+                                $total += $subtotal;
+                            } else {
+                                // Handle the case where $price or $quantity is not numeric
+                                $subtotal = 0;
+                                echo "<script>alert('Invalid price or quantity for product: {$name}');</script>";
+                            }
+
+                            // Format the price and subtotal with commas for thousands separators
+                            $formattedPrice = number_format($price, 2, '.', ',');
+                            $formattedSubtotal = number_format($subtotal, 2, '.', ',');
 
                             echo "<tr>
-                                <td data-label='Image'><img src='photo/{$image}' alt='{$name}'></td>
-                                <td data-label='Product Name'>{$name}</td>
-                                <td data-label='Size'>{$size}</td>
-                                <td data-label='Quantity'>{$quantity}</td>
-                                <td data-label='Price'>₱ {$price}</td>
-                                <td data-label='Subtotal'>₱ {$subtotal}</td>
-                                <td data-label='Action'>
-                                    <a href='cart.php?id={$productId}&size={$size}&action=add' class='btn'>Add</a>
-                                    <a href='cart.php?id={$productId}&size={$size}&action=remove' class='btn'>Remove</a>
-                                </td>
-                            </tr>";
+                <td data-label='Image'><img src='photo/{$image}' alt='{$name}'></td>
+                <td data-label='Product Name'>{$name}</td>
+                <td data-label='Size'>{$size}</td>
+                <td data-label='Quantity'>{$quantity}</td>
+                <td data-label='Price'>₱ {$formattedPrice}</td>
+                <td data-label='Subtotal'>₱ {$formattedSubtotal}</td>
+                <td data-label='Action'>
+                    <a href='cart.php?id={$productId}&size={$size}&action=add' class='btn'>Add</a>
+                    <a href='cart.php?id={$productId}&size={$size}&action=remove' class='btn'>Remove</a>
+                </td>
+            </tr>";
                         }
                     }
 
+                    // Format the total with commas for thousands separators
+                    $formattedTotal = number_format($total, 2, '.', ',');
+
                     echo "<tr>
-                        <td colspan='5'><strong>Total</strong></td>
-                        <td colspan='2'><strong>₱ {$total}</strong></td>
-                    </tr>";
+        <td colspan='5'><strong>Total</strong></td>
+        <td colspan='2'><strong>₱ {$formattedTotal}</strong></td>
+    </tr>";
                 } else {
                     echo "<tr><td colspan='7' class='empty-cart'>Your cart is empty.</td></tr>";
                 }
@@ -379,6 +433,23 @@ if (isset($_POST['pay_now'])) {
     </form>
     </div>
 
+    <!-- 🔔 Notification Modal (Working) -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="notification-list">
+                    <!-- Notifications loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">
@@ -386,6 +457,92 @@ if (isset($_POST['pay_now'])) {
                 <p style="font-size:25px;">Sneakers Street Inc. 2025 </p>
             </div>
         </div>
+
+        <!-- ✅ Corrected: Full jQuery for AJAX -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <!-- 🔔 Fixed Notification Bell AJAX Functionality -->
+        <script>
+            $(document).ready(function() {
+                fetchNotificationCount();
+                setInterval(fetchNotificationCount, 5000);
+
+                $('.notification-bell').on('click', function() {
+                    $('#notificationModal').modal('show');
+                    fetchNotifications();
+                });
+
+                $('#notificationModal').on('hidden.bs.modal', function() {
+                    markNotificationsAsRead();
+                });
+
+                function fetchNotifications() {
+                    $.ajax({
+                        url: 'function/fetch_notifications.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            let output = '';
+                            let unreadCount = 0;
+                            if (response.length === 0) {
+                                output = '<p class="text-center text-muted">No notifications available.</p>';
+                            } else {
+                                response.forEach(notification => {
+                                    if (notification.is_read == 0) unreadCount++;
+                                    const productImage = notification.product_image ?
+                                        `<img src="photo/${notification.product_image}" alt="Product Image" style="width: 100px; height: auto; border-radius: 8px;">` :
+                                        '';
+                                    output += `
+                                        <div class="alert alert-${notification.is_read == 0 ? 'info' : 'secondary'}">
+                                            ${productImage}
+                                            <strong>${notification.title}</strong>
+                                            <p>${notification.message}</p>
+                                            <small class="text-muted">${new Date(notification.created_at).toLocaleString()}</small>
+                                        </div>`;
+                                });
+                            }
+                            $('#notification-list').html(output);
+                            updateBadge(unreadCount);
+                        }
+                    });
+                }
+
+                function fetchNotificationCount() {
+                    $.ajax({
+                        url: 'function/fetch_notifications.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            let unreadCount = 0;
+                            response.forEach(notification => {
+                                if (notification.is_read == 0) unreadCount++;
+                            });
+                            updateBadge(unreadCount);
+                        }
+                    });
+                }
+
+                function updateBadge(count) {
+                    if (count > 0) {
+                        $('#notif-count').text(count).show();
+                    } else {
+                        $('#notif-count').hide();
+                    }
+                }
+
+                function markNotificationsAsRead() {
+                    $.ajax({
+                        url: 'function/mark_notifications_read.php',
+                        method: 'POST',
+                        success: function() {
+                            $('#notif-count').hide();
+                        }
+                    });
+                }
+            });
+        </script>
 </body>
 
 </html>

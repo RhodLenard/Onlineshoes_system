@@ -141,6 +141,24 @@ if (isset($_GET['delete_id'])) {
     echo "<script>alert('Product deleted successfully!'); window.location = 'admin_football.php';</script>";
     exit();
 }
+
+// Edit Product
+if (isset($_POST['edit_product'])) {
+    $product_id = $_POST['product_id'];
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $brand = $_POST['brand'];
+
+    $conn->query("UPDATE product 
+                  SET product_name = '$product_name', 
+                      product_price = '$product_price', 
+                      brand = '$brand'
+                  WHERE product_id = '$product_id'")
+        or die(mysqli_error($conn));
+
+    echo "<script>alert('Product updated successfully!'); window.location = 'admin_football.php';</script>";
+    exit();
+}
 ?>
 
 
@@ -269,8 +287,10 @@ if (isset($_GET['delete_id'])) {
                     <li><a href="admin_product.php" style="margin-left:15px;">Basketball</a></li>
                     <li><a href="admin_football.php" style="margin-left:15px;">Sneakers</a></li>
                     <li><a href="admin_running.php" style="margin-left:15px;">Running</a></li>
+                    <li><a href="admin_sale.php" style="margin-left:15px;">Sale</a></li>
                 </ul>
             </li>
+            <li><a href="admin_send_notification.php">Notif Customer</a></li>
             <li><a href="transaction.php">Transactions</a></li>
             <li><a href="customer.php">Customers</a></li>
             <li><a href="message.php">Messages</a></li>
@@ -323,8 +343,8 @@ if (isset($_GET['delete_id'])) {
                                     onclick="enlargeImage('../photo/<?php echo $fetch['product_image'] ?>')">
                             </td>
                             <td><?php echo $fetch['product_name'] ?></td>
-                            <td><?php echo $fetch['product_price'] ?></td>
-                            <td><?php echo $fetch['product_size'] ?></td>
+                            <td><?php echo '₱' . number_format($fetch['product_price'], 0); ?></td>
+                            <td><?php echo $fetch['product_size']; ?></td>
                             <?php
                             $query1 = $conn->query("SELECT SUM(qty) AS total_qty FROM `stock` WHERE product_id='$id'") or die(mysqli_error());
                             $fetch1 = $query1->fetch_array();
@@ -338,6 +358,10 @@ if (isset($_GET['delete_id'])) {
                                     </button>
                                     <button class="btn btn-warning btn-sm stockout-btn" data-bs-toggle="modal" data-bs-target="#stockOutModal" data-id="<?php echo $id; ?>">
                                         <i class="bi bi-box-arrow-up"></i> Stock Out
+                                    </button>
+                                    <!-- Add Edit Button -->
+                                    <button class="btn btn-primary btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#editProductModal" data-id="<?php echo $id; ?>" data-name="<?php echo $fetch['product_name']; ?>" data-price="<?php echo $fetch['product_price']; ?>" data-brand="<?php echo $fetch['brand']; ?>" data-size="<?php echo $fetch['product_size']; ?>">
+                                        <i class="bi bi-pencil"></i> Edit
                                     </button>
                                     <a href='admin_football.php?delete_id=<?php echo $id; ?>' class='btn btn-danger btn-sm' onclick="return confirm('Are you sure you want to delete this product?');">
                                         <i class="bi bi-trash"></i> Delete
@@ -442,6 +466,36 @@ if (isset($_GET['delete_id'])) {
             </div>
         </div>
 
+        <!-- Edit Product Modal -->
+        <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="admin_football.php">
+                            <input type="hidden" id="edit_product_id" name="product_id">
+                            <div class="mb-3">
+                                <label for="editProductName" class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="editProductName" name="product_name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProductPrice" class="form-label">Product Price</label>
+                                <input type="text" class="form-control" id="editProductPrice" name="product_price" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editBrandName" class="form-label">Brand Name</label>
+                                <input type="text" class="form-control" id="editBrandName" name="brand" required>
+                            </div>
+                            <button type="submit" name="edit_product" class="btn btn-primary w-100">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 document.querySelectorAll(".stockin-btn").forEach(button => {
@@ -488,6 +542,26 @@ if (isset($_GET['delete_id'])) {
                         } else {
                             row.style.display = "none";
                         }
+                    });
+                });
+            });
+
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll('.edit-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Get the product data from the data attributes
+                        const productId = this.getAttribute('data-id');
+                        const productName = this.getAttribute('data-name');
+                        const productPrice = this.getAttribute('data-price');
+                        const productBrand = this.getAttribute('data-brand');
+
+
+                        // Populate the modal inputs with the current data
+                        document.getElementById('edit_product_id').value = productId;
+                        document.getElementById('editProductName').value = productName;
+                        document.getElementById('editProductPrice').value = productPrice;
+                        document.getElementById('editBrandName').value = productBrand;
+
                     });
                 });
             });

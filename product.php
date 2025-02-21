@@ -99,7 +99,7 @@ include("function/customer_signup.php");
                     echo "<img src='images/shopping-cart.png' alt='Add to Cart'>"; // Replace with your cart icon
                     echo "</div>";
                     echo "<h3>" . $fetch['product_name'] . "</h3>";
-                    echo "<p>P " . $fetch['product_price'] . "</p>";
+                    echo "<p>₱ " . number_format($fetch['product_price'], 0) . "</p>";
                     echo "</a>";
                     echo "</div>";
                 }

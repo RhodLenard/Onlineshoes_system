@@ -71,6 +71,20 @@ include("db/dbconn.php"); // Database connection
     </div>
 
     <div id="content">
+        <div id="sale-banner" style="text-align: center; margin: 30px 0;">
+            <?php
+            $sale_query = $conn->query("SELECT image_path FROM sale_banner ORDER BY id DESC LIMIT 1") or die(mysqli_error($conn));
+            $sale_row = $sale_query->fetch_assoc();
+            if (!empty($sale_row) && !empty($sale_row['image_path'])) {
+                echo "<img src='images/" . $sale_row['image_path'] . "' alt='Sale Banner' style='width: 100%; max-width: 1200px; height: auto; border-radius: 10px;'>";
+            } else {
+                echo "";
+            }
+            ?>
+        </div>
+
+        <h3 style="text-align: center;"> <strong>Feature</h3>
+
         <div id="product">
             <?php
             $query = $conn->query("SELECT * FROM product WHERE category='feature' ORDER BY product_id DESC") or die(mysqli_error());
@@ -95,7 +109,7 @@ include("db/dbconn.php"); // Database connection
                     echo "<img src='images/shopping-cart.png' alt='Add to Cart'>"; // Replace with your cart icon
                     echo "</div>";
                     echo "<h3>" . $fetch['product_name'] . "</h3>";
-                    echo "<p>P " . $fetch['product_price'] . "</p>";
+                    echo "<p>₱ " . number_format($fetch['product_price'], 0) . "</p>";
                     echo "</a>";
                     echo "</div>";
                 }
@@ -109,12 +123,21 @@ include("db/dbconn.php"); // Database connection
             }
             ?>
         </div>
+
+
+
+
+
     </div>
+
+
 
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">&copy; Sneakers Street Inc. 2025</div>
         </div>
+
+
         <!-- jQuery (Include First) -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

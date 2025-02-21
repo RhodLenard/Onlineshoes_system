@@ -81,7 +81,11 @@ if (isset($_GET['tid'])) {
     <script type="text/babel">
         function PaymentSuccess() {
             // Transaction and customer data from PHP
-            const transaction = <?php echo json_encode($transaction); ?>;
+            const transaction = <?php
+                                // Ensure the amount is a numeric value
+                                $transaction['amount'] = (float) str_replace(',', '', $transaction['amount']);
+                                echo json_encode($transaction);
+                                ?>;
             const customer = <?php echo json_encode($customer); ?>;
 
             // Full delivery address

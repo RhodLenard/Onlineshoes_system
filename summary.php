@@ -38,6 +38,7 @@ $amount = $transaction['amount'];
 </head>
 
 <body>
+    <!-- ✅ Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="#">
             <img src="images/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -56,6 +57,18 @@ $amount = $transaction['amount'];
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
+
+                <!-- 🔔 Notification Bell with Modal Trigger -->
+                <li class="nav-item position-relative">
+                    <a class="nav-link position-relative notification-bell" href="#" style="position: relative;">
+                        <i class="fas fa-bell" style="position: relative;">
+                            <!-- Badge added here like cart-badge -->
+                            <span class="notif-badge" id="notif-count" style="display: none;">0</span>
+                        </i>
+                    </a>
+                </li>
+
+                <!-- 🛒 Cart Section -->
                 <li class="nav-item">
                     <?php
                     $cartCount = 0;
@@ -119,24 +132,29 @@ $amount = $transaction['amount'];
             <tbody>
                 <?php
                 $query2 = $conn->query("
-                    SELECT 
-                        product.product_name,
-                        transaction_detail.product_size,
-                        product.product_price,
-                        transaction_detail.quantity AS order_qty
-                    FROM 
-                        transaction_detail
-                    LEFT JOIN 
-                        product ON product.product_id = transaction_detail.product_id
-                    WHERE 
-                        transaction_detail.transaction_id = '$transaction_id'
-                ") or die(mysqli_error($conn));
+                SELECT 
+                    product.product_name,
+                    transaction_detail.product_size,
+                    product.product_price,
+                    transaction_detail.quantity AS order_qty
+                FROM 
+                    transaction_detail
+                LEFT JOIN 
+                    product ON product.product_id = transaction_detail.product_id
+                WHERE 
+                    transaction_detail.transaction_id = '$transaction_id'
+            ") or die(mysqli_error($conn));
+
+                $totalAmount = 0; // Initialize total amount
 
                 while ($row = $query2->fetch_array()) {
                     $pname = $row['product_name'];
                     $psize = $row['product_size'];
-                    $pprice = $row['product_price'];
-                    $oqty = $row['order_qty'];
+                    $pprice = (float) str_replace(',', '', $row['product_price']); // Remove commas and convert to float
+                    $oqty = (int) $row['order_qty'];
+
+                    $subtotal = $pprice * $oqty; // Calculate subtotal for each product
+                    $totalAmount += $subtotal; // Add to total amount
 
                     echo "<tr>";
                     echo "<td data-label='Quantity'>" . $oqty . "</td>";
@@ -149,7 +167,7 @@ $amount = $transaction['amount'];
             </tbody>
         </table>
         <legend></legend>
-        <h4>TOTAL: Php <?php echo number_format($amount, 2); ?></h4>
+        <h4>TOTAL: Php <?php echo number_format($totalAmount, 2); ?></h4>
     </form>
 
     <div class="payment-method-container">
@@ -235,6 +253,23 @@ $amount = $transaction['amount'];
 
     </div>
 
+    <!-- 🔔 Notification Modal (Working) -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifications</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="notification-list">
+                    <!-- Notifications loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">
@@ -243,9 +278,91 @@ $amount = $transaction['amount'];
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- ✅ Corrected: Full jQuery for AJAX -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <!-- 🔔 Fixed Notification Bell AJAX Functionality -->
+        <script>
+            $(document).ready(function() {
+                fetchNotificationCount();
+                setInterval(fetchNotificationCount, 5000);
+
+                $('.notification-bell').on('click', function() {
+                    $('#notificationModal').modal('show');
+                    fetchNotifications();
+                });
+
+                $('#notificationModal').on('hidden.bs.modal', function() {
+                    markNotificationsAsRead();
+                });
+
+                function fetchNotifications() {
+                    $.ajax({
+                        url: 'function/fetch_notifications.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            let output = '';
+                            let unreadCount = 0;
+                            if (response.length === 0) {
+                                output = '<p class="text-center text-muted">No notifications available.</p>';
+                            } else {
+                                response.forEach(notification => {
+                                    if (notification.is_read == 0) unreadCount++;
+                                    const productImage = notification.product_image ?
+                                        `<img src="photo/${notification.product_image}" alt="Product Image" style="width: 100px; height: auto; border-radius: 8px;">` :
+                                        '';
+                                    output += `
+                                        <div class="alert alert-${notification.is_read == 0 ? 'info' : 'secondary'}">
+                                            ${productImage}
+                                            <strong>${notification.title}</strong>
+                                            <p>${notification.message}</p>
+                                            <small class="text-muted">${new Date(notification.created_at).toLocaleString()}</small>
+                                        </div>`;
+                                });
+                            }
+                            $('#notification-list').html(output);
+                            updateBadge(unreadCount);
+                        }
+                    });
+                }
+
+                function fetchNotificationCount() {
+                    $.ajax({
+                        url: 'function/fetch_notifications.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            let unreadCount = 0;
+                            response.forEach(notification => {
+                                if (notification.is_read == 0) unreadCount++;
+                            });
+                            updateBadge(unreadCount);
+                        }
+                    });
+                }
+
+                function updateBadge(count) {
+                    if (count > 0) {
+                        $('#notif-count').text(count).show();
+                    } else {
+                        $('#notif-count').hide();
+                    }
+                }
+
+                function markNotificationsAsRead() {
+                    $.ajax({
+                        url: 'function/mark_notifications_read.php',
+                        method: 'POST',
+                        success: function() {
+                            $('#notif-count').hide();
+                        }
+                    });
+                }
+            });
+        </script>
 </body>
 
 </html>

@@ -49,18 +49,21 @@ include("../db/dbconn.php");
 		</div>
 	</nav>
 
+	<!-- Sidebar -->
 	<div class="sidebar">
 		<ul class="list-unstyled">
 			<li><a href="admin_home.php">Dashboard</a></li>
 			<li>
 				<a href="#productsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
 				<ul class="collapse list-unstyled" id="productsSubmenu">
-					<li><a href="admin_feature.php">Features</a></li>
-					<li><a href="admin_product.php">Basketball</a></li>
-					<li><a href="admin_football.php">Sneakers</a></li>
-					<li><a href="admin_running.php">Running</a></li>
+					<li><a href="admin_feature.php" style="margin-left:15px;">Features</a></li>
+					<li><a href="admin_product.php" style="margin-left:15px;">Basketball</a></li>
+					<li><a href="admin_football.php" style="margin-left:15px;">Sneakers</a></li>
+					<li><a href="admin_running.php" style="margin-left:15px;">Running</a></li>
+					<li><a href="admin_sale.php" style="margin-left:15px;">Sale</a></li>
 				</ul>
 			</li>
+			<li><a href="admin_send_notification.php">Notif Customer</a></li>
 			<li><a href="transaction.php">Transactions</a></li>
 			<li><a href="customer.php">Customers</a></li>
 			<li><a href="message.php">Messages</a></li>
@@ -85,36 +88,39 @@ include("../db/dbconn.php");
 						<th style="pointer-events: none;">Customer Name</th>
 						<th style="pointer-events: none;">Total Amount</th>
 						<th style="pointer-events: none;">Order Status</th>
+						<th style="pointer-events: none;">Payment</th>
 						<th style="pointer-events: none;">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-
-					$query = $conn->query("SELECT * FROM transaction LEFT JOIN customer ON customer.customerid = transaction.customerid") or die(mysqli_error());
+					$query = $conn->query("SELECT transaction.*, customer.*, transaction.payment_method 
+                           FROM transaction 
+                           LEFT JOIN customer ON customer.customerid = transaction.customerid")
+						or die(mysqli_error());
 					while ($fetch = $query->fetch_array()) {
 						$id = $fetch['transaction_id'];
 						$amnt = $fetch['amount'];
 						$o_stat = $fetch['order_stat'];
 						$o_date = $fetch['order_date'];
-
+						$payment_method = $fetch['payment_method']; // Fetch payment method
 						$name = $fetch['firstname'] . ' ' . $fetch['lastname'];
 					?>
 						<tr>
 							<td><?php echo $id; ?></td>
 							<td><?php echo $o_date; ?></td>
 							<td><?php echo $name; ?></td>
-							<td><?php echo $amnt; ?></td>
+							<td><?php echo '₱' . number_format($amnt, 0); ?></td>
 							<td><?php echo $o_stat; ?></td>
+							<td><?php echo $payment_method; // Display the payment method 
+									?></td> <!-- Display payment method -->
 							<td>
 								<a href="receipt.php?tid=<?php echo $id; ?>">View</a>
 								<?php if ($o_stat == 'Paid'): ?>
-									| <a class="btn btn-mini btn-info"
-										href="confirm.php?id=<?= $id ?>&action=confirm">
+									| <a class="btn btn-mini btn-info" href="confirm.php?id=<?= $id ?>&action=confirm">
 										Confirm
 									</a>
-									| <a class="btn btn-mini btn-danger"
-										href="confirm.php?id=<?= $id ?>&action=cancel">
+									| <a class="btn btn-mini btn-danger" href="confirm.php?id=<?= $id ?>&action=cancel">
 										Cancel
 									</a>
 								<?php endif; ?>
@@ -124,6 +130,7 @@ include("../db/dbconn.php");
 					}
 					?>
 				</tbody>
+
 			</table>
 		</div>
 	</div>

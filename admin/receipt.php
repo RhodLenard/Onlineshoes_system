@@ -120,18 +120,21 @@ include("../db/dbconn.php");
 		</div>
 	</nav>
 
+	<!-- Sidebar -->
 	<div class="sidebar">
 		<ul class="list-unstyled">
 			<li><a href="admin_home.php">Dashboard</a></li>
 			<li>
 				<a href="#productsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Products</a>
 				<ul class="collapse list-unstyled" id="productsSubmenu">
-					<li><a href="admin_feature.php">Features</a></li>
-					<li><a href="admin_product.php">Basketball</a></li>
-					<li><a href="admin_football.php">Sneakers</a></li>
-					<li><a href="admin_running.php">Running</a></li>
+					<li><a href="admin_feature.php" style="margin-left:15px;">Features</a></li>
+					<li><a href="admin_product.php" style="margin-left:15px;">Basketball</a></li>
+					<li><a href="admin_football.php" style="margin-left:15px;">Sneakers</a></li>
+					<li><a href="admin_running.php" style="margin-left:15px;">Running</a></li>
+					<li><a href="admin_sale.php" style="margin-left:15px;">Sale</a></li>
 				</ul>
 			</li>
+			<li><a href="admin_send_notification.php">Notif Customer</a></li>
 			<li><a href="transaction.php">Transactions</a></li>
 			<li><a href="customer.php">Customers</a></li>
 			<li><a href="message.php">Messages</a></li>
@@ -195,18 +198,21 @@ include("../db/dbconn.php");
 									$psize = $row['product_size']; // Correct size from transaction_detail
 									$pprice = $row['product_price'];
 
+									// Format the price with commas and peso sign
 									echo "<tr>
-					<td>$oqty</td>
-					<td>$pname</td>
-					<td>$psize</td>
-					<td>$pprice</td>
-				  </tr>";
+            <td>$oqty</td>
+            <td>$pname</td>
+            <td>$psize</td>
+            <td>₱" . number_format($pprice, 0) . "</td>
+          </tr>";
 								}
 								?>
 
+								<!-- Display total price below the table -->
 							</table>
 							<legend></legend>
-							<h4>TOTAL: Php <?php echo $amnt; ?></h4>
+							<h4>TOTAL: ₱<?php echo number_format($amnt, 0); ?></h4>
+
 						</center>
 					</div>
 

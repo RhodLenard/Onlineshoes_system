@@ -13,3 +13,17 @@
   min-width: 16px;
   text-align: center;
 }
+
+.notif-badge {
+  position: absolute;
+  top: -10px; /* Adjust vertically */
+  right: -5px; /* Adjust horizontally for proper alignment */
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  font-weight: normal;
+  padding: 1px 5px;
+  border-radius: 50%;
+  min-width: 16px;
+  text-align: center;
+}

@@ -140,8 +140,10 @@ include("../db/dbconn.php");
 					<li><a href="admin_product.php" style="margin-left:15px;">Basketball</a></li>
 					<li><a href="admin_football.php" style="margin-left:15px;">Sneakers</a></li>
 					<li><a href="admin_running.php" style="margin-left:15px;">Running</a></li>
+					<li><a href="admin_sale.php" style="margin-left:15px;">Sale</a></li>
 				</ul>
 			</li>
+			<li><a href="admin_send_notification.php">Notif Customer</a></li>
 			<li><a href="transaction.php">Transactions</a></li>
 			<li><a href="customer.php">Customers</a></li>
 			<li><a href="message.php">Messages</a></li>
