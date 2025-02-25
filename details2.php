@@ -136,7 +136,7 @@ include("db/dbconn.php"); // Database connection
                 <center>
                     <img class="product-image img-polaroid" src="photo/<?php echo $row['product_image']; ?>" alt="Product Image">
                     <h2 class="text-uppercase"><?php echo $row['product_name']; ?></h2>
-                    <h3 class="text-uppercase">Php <?php echo $row['product_price']; ?></h3>
+                    <h3 class="text-uppercase">₱ <?php echo number_format($row['product_price'], 0); ?></h3>
 
                     <!-- Size Selection -->
                     <form action="cart.php" method="POST">

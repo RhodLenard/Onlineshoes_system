@@ -57,6 +57,58 @@ if (isset($_POST['delete_sale_image'])) {
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <style>
+    .main-content {
+      margin-left: 240px;
+      /* Adjust this based on the sidebar's width */
+      padding: 20px;
+    }
+
+    /* Responsive Sidebar */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 10px;
+      }
+
+      .sale-banner-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .upload-container {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    /* Adjustments for smaller devices like phones */
+    @media (max-width: 480px) {
+      .sale-banner-container img {
+        width: 100%;
+        height: auto;
+      }
+
+      .upload-container {
+        padding: 20px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      #preview-container {
+        width: 100%;
+      }
+    }
+
+
     /* Centering Wrapper */
     .center-wrapper {
       display: flex;
@@ -75,6 +127,7 @@ if (isset($_POST['delete_sale_image'])) {
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       position: relative;
+      margin-top: 5vh;
     }
 
     .sale-banner-container img {
@@ -277,39 +330,41 @@ if (isset($_POST['delete_sale_image'])) {
 
 
   <!-- Main Content -->
-  <div class="center-wrapper">
-    <!-- Display Current Sale Banner -->
-    <div class="sale-banner-container">
-      <?php if ($current_sale_image) : ?>
-        <img src="../images/<?php echo $current_sale_image; ?>" alt="Current Sale Banner">
-        <form method="POST" style="position: absolute; top: 15px; right: 15px;">
-          <button type="submit" class="delete-icon-btn" name="delete_sale_image" title="Delete Banner" onclick="return confirm('Are you sure you want to delete this sale banner?')">
-            <div class="delete-content">
-              <span class="delete-text">Delete</span>
-              <i class="bi bi-trash3-fill"></i>
-            </div>
-          </button>
+  <div class="main-content">
+    <div class="center-wrapper">
+      <!-- Display Current Sale Banner -->
+      <div class="sale-banner-container">
+        <?php if ($current_sale_image) : ?>
+          <img src="../images/<?php echo $current_sale_image; ?>" alt="Current Sale Banner">
+          <form method="POST" style="position: absolute; top: 15px; right: 15px;">
+            <button type="submit" class="delete-icon-btn" name="delete_sale_image" title="Delete Banner" onclick="return confirm('Are you sure you want to delete this sale banner?')">
+              <div class="delete-content">
+                <span class="delete-text">Delete</span>
+                <i class="bi bi-trash3-fill"></i>
+              </div>
+            </button>
+          </form>
+        <?php else : ?>
+          <div class="no-banner">No Sale Banner Available</div>
+        <?php endif; ?>
+      </div>
+
+      <!-- Upload Form -->
+      <div class="upload-container">
+        <form method="POST" enctype="multipart/form-data" id="saleForm">
+          <label for="sale_image">Upload Sale Image:</label>
+          <input type="file" id="sale_image" name="sale_image" accept="image/*" required>
+
+          <div id="preview-container">
+            <p><strong>Image Preview:</strong></p>
+            <img id="image-preview" src="" alt="Image Preview">
+          </div>
+
+          <button type="button" class="btn btn-preview" id="preview-btn">Preview Image</button>
+          <button type="submit" class="btn btn-upload" id="upload-btn" name="upload_sale_image">Upload</button>
+          <button type="button" class="btn btn-delete" id="delete-btn">Delete Image</button>
         </form>
-      <?php else : ?>
-        <div class="no-banner">No Sale Banner Available</div>
-      <?php endif; ?>
-    </div>
-
-    <!-- Upload Form -->
-    <div class="upload-container">
-      <form method="POST" enctype="multipart/form-data" id="saleForm">
-        <label for="sale_image">Upload Sale Image:</label>
-        <input type="file" id="sale_image" name="sale_image" accept="image/*" required>
-
-        <div id="preview-container">
-          <p><strong>Image Preview:</strong></p>
-          <img id="image-preview" src="" alt="Image Preview">
-        </div>
-
-        <button type="button" class="btn btn-preview" id="preview-btn">Preview Image</button>
-        <button type="submit" class="btn btn-upload" id="upload-btn" name="upload_sale_image">Upload</button>
-        <button type="button" class="btn btn-delete" id="delete-btn">Delete Image</button>
-      </form>
+      </div>
     </div>
   </div>
 

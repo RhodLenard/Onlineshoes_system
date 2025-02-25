@@ -7,6 +7,26 @@ if (isset($_POST['login'])) {
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $password = trim($_POST['password']);
 
+    // Validate reCAPTCHA
+    $recaptcha_secret_key = "6LfyMOIqAAAAAE72tMHVt5SaiA0uTeXicAgXhh-k";
+    $recaptcha_response = $_POST['g-recaptcha-response'];
+
+    // Verify the reCAPTCHA response
+    $recaptcha_url = "https://www.google.com/recaptcha/api/siteverify";
+    $recaptcha_data = [
+        'secret' => $recaptcha_secret_key,
+        'response' => $recaptcha_response
+    ];
+
+    $recaptcha_verify = file_get_contents($recaptcha_url . '?' . http_build_query($recaptcha_data));
+    $recaptcha_result = json_decode($recaptcha_verify);
+
+    if (!$recaptcha_result->success) {
+        $_SESSION['login_error'] = "Please verify that you are not a robot!";
+        header("Location: login.php");
+        exit();
+    }
+
     // Validate inputs
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['login_error'] = "Invalid Email Format!";
@@ -18,6 +38,8 @@ if (isset($_POST['login'])) {
         header("Location: login.php");
         exit();
     }
+
+
 
     // Limit login attempts (Prevent brute-force)
     $max_attempts = 10;
@@ -233,6 +255,8 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="css/p1.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/newstyle.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 
 <body>
@@ -284,8 +308,10 @@ if (isset($_POST['login'])) {
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
+                <div class="g-recaptcha" data-sitekey="6LfyMOIqAAAAAMEHHZLz221WVNeFGF5gQjDbieim"></div>
                 <button type="submit" name="login">Login</button>
             </form>
+            <p><a class="signup-link" href="reset_password.php">Forgot Password?</a></p>
             <p>Don't have an account? <a href="signup.php" class="signup-link" style="display: inline;"> Sign up here!</a></p>
         </div>
     </div>

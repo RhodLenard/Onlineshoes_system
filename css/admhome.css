@@ -8,6 +8,7 @@ body {
   color: #ffffff;
   height: 100vh;
   padding: 50px 0px;
+  margin-right: 100px;
   position: fixed;
   width: 240px;
   overflow-y: auto;
