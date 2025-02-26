@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['transaction_id'], $_P
       <li><a href="transaction.php">Transactions</a></li>
       <li><a href="customer.php">Customers</a></li>
       <li><a href="message.php">Messages</a></li>
-      <li><a href="order.php">Orders</a></li>
+      <li><a href="order.php">SALES</a></li>
     </ul>
   </div>
 

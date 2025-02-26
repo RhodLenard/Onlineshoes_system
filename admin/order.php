@@ -62,6 +62,40 @@ include("../db/dbconn.php");
 				padding: 0.75rem;
 			}
 		}
+
+		/* Sales Summary Section */
+		.sales-summary {
+			background-color: #f8f9fa;
+			padding: 1.5rem;
+			margin-bottom: 2rem;
+			border-radius: 8px;
+			box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		.sales-summary h3 {
+			margin-bottom: 1rem;
+			font-size: 1.75rem;
+			font-weight: 600;
+		}
+
+		.sales-summary .metric {
+			font-size: 1.2rem;
+			font-weight: 500;
+		}
+
+		/* Table Styling */
+		.table-responsive {
+			margin-top: 1rem;
+		}
+
+		.table thead {
+			background-color: #f1f1f1;
+		}
+
+		.table th,
+		.table td {
+			padding: 10px;
+		}
 	</style>
 </head>
 
@@ -114,88 +148,126 @@ include("../db/dbconn.php");
 			<li><a href="transaction.php">Transactions</a></li>
 			<li><a href="customer.php">Customers</a></li>
 			<li><a href="message.php">Messages</a></li>
-			<li><a href="order.php">Orders</a></li>
+			<li><a href="order.php">SALES</a></li>
 		</ul>
 	</div>
 
 	<div class="container py-4">
-		<div style='width:975px;' class="alert alert-info">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th style="pointer-events: none;">SHOE</th>
-						<th style="pointer-events: none;">Transaction No.</th>
-						<th style="pointer-events: none;">DATE</th> <!-- ✅ New DATE Column -->
-						<th style="pointer-events: none;">AMOUNT</th>
+		<!-- Sales Summary Section -->
+		<div class="sales-summary card shadow-sm mb-4" style="border-left: 5px solid #007bff;">
+			<div class="card-body">
+				<h3 class="card-title text-primary">Sales Overview</h3>
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<div class="metric-box border rounded p-3 bg-light">
+							<h5 class="text-success">Total Sales</h5>
+							<p class="metric text-success">₱
+								<?php
+								$total_sales = $conn->query("SELECT SUM(amount) AS total_sales FROM transaction WHERE order_stat = 'Confirmed'")->fetch_array();
+								echo number_format($total_sales['total_sales'], 2);
+								?>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<div class="metric-box border rounded p-3 bg-light">
+							<h5 class="text-warning">Total Orders</h5>
+							<p class="metric text-warning">
+								<?php
+								$total_orders = $conn->query("SELECT COUNT(transaction_id) AS total_orders FROM transaction WHERE order_stat = 'Confirmed'")->fetch_array();
+								echo $total_orders['total_orders'];
+								?>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<div class="metric-box border rounded p-3 bg-light">
+							<h5 class="text-info">Average Order Value</h5>
+							<p class="metric text-info">₱
+								<?php
+								$avg_order_value = $conn->query("SELECT AVG(amount) AS avg_order_value FROM transaction WHERE order_stat = 'Confirmed'")->fetch_array();
+								echo number_format($avg_order_value['avg_order_value'], 2);
+								?>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
+		<!-- Search Bar -->
+		<div class="mb-3">
+			<input type="text" class="form-control form-control-lg" placeholder="Search sales here" id="filter">
+		</div>
+
+		<!-- Sales Data Table -->
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover">
+				<thead class="thead-dark" style="background-color: #007bff; color: white;">
+					<tr>
+						<th>Customer Name</th>
+						<th>Shoe</th>
+						<th>Transaction No.</th>
+						<th>Date</th>
+						<th>Amount</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="salesTableBody">
 					<?php
-					$Q1 = $conn->query("SELECT * FROM transaction WHERE order_stat = 'Confirmed'");
+					$Q1 = $conn->query("SELECT transaction.*, customer.firstname, customer.lastname FROM transaction
+                    LEFT JOIN customer ON customer.customerid = transaction.customerid
+                    WHERE transaction.order_stat = 'Confirmed'");
 					while ($r1 = $Q1->fetch_array()) {
-
 						$tid = $r1['transaction_id'];
-						$order_date = date('Y-m-d H:i:s', strtotime($r1['order_date'])); // ✅ Fetch and format date
+						$customer_name = $r1['firstname'] . " " . $r1['lastname'];
+						$order_date = date('Y-m-d H:i:s', strtotime($r1['order_date']));
 
 						$Q2 = $conn->query("SELECT * FROM transaction_detail 
-                            LEFT JOIN product ON product.product_id = transaction_detail.product_id 
-                            WHERE transaction_detail.transaction_id = '$tid' ");
+                        LEFT JOIN product ON product.product_id = transaction_detail.product_id 
+                        WHERE transaction_detail.transaction_id = '$tid' ");
 						$r2 = $Q2->fetch_array();
 
 						$pid = $r2['product_id'];
-						$o_qty = $r2['order_qty'];
-
 						$p_price = $r2['product_price'];
 						$brand = $r2['product_name'];
 
-						echo "<tr>";
+						echo "<tr style='background-color: #f9f9f9;'>";
+						echo "<td>" . $customer_name . "</td>";
 						echo "<td>" . $brand . "</td>";
 						echo "<td>" . $tid . "</td>";
-						echo "<td>" . $order_date . "</td>"; // ✅ Display order date
-						echo "<td>₱" . number_format($p_price, 0) . "</td>"; // Format product price with peso sign and commas
+						echo "<td>" . $order_date . "</td>";
+						echo "<td>₱" . number_format($p_price, 0) . "</td>";
 						echo "</tr>";
-					}
-
-					$Q3 = $conn->query("SELECT sum(amount) FROM transaction WHERE order_stat = 'Confirmed'");
-					while ($r3 = $Q3->fetch_array()) {
-
-						$amnt = $r3['sum(amount)'];
-						echo "<tr><td colspan='3' style='text-align:right;'><strong>TOTAL :</strong></td><td><b>₱" . number_format($amnt, 0) . "</b></td></tr>"; // Format total with peso sign and commas
 					}
 					?>
 				</tbody>
-
 			</table>
 		</div>
+	</div>
 
+	<script>
+		// Client-side Search functionality
+		document.getElementById("filter").addEventListener("input", function() {
+			let filter = document.getElementById("filter").value.toLowerCase();
+			let rows = document.querySelectorAll("#salesTableBody tr");
 
-		<?php
-		function formatMoney($number, $fractional = false)
-		{
-			if ($fractional) {
-				$number = sprintf('%.2f', $number);
-			}
-			while (true) {
-				$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-				if ($replaced != $number) {
-					$number = $replaced;
+			rows.forEach(function(row) {
+				let customerName = row.cells[0].textContent.toLowerCase();
+				let brand = row.cells[1].textContent.toLowerCase();
+				let transactionNo = row.cells[2].textContent.toLowerCase();
+				let date = row.cells[3].textContent.toLowerCase();
+				let amount = row.cells[4].textContent.toLowerCase();
+
+				if (customerName.includes(filter) || brand.includes(filter) || transactionNo.includes(filter) || date.includes(filter) || amount.includes(filter)) {
+					row.style.display = "";
 				} else {
-					break;
+					row.style.display = "none";
 				}
-			}
-			return $number;
-		}
-		?>
+			});
+		});
+	</script>
 
 
-
-
-
-	</div>
-	</form>
-	</div>
-	</div>
 
 
 

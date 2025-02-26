@@ -296,7 +296,7 @@ if (isset($_POST['edit_product'])) {
             <li><a href="transaction.php">Transactions</a></li>
             <li><a href="customer.php">Customers</a></li>
             <li><a href="message.php">Messages</a></li>
-            <li><a href="order.php">Orders</a></li>
+            <li><a href="order.php">SALES</a></li>
         </ul>
     </div>
 

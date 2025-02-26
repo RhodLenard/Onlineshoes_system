@@ -67,7 +67,23 @@ include("function/customer_signup.php");
 
     <div id="content" style="padding: 0 20px;">
         <div class="modern-contact-links">
-            <h2>Contact Us</h2>
+            <!-- Message Input Form -->
+            <div class="message-form">
+                <h3 style="font-size: 1.5rem; font-weight: 600;">Send Us a Message</h3>
+                <form action="contact_us.php" method="POST" style="max-width: 500px; margin: 0 auto;">
+                    <div class="form-group">
+                        <label for="email" style="font-size: 1rem; font-weight: 500;">Your Email</label>
+                        <input type="email" class="form-control form-control-sm" id="email" name="email" required style="font-size: 0.9rem;">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" style="font-size: 1rem; font-weight: 500;">Your Message</label>
+                        <textarea class="form-control form-control-sm" id="message" name="message" rows="4" required style="font-size: 0.9rem;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size: 0.9rem; padding: 8px 16px; border-radius: 4px;">Send Message</button>
+                </form>
+            </div>
+            <br>
+            <h3 style="font-size: 1.5rem; font-weight: 600;">Contact Us</h3>
             <p>Feel free to reach out through the following platforms:</p>
             <div class="social-links">
                 <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&emr=1&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=AVdkyDmZbPsSo261wzniWV0BVt6O0CW-C8Qdq1xF5aKDo0nWwkxWdAdxDuPFuZGm9tMkDACitaldhg&osid=1&passive=1209600&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-1458509828%3A1737997365599107&ddm=1" class="social-link email">
@@ -81,7 +97,6 @@ include("function/customer_signup.php");
                 </a>
             </div>
         </div>
-    </div>
     </div>
 
 

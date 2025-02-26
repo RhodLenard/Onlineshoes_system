@@ -1,12 +1,23 @@
 <?php
 include("../function/admin_session.php");
 include("../db/dbconn.php");
+
+// Delete message logic
+if (isset($_GET['delete_id'])) {
+	$contact_id = $_GET['delete_id'];
+	$delete_query = "DELETE FROM contact WHERE contact_id = '$contact_id'";
+	$result = $conn->query($delete_query) or die(mysqli_error($conn));
+	if ($result) {
+		echo "<script>alert('Message deleted successfully!'); window.location.href='message.php';</script>";
+	}
+}
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<title>Sneakers Street</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="../images/logo.jpg">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
@@ -114,41 +125,86 @@ include("../db/dbconn.php");
 			<li><a href="transaction.php">Transactions</a></li>
 			<li><a href="customer.php">Customers</a></li>
 			<li><a href="message.php">Messages</a></li>
-			<li><a href="order.php">Orders</a></li>
+			<li><a href="order.php">SALES</a></li>
 		</ul>
 	</div>
 
 	<div class="container py-4">
 		<div class="alert alert-info text-center">
-			<h2>Customers</h2>
+			<h2>Customer Messages</h2>
 		</div>
+
+		<!-- Search Bar -->
 		<div class="mb-3">
 			<input type="text" class="form-control" placeholder="Search Customers here..." id="filter">
 		</div>
 
-		<div class="alert alert-info">
-			<table class="table table-hover" style="background-color:;">
+		<!-- Table with Modern Style -->
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered">
 				<thead>
-					<tr style="font-size:20px;">
+					<tr style="font-size: 18px;">
 						<th>Email</th>
 						<th>Message</th>
+						<th>Action</th>
 					</tr>
 				</thead>
-				<?php
-				$query = $conn->query("SELECT * FROM `contact`") or die(mysqli_error());
-				while ($fetch = $query->fetch_array()) {
-				?>
-					<tr>
-						<td><?php echo $fetch['email']; ?></td>
-						<td><?php echo $fetch['message'] ?></td>
-					</tr>
-				<?php
-				}
-				?>
+				<tbody>
+					<?php
+					$query = $conn->query("SELECT * FROM `contact`") or die(mysqli_error());
+					while ($fetch = $query->fetch_array()) {
+					?>
+						<tr>
+							<td><?php echo $fetch['email']; ?></td>
+							<td>
+								<!-- Truncated message -->
+								<?php echo substr($fetch['message'], 0, 50) . '...'; ?>
+							</td>
+							<td>
+								<!-- Button to open modal -->
+								<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#messageModal<?php echo $fetch['contact_id']; ?>">
+									View Full Message
+								</button>
+
+								<!-- Delete Button -->
+								<a href="?delete_id=<?php echo $fetch['contact_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this message?');">
+									<i class="bi bi-trash"></i> Delete
+								</a>
+							</td>
+						</tr>
+
+						<!-- Modal to show full message -->
+						<div class="modal fade" id="messageModal<?php echo $fetch['contact_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="messageModalLabel">Full Message</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- Full Message -->
+										<p><?php echo nl2br(htmlspecialchars($fetch['message'])); ?></p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					<?php
+					}
+					?>
+				</tbody>
 			</table>
 		</div>
-
 	</div>
+
+	<!-- Include Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 
