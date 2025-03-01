@@ -16,6 +16,7 @@ include("function/customer_signup.php");
     <link rel="stylesheet" href="css/loginstyle.css">
     <link rel="stylesheet" href="css/p1.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/darkmode.css">
 </head>
 
 <body>
@@ -29,6 +30,12 @@ include("function/customer_signup.php");
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
 
                 <li class="nav-item">
                     <a class="nav-link" href="login.php">
@@ -63,9 +70,12 @@ include("function/customer_signup.php");
         </div>
     </div>
 
-    <div style="display: flex; justify-content: center; align-items: center; min-height: 38vh;">
-        <img src="img/about1.jpg" style="width: 100%; max-width: 1150px; height: auto; border: 1px solid #000;">
+
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh; width: 100%; overflow: hidden;">
+        <img src="img/about1.jpg" style="max-width: 100%; height: 50vh; border: 1px solid #000;">
     </div>
+
+
 
     <div id="content" style="display:flex; justify-content: center; align-items: center; text-align:center;">
         <div>
@@ -79,7 +89,6 @@ include("function/customer_signup.php");
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">
-                <label style="font-size:17px;"> Copyright &copy; </label>
                 <p style="font-size:25px;">Sneakers Street Inc. 2025 </p>
             </div>
         </div>
@@ -90,6 +99,8 @@ include("function/customer_signup.php");
 
         <!-- Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script src="js/darkMode.js"></script>
 </body>
 
 </html>

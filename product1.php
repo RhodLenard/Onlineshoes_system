@@ -18,49 +18,7 @@ include("db/dbconn.php");
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/plist.css">
     <link rel="stylesheet" href="css/cartnotif.css">
-    <style>
-        .theme-switch {
-            display: flex;
-            align-items: center;
-            margin-right: 15px;
-        }
-
-        .toggle-label {
-            width: 60px;
-            height: 30px;
-            background: #e0e0e0;
-            border-radius: 30px;
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: background 0.4s ease-in-out;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.6);
-        }
-
-        .toggle-knob {
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            left: 3px;
-            top: 3px;
-            /* Instead of 50% */
-            transition: transform 0.4s ease-in-out;
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-
-        /* Dark mode active */
-        .toggle-label.active {
-            background: #1c1c1c;
-        }
-
-        .toggle-label.active .toggle-knob {
-            transform: translateX(30px) translateY(-50%);
-        }
-    </style>
+    <link rel="stylesheet" href="css/darkmode.css">
 </head>
 
 <body>
@@ -210,7 +168,6 @@ include("db/dbconn.php");
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">
-                <label style="font-size:17px;"> Copyright &copy; </label>
                 <p style="font-size:25px;">Sneakers Street Inc. 2025</p>
             </div>
         </div>

@@ -269,6 +269,7 @@ if (isset($_POST['pay_now'])) {
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/cart.css">
     <link rel="stylesheet" href="css/cartnotif.css">
+    <link rel="stylesheet" href="css/darkmode.css">
 </head>
 
 <body>
@@ -288,6 +289,13 @@ if (isset($_POST['pay_now'])) {
                 $query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
                 $fetch = $query->fetch_array();
                 ?>
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
@@ -453,7 +461,6 @@ if (isset($_POST['pay_now'])) {
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">
-                <label style="font-size:17px;"> Copyright &copy; </label>
                 <p style="font-size:25px;">Sneakers Street Inc. 2025 </p>
             </div>
         </div>
@@ -543,6 +550,8 @@ if (isset($_POST['pay_now'])) {
                 }
             });
         </script>
+
+        <script src="js/darkMode.js"></script>
 </body>
 
 </html>

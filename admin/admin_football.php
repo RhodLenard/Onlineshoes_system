@@ -152,7 +152,14 @@ if (isset($_POST['stockout'])) {
 // Delete Logic
 if (isset($_GET['delete_id'])) {
     $delete_id = (int)$_GET['delete_id'];
+
+    // Step 1: Delete the product images related to the product
+    $conn->query("DELETE FROM product_images WHERE product_id = '$delete_id'") or die(mysqli_error($conn));
+
+    // Step 2: Delete stock records for the product
     $conn->query("DELETE FROM stock WHERE product_id = '$delete_id'") or die(mysqli_error($conn));
+
+    // Step 3: Delete the product from the product table
     $conn->query("DELETE FROM product WHERE product_id = '$delete_id'") or die(mysqli_error($conn));
 
     echo "<script>alert('Product deleted successfully!'); window.location = 'admin_football.php';</script>";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2025 at 10:55 PM
+-- Generation Time: Mar 01, 2025 at 08:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,33 +53,6 @@ CREATE TABLE `contact` (
   `message` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `contact`
---
-
-INSERT INTO `contact` (`contact_id`, `email`, `message`) VALUES
-(89, '', ''),
-(90, '', ''),
-(91, '', ''),
-(92, '', ''),
-(93, '', ''),
-(94, '', ''),
-(95, '', ''),
-(96, '', ''),
-(97, '', ''),
-(98, '', ''),
-(99, '', ''),
-(100, '', ''),
-(101, '', ''),
-(102, '', ''),
-(103, '', ''),
-(104, '', ''),
-(105, '', ''),
-(106, '', ''),
-(107, '', ''),
-(108, '', ''),
-(109, '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -109,7 +82,7 @@ INSERT INTO `customer` (`customerid`, `firstname`, `mi`, `lastname`, `address`, 
 (12, 'jharil', 'j', 'pinpin', 'poblacion plaridel bulacan', 'bulacan', '3004', '09123456789', '12345678', 'jharilpinpin@yahoo.com', '$2y$10$OxIRXNlGRjJbs7mDGHx9Y.atFJAX.gBLOGoZclvRS2wk1jgeEHi1O'),
 (16, 'Khristalle ', 'S', 'Tubig', 'Camia Rd, San Jose', 'Bulacan', '1111', '09534211778', '84836262', 'khristalle@gmail.com', '$2y$10$P8/vPK0op1xZL8fWARdKc.YB2OVzomuSgCffnHLQ1mSUpS/iTgupi'),
 (17, 'Joshua', 'B', 'Musngi', 'Mapulang-Lupa', 'Bulacan', '3014', '09954048116', '11223344', 'musngijoshua@gmail.com', '$2y$10$INEjTb2YLOxBqp8SCxyTvuPvwf57uogmD7szPch4O2wt8kGDQEzY6'),
-(18, 'Rhod Lenard', 'V', 'Delas Nieves', '034 Avendano street', 'Bulacan', '3004', '09760048883', '12345678', 'rdelasnieves2023@student.nbscollege.edu.ph', '$2y$10$3859m7Z/OSs7aJv.KS9UM.EHmIqpz0aQnML6KdrARLvY7newE/LSO');
+(18, 'Rhod Lenard', 'V', 'Delas Nieves', '034 Avendano street', 'Bulacan', '3004', '09760048883', '12345678', 'rdelasnieves2023@student.nbscollege.edu.ph', '$2y$10$lEZboNUp4axedrnMngAkouHcoWu3h1URkoXpiy2.FhO3MMya1bDLO');
 
 -- --------------------------------------------------------
 
@@ -128,19 +101,6 @@ CREATE TABLE `notifications` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `notifications`
---
-
-INSERT INTO `notifications` (`notification_id`, `customer_id`, `title`, `message`, `is_read`, `notification_type`, `link`, `created_at`) VALUES
-(42, 18, 'Order Processed', 'Hi Rhod Lenard, Your order <strong>J1</strong> has been processed.', 1, 'Order Processed', 'transaction_details.php?transaction_id=146', '2025-02-21 07:33:59'),
-(43, 18, 'Order Processed', 'Hi Rhod Lenard, Your order <strong>J1</strong> has been processed.', 1, 'Order Processed', 'transaction_details.php?transaction_id=146', '2025-02-21 14:36:19'),
-(44, 18, 'Order Processed', 'Hi Rhod Lenard, Your order <strong>J1</strong> has been processed.', 1, 'Order Processed', 'transaction_details.php?transaction_id=148', '2025-02-21 16:57:11'),
-(45, 18, 'Order Processed', 'Hi Rhod Lenard, Your order <strong>Giannis</strong> has been processed.', 1, 'Order Processed', 'transaction_details.php?transaction_id=149', '2025-02-21 17:43:38'),
-(46, 18, 'Order Shipped', 'Hi Rhod Lenard, Good news! Your order <strong>Giannis</strong> has been shipped.', 1, 'Order Shipped', 'transaction_details.php?transaction_id=149', '2025-02-21 17:45:53'),
-(47, 18, 'Out for Delivery', 'Hi Rhod Lenard, Heads up! Your order <strong>Giannis</strong> is out for delivery today.', 1, 'Out for Delivery', 'transaction_details.php?transaction_id=149', '2025-02-21 10:46:42'),
-(48, 18, 'Out for Delivery', 'Hi Rhod Lenard, Heads up! Your order <strong>Giannis</strong> is out for delivery today.', 1, 'Out for Delivery', 'transaction_details.php?transaction_id=149', '2025-02-21 17:47:18');
-
 -- --------------------------------------------------------
 
 --
@@ -157,6 +117,26 @@ CREATE TABLE `order_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expires` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`id`, `email`, `token`, `expires`) VALUES
+(11, 'rdelasnieves2023@student.nbscollege.edu.ph', 'de66787e8103cd0bc591cb3332c35ba4adf15b2c3b51b147d9e43bc632ff5b5e53d9b65b7dda1e83c640f5fad101e9d482a6', '2025-02-27 00:25:56');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product`
 --
 
@@ -167,34 +147,80 @@ CREATE TABLE `product` (
   `product_size` varchar(255) DEFAULT NULL,
   `product_image` varchar(500) NOT NULL,
   `brand` varchar(100) NOT NULL,
-  `category` varchar(50) NOT NULL
+  `category` varchar(50) NOT NULL,
+  `created_at` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_size`, `product_image`, `brand`, `category`) VALUES
-(95798472, 'Adidas ', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '54417628812010555466110427_122181261116187336_3953565432394203454_n.jpg', 'Adidas', 'running'),
-(115925985, 'Onitsuka ', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '68016117731145611onitsuka.png', 'Onitsuka', 'football'),
-(158580830, 'Converse', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '50500996352519288449835640_122155766774187336_1973844099569275164_n.jpg', 'Converse', 'football'),
-(198883440, 'Yeezy white', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '16726521146804405474625861_122196984764187336_6723816367738442418_n.jpg', 'Yeezy', 'running'),
-(203821907, 'AE 1', '4000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '11397708856230762441499449_979896130499020_2201079667166261346_n.jpg', 'AE 1', 'basketball'),
-(236262610, 'Lebron 20', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '12389185410443833469863661_1019961823478461_8465046295829723111_n.jpg', 'Nike', 'basketball'),
-(239260727, 'Adidas ', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '39441438428271556470209853_1023991686408808_3721019142001919974_n.jpg', 'Adidas', 'running'),
-(260402624, 'Kyrie 1 ', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '73634536575684290Kyrie1.png', 'Kyrie ', 'basketball'),
-(269816191, 'Nike Cortez', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '24592124249963498449856170_122155771346187336_2271257309018430755_n.jpg', 'Nike', 'football'),
-(293848527, 'Nike Air ', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '86431725269987457452157527_122159354354187336_1223703388960775354_n.jpg', 'Nike', 'football'),
-(320358821, 'Kobe 11', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '49898037106694283466557740_999863708821606_3683586002233114245_n.jpg', 'Kobe', 'basketball'),
-(398419917, 'Nike Gt', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '2183763278554342nikegtcut.png', 'Nike', 'basketball'),
-(425336105, 'J1', '5000', 'US 7', '47295325801709962itrsneakersAir_Jordan_1_Low_Dune_Red-FJ3459-160-0.webp', 'Jordan', 'feature'),
-(446287022, 'Sport', '1500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '98436516180085501474854668_122196984374187336_4213326592118695061_n.jpg', 'Sport', 'running'),
-(456877743, 'J1 Travis Fragment', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '1324082789699149NIkeair.png', 'Jordan', 'football'),
-(557326675, 'Curry', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '87928971299168700470191745_1023276579813652_1145497151134725404_n.jpg', 'Curry', 'basketball'),
-(624151402, 'Giannis', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '31918467693525177470241575_1023991153075528_102940168185031159_n.jpg', 'Nike', 'basketball'),
-(661619842, 'Samba ', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '73657427192030980samba.png', 'Adidas', 'football'),
-(829082289, 'Yeezy', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '29794965147027224449707406_122154870362187336_6846915699252259178_n.jpg', 'Yeezy', 'running'),
-(944470087, 'Hoka', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '10952044557379279467312562_1002751268532850_6109112710819289515_n.jpg', 'Hoka', 'running');
+INSERT INTO `product` (`product_id`, `product_name`, `product_price`, `product_size`, `product_image`, `brand`, `category`, `created_at`) VALUES
+(35950620, 'nike zoom ', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '3936598485474861462561056_1947487452396244_8408637156408831686_n.jpg', 'Nike', 'running', NULL),
+(51807240, 'Vans KNU', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '76639707382476763Knu.png', 'Vans ', 'football', NULL),
+(95798472, 'Adidas ', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '54417628812010555466110427_122181261116187336_3953565432394203454_n.jpg', 'Adidas', 'running', NULL),
+(109224725, 'New Balance ', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '82137191222986790450807904_122156959754187336_7221892738182386746_n.jpg', 'New Balance', 'running', NULL),
+(115925985, 'Onitsuka ', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '68016117731145611onitsuka.png', 'Onitsuka', 'football', NULL),
+(158580830, 'Converse', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '50500996352519288449835640_122155766774187336_1973844099569275164_n.jpg', 'Converse', 'football', NULL),
+(186531823, 'J1', '5000', 'US 7', '15487611939839339553558-615.webp', 'Jordan', 'basketball', '2025-03-02'),
+(198883440, 'Yeezy white', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '16726521146804405474625861_122196984764187336_6723816367738442418_n.jpg', 'Yeezy', 'running', NULL),
+(203821907, 'AE 1', '4000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '11397708856230762441499449_979896130499020_2201079667166261346_n.jpg', 'AE 1', 'basketball', NULL),
+(236262610, 'Lebron 20', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '12389185410443833469863661_1019961823478461_8465046295829723111_n.jpg', 'Nike', 'basketball', NULL),
+(239260727, 'Adidas ', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '39441438428271556470209853_1023991686408808_3721019142001919974_n.jpg', 'Adidas', 'running', NULL),
+(260402624, 'Kyrie 1 ', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '73634536575684290Kyrie1.png', 'Kyrie ', 'basketball', NULL),
+(269816191, 'Nike Cortez', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '24592124249963498449856170_122155771346187336_2271257309018430755_n.jpg', 'Nike', 'football', NULL),
+(285535499, 'Puma', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '52720906695788574471765467_1034054412069202_2685442819752268084_n.jpg', 'Puma', 'football', NULL),
+(293848527, 'Nike Air ', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '86431725269987457452157527_122159354354187336_1223703388960775354_n.jpg', 'Nike', 'football', NULL),
+(320358821, 'Kobe 11', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '49898037106694283466557740_999863708821606_3683586002233114245_n.jpg', 'Kobe', 'basketball', NULL),
+(353378820, 'Sabrina', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11', '34066925811684013sabrina.png', 'Sabrina', 'feature', NULL),
+(398419917, 'Nike Gt', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '2183763278554342nikegtcut.png', 'Nike', 'basketball', NULL),
+(422448398, 'Kobe 9', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '24063969933665535463867603_981221127352531_3796712006077300261_n.jpg', 'Kobe', 'basketball', NULL),
+(437776392, 'New Balance ', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '35023906996882941450807904_122156959754187336_7221892738182386746_n.jpg', 'New Balance', 'feature', NULL),
+(446287022, 'Sport', '1500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '98436516180085501474854668_122196984374187336_4213326592118695061_n.jpg', 'Sport', 'running', NULL),
+(454312233, 'Onitsuka ', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '32815543050473999onitsuka.png', 'Onitsuka', 'feature', NULL),
+(456877743, 'J1 Travis Fragment', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '1324082789699149NIkeair.png', 'Jordan', 'football', NULL),
+(466927871, 'Jordan 1', '5000', 'US 7', '90251455827772187553558-615.webp', 'Jordan', 'feature', '2025-03-02'),
+(473184359, 'Adidas High', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5', '59450019946803806449742219_122154870602187336_6421464602731655693_n.jpg', 'Adidas', 'running', NULL),
+(557326675, 'Curry', '3500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '87928971299168700470191745_1023276579813652_1145497151134725404_n.jpg', 'Curry', 'basketball', NULL),
+(624151402, 'Giannis', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '31918467693525177470241575_1023991153075528_102940168185031159_n.jpg', 'Nike', 'basketball', NULL),
+(661619842, 'Samba ', '2500', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '73657427192030980samba.png', 'Adidas', 'football', NULL),
+(825581141, 'Jordan 1', '5000', 'US 7', '45793416305022323553558-615.webp', 'Jordan', 'football', '2025-03-02'),
+(829082289, 'Yeezy', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '29794965147027224449707406_122154870362187336_6846915699252259178_n.jpg', 'Yeezy', 'running', NULL),
+(902319149, 'Jordan 1', '5000', 'US 7', '63247728998401893553558-615.webp', 'Jordan', 'running', '2025-03-02'),
+(929797644, 'J1 Low', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '68071123731961483467291251_1002752105199433_270795246232220402_n.jpg', 'Jordan', 'football', NULL),
+(944470087, 'Hoka', '2000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '10952044557379279467312562_1002751268532850_6109112710819289515_n.jpg', 'Hoka', 'running', NULL),
+(955982345, 'Kobe 5 ', '3000', 'US 7,US 7.5,US 8,US 8.5,US 9,US 9.5,US 10,US 10.5,US 11,US 11.5,US 12', '8109400629923293kobev.png', 'Kobe', 'basketball', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE `product_images` (
+  `image_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `image_path` varchar(255) NOT NULL,
+  `image_type` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`image_id`, `product_id`, `image_path`, `image_type`) VALUES
+(16, 466927871, '466927871_AirJordan1Low_CherrywoodRedCementGrey_553558-615-4.webp', 'side'),
+(17, 466927871, '466927871_AirJordan1Low_CherrywoodRedCementGrey_553558-615-3.webp', 'side'),
+(18, 466927871, '466927871_AirJordan1Low_CherrywoodRedCementGrey_553558-615-2.webp', 'side'),
+(22, 186531823, '186531823_AirJordan1Low_CherrywoodRedCementGrey_553558-615-4.webp', 'side'),
+(23, 186531823, '186531823_AirJordan1Low_CherrywoodRedCementGrey_553558-615-3.webp', 'side'),
+(24, 186531823, '186531823_AirJordan1Low_CherrywoodRedCementGrey_553558-615-2.webp', 'side'),
+(25, 825581141, '825581141_AirJordan1Low_CherrywoodRedCementGrey_553558-615-4.webp', 'side'),
+(26, 825581141, '825581141_AirJordan1Low_CherrywoodRedCementGrey_553558-615-3.webp', 'side'),
+(27, 825581141, '825581141_AirJordan1Low_CherrywoodRedCementGrey_553558-615-2.webp', 'side'),
+(28, 902319149, '902319149_AirJordan1Low_CherrywoodRedCementGrey_553558-615-4.webp', 'side'),
+(29, 902319149, '902319149_AirJordan1Low_CherrywoodRedCementGrey_553558-615-3.webp', 'side'),
+(30, 902319149, '902319149_AirJordan1Low_CherrywoodRedCementGrey_553558-615-2.webp', 'side');
 
 -- --------------------------------------------------------
 
@@ -212,7 +238,7 @@ CREATE TABLE `sale_banner` (
 --
 
 INSERT INTO `sale_banner` (`id`, `image_path`) VALUES
-(4, 'sale2.png');
+(5, 'shoe-sale-banner-vector.jpg');
 
 -- --------------------------------------------------------
 
@@ -232,6 +258,7 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`stock_id`, `product_id`, `product_size`, `qty`) VALUES
+(463, 109224725, 'US 7', 3),
 (386, 398419917, 'US 7', 1),
 (377, 353378820, 'US 7', 3),
 (378, 353378820, 'US 7.5', 3),
@@ -273,7 +300,8 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `product_size`, `qty`) VALUES
 (466, 109224725, 'US 8.5', 3),
 (465, 109224725, 'US 8', 3),
 (464, 109224725, 'US 7.5', 3),
-(463, 109224725, 'US 7', 3),
+(631, 198883440, 'US 8.5', 3),
+(630, 198883440, 'US 8', 3),
 (462, 829082289, 'US 12', 3),
 (461, 829082289, 'US 11.5', 3),
 (460, 829082289, 'US 11', 3),
@@ -284,7 +312,7 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `product_size`, `qty`) VALUES
 (455, 829082289, 'US 8.5', 3),
 (454, 829082289, 'US 8', 3),
 (453, 829082289, 'US 7.5', 3),
-(452, 829082289, 'US 7', 2),
+(452, 829082289, 'US 7', 3),
 (451, 269816191, 'US 12', 3),
 (450, 269816191, 'US 11.5', 3),
 (449, 269816191, 'US 11', 3),
@@ -307,7 +335,7 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `product_size`, `qty`) VALUES
 (493, 454312233, 'US 11', 3),
 (494, 454312233, 'US 11.5', 3),
 (495, 454312233, 'US 12', 3),
-(496, 955982345, 'US 7', 0),
+(496, 955982345, 'US 7', 1),
 (650, 236262610, 'US 7', 3),
 (498, 955982345, 'US 8', 2),
 (499, 955982345, 'US 8.5', 3),
@@ -441,8 +469,6 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `product_size`, `qty`) VALUES
 (627, 95798472, 'US 12', 3),
 (628, 198883440, 'US 7', 3),
 (629, 198883440, 'US 7.5', 3),
-(630, 198883440, 'US 8', 3),
-(631, 198883440, 'US 8.5', 3),
 (632, 198883440, 'US 9', 3),
 (633, 198883440, 'US 9.5', 3),
 (634, 198883440, 'US 10', 3),
@@ -558,10 +584,10 @@ INSERT INTO `stock` (`stock_id`, `product_id`, `product_size`, `qty`) VALUES
 (756, 239260727, 'US 11', 3),
 (757, 239260727, 'US 11.5', 3),
 (758, 239260727, 'US 12', 3),
-(762, 764622953, 'US 7', 1),
-(772, 332449607, 'US 9', 1),
-(771, 332449607, 'US 7', 1),
-(784, 425336105, 'US 7', 1);
+(837, 466927871, 'US 7', 1),
+(839, 186531823, 'US 7', 1),
+(840, 825581141, 'US 7', 1),
+(841, 902319149, 'US 7', 1);
 
 -- --------------------------------------------------------
 
@@ -585,20 +611,6 @@ CREATE TABLE `transaction` (
   `landmark` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `transaction`
---
-
-INSERT INTO `transaction` (`transaction_id`, `customerid`, `amount`, `order_stat`, `order_date`, `payment_method`, `house_number`, `street`, `barangay`, `city`, `province`, `postal_code`, `landmark`) VALUES
-(149, 18, 2500, 'Paid', '2025-02-22 01:43:20', 'Cash', '034', 'Avendano', 'Poblacion', 'Plaridel', 'Bulacan', '3001', 'None'),
-(155, 18, 6, 'Paid', '2025-02-22 02:55:30', 'Cash', '034', 'Avendano', 'Poblacion', 'Quezon', 'Bulacan', '3001', 'None'),
-(156, 18, 5, 'Paid', '2025-02-22 03:01:20', 'Cash', '034', 'Avendano', 'Poblacion', 'Plaridel', 'Bulacan', '3001', ''),
-(157, 18, 5, 'Paid', '2025-02-22 03:03:27', 'Cash', '034', 'Avendano', 'Poblacion', 'Plaridel', 'Bulacan', '3001', ''),
-(158, 18, 5, 'Paid', '2025-02-22 03:05:31', 'Cash', '034', 'Avendano', 'Poblacion', 'Plaridel', 'Bulacan', '3001', ''),
-(159, 18, 5000, 'Paid', '2025-02-22 03:09:25', 'Cash', '034', 'Avendano', 'Poblacion', 'Plaridel', 'Bulacan', '3001', 'None'),
-(160, 18, 2000, 'Confirmed', '2025-02-22 03:20:51', 'GCash', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(161, 18, 5000, 'Paid', '2025-02-22 03:35:59', 'Card', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -613,20 +625,6 @@ CREATE TABLE `transaction_detail` (
   `product_size` varchar(50) DEFAULT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `transaction_detail`
---
-
-INSERT INTO `transaction_detail` (`transacton_detail_id`, `product_id`, `order_qty`, `transaction_id`, `product_size`, `quantity`) VALUES
-(591, 425336105, 0, 161, 'US 7', 1),
-(590, 829082289, 0, 160, 'US 7', 1),
-(589, 425336105, 0, 159, 'US 7', 1),
-(588, 425336105, 0, 158, 'US 7', 1),
-(587, 425336105, 0, 157, 'US 7', 1),
-(585, 557326675, 0, 155, 'US 7.5', 2),
-(586, 425336105, 0, 156, 'US 7', 1),
-(578, 624151402, 0, 149, 'US 7', 1);
 
 --
 -- Indexes for dumped tables
@@ -664,10 +662,23 @@ ALTER TABLE `order_details`
   ADD PRIMARY KEY (`order_id`,`product_id`,`product_size`);
 
 --
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`image_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `sale_banner`
@@ -709,7 +720,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `contact_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -721,31 +732,43 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
+--
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `sale_banner`
 --
 ALTER TABLE `sale_banner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=785;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=842;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `transaction_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- AUTO_INCREMENT for table `transaction_detail`
 --
 ALTER TABLE `transaction_detail`
-  MODIFY `transacton_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=592;
+  MODIFY `transacton_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=617;
 
 --
 -- Constraints for dumped tables
@@ -756,6 +779,12 @@ ALTER TABLE `transaction_detail`
 --
 ALTER TABLE `notifications`
   ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customerid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

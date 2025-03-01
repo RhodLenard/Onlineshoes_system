@@ -18,7 +18,41 @@ include("db/dbconn.php");
 	<link rel="stylesheet" href="css/home.css">
 	<link rel="stylesheet" href="css/newstyle.css">
 	<link rel="stylesheet" href="css/cartnotif.css">
+	<link rel="stylesheet" href="css/darkmode.css">
 </head>
+<style>
+	/* Light Mode Styles */
+	#contentInner {
+		background: #fff;
+		/* Light background for light mode */
+		color: #333;
+		/* Dark text */
+	}
+
+	/* Dark Mode Styles */
+	body[data-theme='dark'] #contentInner {
+		background: #333;
+		/* Dark background for dark mode */
+		color: #dcdcdc;
+		/* Light text for dark mode */
+	}
+
+	body[data-theme='dark'] #contentInner h4,
+	body[data-theme='dark'] #contentInner h3 {
+		color: #dcdcdc;
+		/* Light text color for headings */
+	}
+
+	body[data-theme='dark'] #contentInner p {
+		color: #b0b0b0;
+		/* Softer light color for paragraph text */
+	}
+
+	body[data-theme='dark'] #contentInner hr {
+		border-color: #555;
+		/* Darker border for HR in dark mode */
+	}
+</style>
 
 <body>
 	<!-- ✅ Navigation Bar -->
@@ -37,6 +71,13 @@ include("db/dbconn.php");
 				$query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
 				$fetch = $query->fetch_array();
 				?>
+
+				<div class="theme-switch">
+					<div class="toggle-label" id="darkModeToggle">
+						<div class="toggle-knob"></div>
+					</div>
+				</div>
+
 				<li class="nav-item">
 					<a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
 				</li>
@@ -93,10 +134,8 @@ include("db/dbconn.php");
 
 
 	<div id="content">
-		<div style="display: flex; justify-content: center; align-items: center; min-height: 50vh; background-color: #f9f9f9;">
-			<div id="content" style="width: 70%; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align:center">
-
-
+		<div style="display: flex; justify-content: center; align-items: center; min-height: 50vh;">
+			<div id="contentInner" style="width: 70%; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align:center">
 				<legend>Frequently Added Questions</legend>
 
 				<h4>DO YOU SHIP?</h4>
@@ -114,6 +153,7 @@ include("db/dbconn.php");
 			</div>
 		</div>
 	</div>
+
 
 	<!-- 🔔 Notification Modal (Working) -->
 	<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
@@ -225,5 +265,7 @@ include("db/dbconn.php");
 				}
 			});
 		</script>
+
+		<script src="js/darkMode.js"></script>
 
 </html>

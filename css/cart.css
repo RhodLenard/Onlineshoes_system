@@ -1,5 +1,7 @@
+/* Default Light Mode Styles */
 .well {
-  background-color: #fff;
+  background-color: #fff; /* Light background */
+  color: #333; /* Dark text */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -12,9 +14,21 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 20px;
+  color: #333; /* Dark text for light mode */
 }
 
-/* Table Styles */
+/* Dark Mode Styles */
+body[data-theme='dark'] .well {
+  background-color: #444444; /* Dark background */
+  color: #dcdcdc; /* Light text */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Darker shadow for dark mode */
+}
+
+body[data-theme='dark'] label {
+  color: #dcdcdc; /* Light text for dark mode */
+}
+
+/* Default Light Mode Styles */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -29,8 +43,28 @@ label {
 }
 
 .table th {
-  background-color: #f5f5f5;
+  background-color: #f5f5f5; /* Light background for headers */
   font-weight: bold;
+}
+
+.table td {
+  background-color: #fff; /* Light background for data cells */
+  color: #333; /* Dark text for data cells */
+}
+
+/* Dark Mode Styles */
+body[data-theme='dark'] .table th {
+  background-color: #555555; /* Darker background for headers */
+  color: #dcdcdc; /* Light text for headers */
+}
+
+body[data-theme='dark'] .table td {
+  background-color: #444444; /* Dark background for data cells */
+  color: #dcdcdc; /* Light text for data cells */
+}
+
+body[data-theme='dark'] .table {
+  border: 1px solid #555555; /* Dark border for the table */
 }
 
 /* Center alignment for empty cart message */
@@ -38,15 +72,14 @@ label {
   text-align: center;
   padding: 20px;
   font-style: italic;
-  /* Optional for emphasis */
-  color: #666;
-  /* Optional for styling */
+  color: #dcdcdc; /* Light text for empty cart */
 }
 
 /* Alternatively, center-align any cell with colspan */
 .table td[colspan] {
   text-align: center;
   padding: 20px;
+  color: #000000; /* Light text for colspan cells */
 }
 
 .table img {
@@ -120,4 +153,24 @@ label {
 
 .btn-inverse:hover {
   background-color: #f5f5f5;
+}
+
+/* Dark Mode Button Styles */
+body[data-theme='dark'] .btn {
+  background-color: #555555; /* Dark background for primary button */
+  color: #dcdcdc; /* Light text for button */
+}
+
+body[data-theme='dark'] .btn:hover {
+  background-color: #666666; /* Darker hover for primary button */
+}
+
+body[data-theme='dark'] .btn-inverse {
+  background-color: #444444; /* Dark background for inverse button */
+  color: #dcdcdc; /* Light text for inverse button */
+  border: 1px solid #666666; /* Darker border */
+}
+
+body[data-theme='dark'] .btn-inverse:hover {
+  background-color: #555555; /* Darker hover for inverse button */
 }

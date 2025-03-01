@@ -35,6 +35,8 @@ $amount = $transaction['amount'];
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/summary.css">
     <link rel="stylesheet" href="css/cartnotif.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+
 </head>
 
 <body>
@@ -54,6 +56,13 @@ $amount = $transaction['amount'];
                 $query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
                 $fetch = $query->fetch_array();
                 ?>
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
@@ -273,7 +282,6 @@ $amount = $transaction['amount'];
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">
-                <label style="font-size:17px;"> Copyright &copy; </label>
                 <p style="font-size:25px;">Sneakers Street Inc. 2025</p>
             </div>
         </div>
@@ -363,6 +371,8 @@ $amount = $transaction['amount'];
                 }
             });
         </script>
+
+        <script src="js/darkMode.js"></script>
 </body>
 
 </html>

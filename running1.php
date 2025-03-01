@@ -18,6 +18,7 @@ include("db/dbconn.php");
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/plist.css">
     <link rel="stylesheet" href="css/cartnotif.css">
+    <link rel="stylesheet" href="css/darkmode.css">
 </head>
 
 <body>
@@ -37,6 +38,13 @@ include("db/dbconn.php");
                 $query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
                 $fetch = $query->fetch_array();
                 ?>
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
@@ -100,48 +108,44 @@ include("db/dbconn.php");
         </ul>
     </div>
 
+    <!-- 🛍️ Product Listing ✅ RESTORED -->
+    <div id="product">
+        <?php
+        $query = $conn->query("SELECT * FROM product WHERE category='running' ORDER BY created_at DESC") or die(mysqli_error());
+        $all_out_of_stock = true;
 
+        while ($fetch = $query->fetch_array()) {
+            $pid = $fetch['product_id'];
+            $query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die(mysqli_error());
+            $rows = $query1->fetch_array();
 
-    <div id="content">
-        <!-- 🛍️ Product Listing ✅ RESTORED -->
-        <div id="product">
-            <?php
-            $query = $conn->query("SELECT * FROM product WHERE category='running' ORDER BY created_at DESC") or die(mysqli_error());
-            $all_out_of_stock = true;
+            if ($rows && isset($rows['qty']) && $rows['qty'] > 0) {
+                $all_out_of_stock = false;
+                echo "<div class='float'>";
+                echo "<a href='details.php?id=" . $fetch['product_id'] . "'>";
+                echo "<img src='photo/" . $fetch['product_image'] . "' alt='" . $fetch['product_name'] . "' class='main-product-image' data-product-id='" . $fetch['product_id'] . "'>";
 
-            while ($fetch = $query->fetch_array()) {
-                $pid = $fetch['product_id'];
-                $query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die(mysqli_error());
-                $rows = $query1->fetch_array();
-
-                if ($rows && isset($rows['qty']) && $rows['qty'] > 0) {
-                    $all_out_of_stock = false;
-                    echo "<div class='float'>";
-                    echo "<a href='details.php?id=" . $fetch['product_id'] . "'>";
-                    echo "<img src='photo/" . $fetch['product_image'] . "' alt='" . $fetch['product_name'] . "' class='main-product-image' data-product-id='" . $fetch['product_id'] . "'>";
-
-                    // Fetch additional images from the database
-                    $imageQuery = $conn->query("SELECT image_path FROM product_images WHERE product_id = '$pid'");
-                    echo "<div class='extra-images' style='display: none;'>";
-                    while ($imageRow = $imageQuery->fetch_assoc()) {
-                        echo "<img src='photo/" . $imageRow['image_path'] . "' class='hidden-thumbnail' data-product-id='" . $fetch['product_id'] . "'>";
-                    }
-                    echo "</div>";
-
-                    echo "<div class='cart-icon' onclick='addToCart(" . $fetch['product_id'] . ")'>";
-                    echo "<img src='images/shopping-cart.png' alt='Add to Cart'>";
-                    echo "</div>";
-                    echo "<h3>" . $fetch['product_name'] . "</h3>";
-                    echo "<p>₱ " . number_format($fetch['product_price'], 0) . "</p>";
-                    echo "</a>";
-                    echo "</div>";
+                // Fetch additional images from the database
+                $imageQuery = $conn->query("SELECT image_path FROM product_images WHERE product_id = '$pid'");
+                echo "<div class='extra-images' style='display: none;'>";
+                while ($imageRow = $imageQuery->fetch_assoc()) {
+                    echo "<img src='photo/" . $imageRow['image_path'] . "' class='hidden-thumbnail' data-product-id='" . $fetch['product_id'] . "'>";
                 }
+                echo "</div>";
+
+                echo "<div class='cart-icon' onclick='addToCart(" . $fetch['product_id'] . ")'>";
+                echo "<img src='images/shopping-cart.png' alt='Add to Cart'>";
+                echo "</div>";
+                echo "<h3>" . $fetch['product_name'] . "</h3>";
+                echo "<p>₱ " . number_format($fetch['product_price'], 0) . "</p>";
+                echo "</a>";
+                echo "</div>";
             }
-            if ($all_out_of_stock) {
-                echo "<div style='text-align: center; margin-top: 20px;'><span style='color: red; font-weight: bold; font-size: 18px;'>No Stock</span></div>";
-            }
-            ?>
-        </div>
+        }
+        if ($all_out_of_stock) {
+            echo "<div style='text-align: center; margin-top: 20px;'><span style='color: red; font-weight: bold; font-size: 18px;'>No Stock</span></div>";
+        }
+        ?>
     </div>
 
     <!-- 🔔 Notification Modal (Working) -->
@@ -164,7 +168,6 @@ include("db/dbconn.php");
     <div style="padding: 20px;">
         <div id="footer">
             <div class="foot">
-                <label style="font-size:17px;"> Copyright &copy; </label>
                 <p style="font-size:25px;">Sneakers Street Inc. 2025</p>
             </div>
         </div>
@@ -291,6 +294,8 @@ include("db/dbconn.php");
                 });
             });
         </script>
+
+        <script src="js/darkMode.js"></script>
 </body>
 
 </html>

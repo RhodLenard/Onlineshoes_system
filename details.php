@@ -20,6 +20,8 @@ include("function/cash.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/newstyle.css">
     <link rel="stylesheet" href="css/cartnotif.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&family=Lato:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <script>
         function toggleSizeGuide() {
             var guide = document.getElementById("size-guide");
@@ -31,6 +33,25 @@ include("function/cash.php");
         }
     </script>
     <style>
+        :root {
+            --podium-cds-typography-1920-plus-title4: 'Roboto', sans-serif;
+            /* Font Family */
+            --podium-cds-typography-1920-plus-title4-size: 24px;
+            /* Font Size */
+            --podium-cds-typography-1920-plus-title4-weight: bold;
+            /* Font Weight */
+        }
+
+        /* Using the variable in your .text-uppercase class */
+        .text-uppercase {
+            text-transform: uppercase;
+            font-family: var(--podium-cds-typography-1920-plus-title4);
+            font-size: var(--podium-cds-typography-1920-plus-title4-size);
+            /* Add the font size here */
+            font-weight: var(--podium-cds-typography-1920-plus-title4-weight);
+            /* Add font weight if needed */
+        }
+
         .size-guide-link {
             display: flex;
             align-items: center;
@@ -123,6 +144,13 @@ include("function/cash.php");
                 $query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
                 $fetch = $query->fetch_array();
                 ?>
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
@@ -255,9 +283,11 @@ include("function/cash.php");
                 </div>";
                             }
                             ?>
-                            <a class="size-guide-link" data-toggle="modal" data-target="#sizeGuideModal">
-                                <i class="fas fa-ruler"></i> Size Guide
-                            </a>
+                        </div>
+                        <a class="size-guide-link" data-toggle="modal" data-target="#sizeGuideModal">
+                            <i class="fas fa-ruler"></i> Size Guide
+                        </a>
+                        <div>
                             <div id="size-guide" style="display: none;">
                                 <img src="images/size-guide.jpg" style="width: 100%; max-width: 800px; height: auto; border: 1px solid #000; display: block; margin: 10px auto;">
                             </div>
@@ -272,7 +302,7 @@ include("function/cash.php");
                 </center>
             </div>
         <?php } ?>
-
+        </div>
         <!-- Add CSS and JavaScript -->
         <style>
             /* Default size option styles */
@@ -299,6 +329,16 @@ include("function/cash.php");
                 box-sizing: border-box;
             }
 
+            /* Add styles for dark mode */
+            body[data-theme='dark'] .size-option {
+                background: #555555;
+                /* Darker background in dark mode */
+                color: #dcdcdc;
+                /* Light gray text in dark mode */
+                border-color: #444444;
+                /* Softer border in dark mode */
+            }
+
             .size-option:hover {
                 border-color: rgb(0, 0, 0);
             }
@@ -306,7 +346,8 @@ include("function/cash.php");
             input[type="radio"]:checked+.size-option {
                 border-color: #000;
                 background: #f9f9f9;
-                color: inherit;
+                color: black;
+                /* Black text when selected */
             }
 
             /* Disabled size option styling */
@@ -315,6 +356,16 @@ include("function/cash.php");
                 color: #a0a0a0;
                 cursor: not-allowed;
                 border-color: #ccc;
+            }
+
+            /* Add styles for dark mode for out-of-stock sizes */
+            body[data-theme='dark'] .size-option.out-of-stock {
+                background: #333333;
+                /* Darker background for out-of-stock items */
+                color: #666666;
+                /* Lighter gray text for disabled items */
+                border-color: #444444;
+                /* Softer border for out-of-stock items */
             }
 
             /* Size group container */
@@ -443,7 +494,6 @@ include("function/cash.php");
         <div style="padding: 20px;">
             <div id="footer">
                 <div class="foot">
-                    <label style="font-size:17px;"> Copyright &copy; </label>
                     <p style="font-size:25px;">Sneakers Street Inc. 2025 </p>
                 </div>
             </div>
@@ -572,6 +622,8 @@ include("function/cash.php");
                     });
                 });
             </script>
+
+            <script src="js/darkMode.js"></script>
 </body>
 
 </html>

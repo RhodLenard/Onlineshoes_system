@@ -1,0 +1,49 @@
+.theme-switch {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.toggle-label {
+  width: 40px;
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.4s ease-in-out;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+}
+
+/* Default (Light Mode) */
+.toggle-knob {
+  width: 15px;
+  height: 15px;
+  background: #333; /* Dark color for light mode */
+  border-radius: 50%;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out; /* Transition for both position and background-color */
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode Styles */
+body[data-theme='dark'] .toggle-knob {
+  background: #fff; /* White color for dark mode */
+  transform: translateX(
+    20px
+  ); /* Move knob to the right when dark mode is active */
+}
+
+/* Dark mode active */
+.toggle-label.active {
+  background: #1c1c1c;
+}
+
+.toggle-label.active .toggle-knob {
+  transform: translateX(30px) translateY(-50%);
+}

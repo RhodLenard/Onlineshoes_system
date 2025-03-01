@@ -65,6 +65,7 @@ if (isset($_SESSION['cart'])) {
     <link rel="stylesheet" href="css/p1.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/sucess.css">
+    <link rel="stylesheet" href="css/darkmode.css">
 </head>
 
 <body>
@@ -83,6 +84,13 @@ if (isset($_SESSION['cart'])) {
                 $query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
                 $fetch = $query->fetch_array();
                 ?>
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
@@ -159,6 +167,7 @@ if (isset($_SESSION['cart'])) {
         </div>
     </div>
 
+    <script src="js/darkMode.js"></script>
 </body>
 
 </html>

@@ -15,6 +15,7 @@ include("function/customer_signup.php");
     <link rel="stylesheet" href="css/p1.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/newstyle.css">
+    <link rel="stylesheet" href="css/darkmode.css">
 </head>
 
 <body>
@@ -28,6 +29,13 @@ include("function/customer_signup.php");
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="login.php">
                         <i class="fas fa-shopping-cart">
@@ -112,6 +120,8 @@ include("function/customer_signup.php");
 
         <!-- Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script src="js/darkMode.js"></script>
 </body>
 
 </html>

@@ -39,6 +39,33 @@ if (isset($_GET['tid'])) {
     <link rel="stylesheet" href="css/p1.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/newstyle.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+    <style>
+        /* Dark Mode Styles */
+        body[data-theme='dark'] .bg-white {
+            background-color: #444444 !important;
+            /* Dark background for white background class */
+        }
+
+        /* Dark Mode Styles */
+        body[data-theme='dark'] .text-gray-700 {
+            color: #ffffff !important;
+            /* White text for dark mode */
+        }
+
+        /* Dark Mode Styles */
+        body[data-theme='dark'] b,
+        body[data-theme='dark'] strong {
+            color: #ffffff !important;
+            /* White text color for b and strong in dark mode */
+        }
+
+        /* Dark Mode Styles */
+        body[data-theme='dark'] p {
+            color: #ffffff !important;
+            /* Make text inside <p> white in dark mode */
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -57,6 +84,13 @@ if (isset($_GET['tid'])) {
                 $query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
                 $fetch = $query->fetch_array();
                 ?>
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
@@ -75,11 +109,11 @@ if (isset($_GET['tid'])) {
     </nav>
 
     <!-- React App Container -->
-    <div id="app" class="container mx-auto p-4"></div>
+    <div id="app" class="container mx-auto p-4 h-screen flex items-center justify-center">
 
-    <!-- React Component -->
-    <script type="text/babel">
-        function PaymentSuccess() {
+        <!-- React Component -->
+        <script type="text/babel">
+            function PaymentSuccess() {
             // Transaction and customer data from PHP
             const transaction = <?php
                                 // Ensure the amount is a numeric value
@@ -89,11 +123,11 @@ if (isset($_GET['tid'])) {
             const customer = <?php echo json_encode($customer); ?>;
 
             // Full delivery address
-            const deliveryAddress = `
+            const deliveryAddress = ` 
                 ${transaction.house_number}, ${transaction.street}, 
                 ${transaction.barangay}, ${transaction.city}, 
                 ${transaction.province}, ${transaction.postal_code} 
-                ${transaction.landmark ? `(${transaction.landmark})` : ''}
+                ${transaction.landmark ? `(${transaction.landmark})` : ''} 
             `.trim();
 
             // Countdown state
@@ -141,6 +175,10 @@ if (isset($_GET['tid'])) {
         // Render the React component
         ReactDOM.render(<PaymentSuccess />, document.getElementById('app'));
     </script>
+    </div>
+
+
+    <script src="js/darkMode.js"></script>
 </body>
 
 </html>

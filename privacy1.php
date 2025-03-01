@@ -17,6 +17,7 @@ include("db/dbconn.php");
 	<link rel="stylesheet" href="css/p1.css">
 	<link rel="stylesheet" href="css/home.css">
 	<link rel="stylesheet" href="css/cartnotif.css">
+	<link rel="stylesheet" href="css/darkmode.css">
 </head>
 
 <body>
@@ -36,6 +37,13 @@ include("db/dbconn.php");
 				$query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
 				$fetch = $query->fetch_array();
 				?>
+
+				<div class="theme-switch">
+					<div class="toggle-label" id="darkModeToggle">
+						<div class="toggle-knob"></div>
+					</div>
+				</div>
+
 				<li class="nav-item">
 					<a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
 				</li>
@@ -149,7 +157,6 @@ include("db/dbconn.php");
 	<div style="padding: 20px;">
 		<div id="footer">
 			<div class="foot">
-				<label style="font-size:17px;"> Copyright &copy; </label>
 				<p style="font-size:25px;">Sneakers Street Inc. 2025 </p>
 			</div>
 		</div>
@@ -239,6 +246,8 @@ include("db/dbconn.php");
 				}
 			});
 		</script>
+
+		<script src="js/darkMode.js"></script>
 </body>
 
 </html>

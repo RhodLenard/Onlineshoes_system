@@ -22,6 +22,7 @@ include("db/dbconn.php");
 	<link rel="stylesheet" href="css/home.css">
 	<link rel="stylesheet" href="css/plist.css">
 	<link rel="stylesheet" href="css/cartnotif.css">
+	<link rel="stylesheet" href="css/darkmode.css">
 
 	<style>
 		#sale-banner img {
@@ -31,50 +32,6 @@ include("db/dbconn.php");
 			border-radius: 10px;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		}
-
-		.theme-switch {
-			display: flex;
-			align-items: center;
-			margin-right: 10px;
-		}
-
-		.toggle-label {
-			width: 40px;
-			height: 20px;
-			background: #e0e0e0;
-			border-radius: 30px;
-			position: relative;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			transition: background 0.4s ease-in-out;
-			box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.6);
-		}
-
-		.toggle-knob {
-			width: 15px;
-			height: 15px;
-			background: white;
-			border-radius: 50%;
-			position: absolute;
-			left: 3px;
-			top: 3px;
-			/* Instead of 50% */
-			transition: transform 0.4s ease-in-out;
-			box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-		}
-
-
-		/* Dark mode active */
-		.toggle-label.active {
-			background: #1c1c1c;
-		}
-
-		.toggle-label.active .toggle-knob {
-			transform: translateX(30px) translateY(-50%);
-		}
-	</style>
-
 	</style>
 </head>
 
@@ -184,7 +141,7 @@ include("db/dbconn.php");
 	<!-- 🛍️ Product Listing ✅ RESTORED -->
 	<div id="product">
 		<?php
-		$query = $conn->query("SELECT * FROM product WHERE category='feature' ORDER BY product_id DESC") or die(mysqli_error());
+		$query = $conn->query("SELECT * FROM product WHERE category='feature' ORDER BY created_at DESC") or die(mysqli_error());
 		$all_out_of_stock = true;
 
 		while ($fetch = $query->fetch_array()) {

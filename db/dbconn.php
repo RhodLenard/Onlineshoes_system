@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli('localhost', 'root', '', 'shoes', 3307); // Added the port 3307
+$conn = new mysqli('localhost', 'root', '', 'shoes'); // Added the port 3307
 
 // Check for connection errors
 if ($conn->connect_error) {

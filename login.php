@@ -255,7 +255,173 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="css/p1.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/newstyle.css">
+    <link rel="stylesheet" href="css/darkmode.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        /* Default (Light Mode) */
+        #fcontainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f0f0, #e4e4e4);
+            min-height: 58vh;
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-container input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-container input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.25);
+            background-color: #fff;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+            transform: scale(1.02);
+        }
+
+        .form-container button:active {
+            transform: scale(0.98);
+        }
+
+        .form-container .signup-link {
+            display: inline;
+            margin-top: 20px;
+            margin-left: 5px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .form-container .signup-link:hover {
+            color: #0056b3;
+        }
+
+        /* Dark Mode Styles */
+        body[data-theme='dark'] #fcontainer {
+            background: linear-gradient(135deg, #2c2c2c, #444444);
+        }
+
+        body[data-theme='dark'] .form-container {
+            background-color: #333;
+            /* Dark background for form */
+            color: #dcdcdc;
+            /* Light text color */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            /* Darker shadow */
+        }
+
+        body[data-theme='dark'] .form-container h2 {
+            color: #dcdcdc;
+            /* Light text for heading */
+        }
+
+        body[data-theme='dark'] .form-container label {
+            color: #ddd;
+            /* Lighter text for labels */
+        }
+
+        body[data-theme='dark'] .form-container input {
+            background-color: #555;
+            /* Dark background for input */
+            border: 1px solid #777;
+            /* Darker border for input */
+            color: #dcdcdc;
+            /* Light text inside inputs */
+        }
+
+        body[data-theme='dark'] .form-container input:focus {
+            border-color: #007bff;
+            /* Highlight color on focus */
+            background-color: #666;
+            /* Dark background on focus */
+        }
+
+        body[data-theme='dark'] .form-container button {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+            /* Darker blue gradient */
+        }
+
+        body[data-theme='dark'] .form-container button:hover {
+            background: linear-gradient(135deg, #003f7f, #0056b3);
+        }
+
+        body[data-theme='dark'] .form-container .signup-link {
+            color: #77b5fe;
+            /* Lighter color for signup link in dark mode */
+        }
+
+        body[data-theme='dark'] .form-container .signup-link:hover {
+            color: #b0d4fe;
+            /* Lighter hover color */
+        }
+    </style>
 
 </head>
 
@@ -273,6 +439,11 @@ if (isset($_POST['login'])) {
         <!-- Corrected structure: Now includes the navigation links inside the collapsible div -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
                 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="product.php">Product</a></li>
                 <li class="nav-item"><a class="nav-link" href="aboutus.php">About Us</a></li>
@@ -329,6 +500,8 @@ if (isset($_POST['login'])) {
 
         <!-- Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script src="js/darkMode.js"></script>
 
 </body>
 
