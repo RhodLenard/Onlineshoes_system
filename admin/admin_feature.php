@@ -30,8 +30,24 @@ if (isset($_POST['add'])) {
             die("Duplicate product_id generated. Please try again.");
         }
 
-        $conn->query("INSERT INTO product (product_id, product_name, product_price, product_image, brand, category, product_size)
-                      VALUES ('$product_code', '$product_name', '$product_price', '$name', '$brand', '$category', '$product_size')");
+        $created_at = !empty($_POST['created_at']) ? $_POST['created_at'] : date("Y-m-d"); // Use selected date or today's date
+
+        $conn->query("INSERT INTO product (product_id, product_name, product_price, product_image, brand, category, product_size, created_at)
+                      VALUES ('$product_code', '$product_name', '$product_price', '$name', '$brand', '$category', '$product_size', '$created_at')")
+            or die(mysqli_error($conn));
+
+
+        foreach ($_FILES["product_images"]["tmp_name"] as $key => $tmp_name) {
+            if (!empty($tmp_name)) {
+                $file_name = $product_code . "_" . $_FILES["product_images"]["name"][$key];
+                move_uploaded_file($tmp_name, "../photo/" . $file_name);
+
+                // Insert image into product_images table with the correct product_id
+                $conn->query("INSERT INTO product_images (product_id, image_path, image_type)
+                      VALUES ('$product_code', '$file_name', 'side')")
+                    or die("Error inserting product images: " . mysqli_error($conn));
+            }
+        }
 
         $sizes = ["US 7", "US 7.5", "US 8", "US 8.5", "US 9", "US 9.5", "US 10", "US 10.5", "US 11", "US 11", "US 12"];
         foreach ($sizes as $size) {
@@ -175,6 +191,9 @@ if (isset($_POST['edit_product'])) {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="../css/admhome.css">
     <link rel="stylesheet" href="../css/fea.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -227,6 +246,11 @@ if (isset($_POST['edit_product'])) {
                             <input type="file" class="form-control" id="productImage" name="product_image" required>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="product_images[]" class="form-label">Side Of Shoes (Can add many image)</label>
+                            <input type="file" class="form-control" name="product_images[]" multiple>
+                        </div>
+
                         <?php include("random_id.php"); ?>
                         <input type="hidden" name="product_code" value="<?php echo $code; ?>">
 
@@ -259,6 +283,13 @@ if (isset($_POST['edit_product'])) {
                                 ?>
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="createdAt" class="form-label">Product Creation Date</label>
+                            <input type="text" class="form-control" id="createdAt" name="created_at" placeholder="Select a date" required>
+                        </div>
+
+
 
                         <div class="mb-3">
                             <label for="brandName" class="form-label">Brand Name</label>
@@ -333,7 +364,7 @@ if (isset($_POST['edit_product'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $query = $conn->query("SELECT * FROM `product` WHERE category='feature' ORDER BY product_id DESC") or die(mysqli_error());
+                    $query = $conn->query("SELECT * FROM `product` WHERE category='feature' ORDER BY created_at DESC") or die(mysqli_error());
                     while ($fetch = $query->fetch_array()) {
                         $id = $fetch['product_id'];
                     ?>
@@ -569,6 +600,25 @@ if (isset($_POST['edit_product'])) {
                 });
             });
         </script>
+
+        <!-- Flatpickr JS -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                flatpickr("#createdAt", {
+                    dateFormat: "Y-m-d", // Format: YYYY-MM-DD
+                    minDate: "today", // Prevent selecting past dates
+                    defaultDate: "today", // Auto-select today's date
+                    static: true, // Prevents modal closing on selection
+                    clickOpens: true, // Ensures input field opens the calendar
+                    onOpen: function(selectedDates, dateStr, instance) {
+                        instance._positionCalendar(); // Ensures correct positioning
+                    }
+                });
+            });
+        </script>
+
 
 
 </body>

@@ -70,6 +70,38 @@ include("function/cash.php");
                 height: auto;
             }
         }
+
+        .thumbnail-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: auto;
+            /* Maintain aspect ratio */
+            object-fit: contain;
+            /* Prevent cropping */
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+            border-color: black;
+        }
+
+        .product-image {
+            max-width: 400px;
+            height: auto;
+            object-fit: contain;
+            /* Ensures the image is not cropped */
+            border: 2px solid #000;
+        }
     </style>
 
 </head>
@@ -168,7 +200,25 @@ include("function/cash.php");
 
                 <center>
 
-                    <img class="product-image img-polaroid" src="photo/<?php echo $row['product_image']; ?>" alt="Product Image">
+                    <!-- Main Product Image -->
+                    <center>
+                        <img id="main-product-image" class="product-image img-polaroid" src="photo/<?php echo $row['product_image']; ?>" alt="Product Image">
+                    </center>
+
+                    <!-- Thumbnail Images -->
+                    <div class="thumbnail-container">
+                        <img class="thumbnail" src="photo/<?php echo $row['product_image']; ?>" onmouseover="changeMainImage('photo/<?php echo $row['product_image']; ?>')">
+
+                        <?php
+                        $imagePaths = ["photo/" . $row['product_image']]; // Include main image in cycle
+                        $imageQuery = $conn->query("SELECT image_path FROM product_images WHERE product_id = '$id'");
+                        while ($imageRow = $imageQuery->fetch_assoc()) {
+                            $imagePaths[] = "photo/" . $imageRow['image_path'];
+                            echo "<img class='thumbnail' src='photo/{$imageRow['image_path']}' onmouseover='changeMainImage(\"photo/{$imageRow['image_path']}\")'>";
+                        }
+                        ?>
+
+                    </div>
                     <h2 class="text-uppercase"><?php echo $row['product_name']; ?></h2>
                     <h3 class="text-uppercase">₱ <?php echo number_format($row['product_price'], 0); ?></h3>
 
@@ -482,6 +532,44 @@ include("function/cash.php");
                             }
                         });
                     }
+                });
+            </script>
+
+            <script>
+                let imageIndex = 0;
+                let imagePaths = <?php echo json_encode($imagePaths); ?>;
+                let cycleInterval;
+                let firstImageSrc = imagePaths[0]; // Store the first image as default
+
+                function changeMainImage(imageSrc) {
+                    document.getElementById("main-product-image").src = imageSrc;
+                }
+
+                // Hovering over the main image starts cycling through images
+                document.getElementById("main-product-image").addEventListener("mouseover", function() {
+                    clearInterval(cycleInterval); // Reset cycle when hovering again
+                    cycleInterval = setInterval(() => {
+                        document.getElementById("main-product-image").src = imagePaths[imageIndex];
+                        imageIndex = (imageIndex + 1) % imagePaths.length; // Loop through images
+                    }, 1000); // Change image every 1 second
+                });
+
+                // Stop cycling when mouse leaves and reset to the first image
+                document.getElementById("main-product-image").addEventListener("mouseleave", function() {
+                    clearInterval(cycleInterval);
+                    document.getElementById("main-product-image").src = firstImageSrc; // Reset to first image
+                    imageIndex = 0; // Reset index
+                });
+
+                // Hovering over a thumbnail updates the main image
+                document.querySelectorAll(".thumbnail").forEach(thumbnail => {
+                    thumbnail.addEventListener("mouseover", function() {
+                        changeMainImage(this.src);
+                    });
+
+                    thumbnail.addEventListener("mouseleave", function() {
+                        document.getElementById("main-product-image").src = firstImageSrc; // Reset to first image
+                    });
                 });
             </script>
 </body>

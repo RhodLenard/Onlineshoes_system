@@ -18,6 +18,49 @@ include("db/dbconn.php");
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/plist.css">
     <link rel="stylesheet" href="css/cartnotif.css">
+    <style>
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .toggle-label {
+            width: 60px;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background 0.4s ease-in-out;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+        }
+
+        .toggle-knob {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            /* Instead of 50% */
+            transition: transform 0.4s ease-in-out;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* Dark mode active */
+        .toggle-label.active {
+            background: #1c1c1c;
+        }
+
+        .toggle-label.active .toggle-knob {
+            transform: translateX(30px) translateY(-50%);
+        }
+    </style>
 </head>
 
 <body>
@@ -37,6 +80,13 @@ include("db/dbconn.php");
                 $query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
                 $fetch = $query->fetch_array();
                 ?>
+
+                <div class="theme-switch">
+                    <div class="toggle-label" id="darkModeToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
                 </li>
@@ -99,39 +149,45 @@ include("db/dbconn.php");
         </ul>
     </div>
 
-    <div id="content">
-        <div id="product">
-            <?php
-            $query = $conn->query("SELECT * FROM product WHERE category='basketball' ORDER BY product_id DESC") or die(mysqli_error());
-            $all_out_of_stock = true;
 
-            while ($fetch = $query->fetch_array()) {
-                $pid = $fetch['product_id'];
-                $query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die(mysqli_error());
-                $rows = $query1->fetch_array();
+    <!-- 🛍️ Product Listing ✅ RESTORED -->
+    <div id="product">
+        <?php
+        $query = $conn->query("SELECT * FROM product WHERE category='basketball' ORDER BY created_at DESC") or die(mysqli_error());
+        $all_out_of_stock = true;
 
-                if ($rows && isset($rows['qty']) && $rows['qty'] > 0) {
-                    $all_out_of_stock = false;
-                    echo "<div class='float'>
-                            <a href='details.php?id=" . $fetch['product_id'] . "'>
-                                <img src='photo/" . $fetch['product_image'] . "' alt='" . $fetch['product_name'] . "'>
-                                <div class='cart-icon' onclick='addToCart(" . $fetch['product_id'] . ")'>
-                                    <img src='images/shopping-cart.png' alt='Add to Cart'>
-                                </div>
-                                <h3>" . $fetch['product_name'] . "</h3>
-                                <p>₱ " . number_format($fetch['product_price'], 0) . "</p>
-                            </a>
-                          </div>";
+        while ($fetch = $query->fetch_array()) {
+            $pid = $fetch['product_id'];
+            $query1 = $conn->query("SELECT * FROM stock WHERE product_id = '$pid'") or die(mysqli_error());
+            $rows = $query1->fetch_array();
+
+            if ($rows && isset($rows['qty']) && $rows['qty'] > 0) {
+                $all_out_of_stock = false;
+                echo "<div class='float'>";
+                echo "<a href='details.php?id=" . $fetch['product_id'] . "'>";
+                echo "<img src='photo/" . $fetch['product_image'] . "' alt='" . $fetch['product_name'] . "' class='main-product-image' data-product-id='" . $fetch['product_id'] . "'>";
+
+                // Fetch additional images from the database
+                $imageQuery = $conn->query("SELECT image_path FROM product_images WHERE product_id = '$pid'");
+                echo "<div class='extra-images' style='display: none;'>";
+                while ($imageRow = $imageQuery->fetch_assoc()) {
+                    echo "<img src='photo/" . $imageRow['image_path'] . "' class='hidden-thumbnail' data-product-id='" . $fetch['product_id'] . "'>";
                 }
-            }
+                echo "</div>";
 
-            if ($all_out_of_stock) {
-                echo "<div style='text-align: center; margin-top: 20px;'>
-                        <span style='color: red; font-weight: bold; font-size: 18px;'>No Stock</span>
-                      </div>";
+                echo "<div class='cart-icon' onclick='addToCart(" . $fetch['product_id'] . ")'>";
+                echo "<img src='images/shopping-cart.png' alt='Add to Cart'>";
+                echo "</div>";
+                echo "<h3>" . $fetch['product_name'] . "</h3>";
+                echo "<p>₱ " . number_format($fetch['product_price'], 0) . "</p>";
+                echo "</a>";
+                echo "</div>";
             }
-            ?>
-        </div>
+        }
+        if ($all_out_of_stock) {
+            echo "<div style='text-align: center; margin-top: 20px;'><span style='color: red; font-weight: bold; font-size: 18px;'>No Stock</span></div>";
+        }
+        ?>
     </div>
 
     <!-- 🔔 Notification Modal (Working) -->
@@ -244,6 +300,46 @@ include("db/dbconn.php");
                 }
             });
         </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let productImages = document.querySelectorAll(".main-product-image");
+
+                productImages.forEach((imgElement) => {
+                    let productId = imgElement.getAttribute("data-product-id");
+                    let defaultImage = imgElement.src;
+                    let hiddenImages = document.querySelectorAll(`.hidden-thumbnail[data-product-id='${productId}']`);
+                    let imageArray = [defaultImage]; // Start with the default image
+                    hiddenImages.forEach(img => imageArray.push(img.src)); // Add extra images
+                    let imageIndex = 0;
+                    let interval;
+
+                    // Function to cycle images
+                    function startImageCycle() {
+                        if (imageArray.length > 1) {
+                            interval = setInterval(() => {
+                                imageIndex = (imageIndex + 1) % imageArray.length;
+                                imgElement.src = imageArray[imageIndex];
+                            }, 1000);
+                        }
+                    }
+
+                    // Function to reset to default image
+                    function resetImage() {
+                        clearInterval(interval);
+                        imgElement.src = defaultImage;
+                        imageIndex = 0;
+                    }
+
+                    // Hover events
+                    imgElement.addEventListener("mouseover", startImageCycle);
+                    imgElement.addEventListener("mouseleave", resetImage);
+                });
+            });
+        </script>
+
+        <script src="js/darkMode.js"></script>
+
 </body>
 
 </html>

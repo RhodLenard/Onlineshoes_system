@@ -31,6 +31,50 @@ include("db/dbconn.php");
 			border-radius: 10px;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		}
+
+		.theme-switch {
+			display: flex;
+			align-items: center;
+			margin-right: 10px;
+		}
+
+		.toggle-label {
+			width: 40px;
+			height: 20px;
+			background: #e0e0e0;
+			border-radius: 30px;
+			position: relative;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			transition: background 0.4s ease-in-out;
+			box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+		}
+
+		.toggle-knob {
+			width: 15px;
+			height: 15px;
+			background: white;
+			border-radius: 50%;
+			position: absolute;
+			left: 3px;
+			top: 3px;
+			/* Instead of 50% */
+			transition: transform 0.4s ease-in-out;
+			box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+		}
+
+
+		/* Dark mode active */
+		.toggle-label.active {
+			background: #1c1c1c;
+		}
+
+		.toggle-label.active .toggle-knob {
+			transform: translateX(30px) translateY(-50%);
+		}
+	</style>
+
 	</style>
 </head>
 
@@ -52,6 +96,12 @@ include("db/dbconn.php");
 				$query = $conn->query("SELECT * FROM customer WHERE customerid = '$id'") or die(mysqli_error());
 				$fetch = $query->fetch_array();
 				?>
+				<div class="theme-switch">
+					<div class="toggle-label" id="darkModeToggle">
+						<div class="toggle-knob"></div>
+					</div>
+				</div>
+
 				<li class="nav-item">
 					<a class="nav-link" href="account.php"><i class="icon-user"></i> <?php echo $fetch['firstname']; ?> <?php echo $fetch['lastname']; ?></a>
 				</li>
@@ -146,7 +196,16 @@ include("db/dbconn.php");
 				$all_out_of_stock = false;
 				echo "<div class='float'>";
 				echo "<a href='details.php?id=" . $fetch['product_id'] . "'>";
-				echo "<img src='photo/" . $fetch['product_image'] . "' alt='" . $fetch['product_name'] . "'>";
+				echo "<img src='photo/" . $fetch['product_image'] . "' alt='" . $fetch['product_name'] . "' class='main-product-image' data-product-id='" . $fetch['product_id'] . "'>";
+
+				// Fetch additional images from the database
+				$imageQuery = $conn->query("SELECT image_path FROM product_images WHERE product_id = '$pid'");
+				echo "<div class='extra-images' style='display: none;'>";
+				while ($imageRow = $imageQuery->fetch_assoc()) {
+					echo "<img src='photo/" . $imageRow['image_path'] . "' class='hidden-thumbnail' data-product-id='" . $fetch['product_id'] . "'>";
+				}
+				echo "</div>";
+
 				echo "<div class='cart-icon' onclick='addToCart(" . $fetch['product_id'] . ")'>";
 				echo "<img src='images/shopping-cart.png' alt='Add to Cart'>";
 				echo "</div>";
@@ -161,6 +220,7 @@ include("db/dbconn.php");
 		}
 		?>
 	</div>
+
 
 	<!-- 🔔 Notification Modal (Fixed & Working) -->
 	<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
@@ -290,6 +350,45 @@ include("db/dbconn.php");
 			}
 		});
 	</script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			let productImages = document.querySelectorAll(".main-product-image");
+
+			productImages.forEach((imgElement) => {
+				let productId = imgElement.getAttribute("data-product-id");
+				let defaultImage = imgElement.src;
+				let hiddenImages = document.querySelectorAll(`.hidden-thumbnail[data-product-id='${productId}']`);
+				let imageArray = [defaultImage]; // Start with the default image
+				hiddenImages.forEach(img => imageArray.push(img.src)); // Add extra images
+				let imageIndex = 0;
+				let interval;
+
+				// Function to cycle images
+				function startImageCycle() {
+					if (imageArray.length > 1) {
+						interval = setInterval(() => {
+							imageIndex = (imageIndex + 1) % imageArray.length;
+							imgElement.src = imageArray[imageIndex];
+						}, 1000);
+					}
+				}
+
+				// Function to reset to default image
+				function resetImage() {
+					clearInterval(interval);
+					imgElement.src = defaultImage;
+					imageIndex = 0;
+				}
+
+				// Hover events
+				imgElement.addEventListener("mouseover", startImageCycle);
+				imgElement.addEventListener("mouseleave", resetImage);
+			});
+		});
+	</script>
+
+	<script src="js/darkMode.js"></script>
 </body>
 
 </html>
